@@ -1,0 +1,90 @@
+class DealershipDiscounts(models.Model):
+    """
+    Model of discounts, includes a dealer, car, discount dates,
+    price during discount, name of discount and description.
+    """
+
+    dealer = models.ForeignKey(
+        CarDealership, on_delete=models.CASCADE, verbose_name="Dealership"
+    )
+    car = models.ForeignKey(
+        "car.Car", on_delete=models.CASCADE, verbose_name="Car in stock"
+    )
+    discount_date_from = models.DateField(verbose_name="Date of promotion start")
+    discount_date_to = models.DateField(verbose_name="Date of promotion ending")
+    price_during_discount = models.DecimalField(
+        max_digits=8, decimal_places=2, verbose_name="Car price during discount"
+    )
+    name = models.CharField(max_length=100, verbose_name="Promotion naming")
+    description = models.CharField(
+        max_length=1000, verbose_name="Promotion description"
+    )
+
+    def __str__(self):
+        return (
+            f"{self.dealer.name} have a discount from {self.discount_date_from} to "
+            f"{self.discount_date_to} a {self.car} - {self.price_during_discount} USD"
+        )
+
+class DealershipPersonalDiscounts(models.Model):
+    """Model of personal discounts according to quantity of bought cars."""
+
+    PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
+    dealer = models.ForeignKey(
+        CarDealership, on_delete=models.CASCADE, verbose_name="Dealership"
+    )
+    buyer = models.ForeignKey(
+        "buyer.Buyer", on_delete=models.CASCADE, verbose_name="Buyer"
+    )
+    actual_discount = models.IntegerField(
+        validators=PERCENTAGE_VALIDATOR, verbose_name="Actual discount"
+    )
+    quantity_of_bought_cars = models.IntegerField(
+        verbose_name="Quantity of bought cars"
+    )
+
+    def __str__(self):
+        return (
+            f"For all time {self.buyer.account} bought {self.quantity_of_bought_cars}"
+            f" cars from {self.dealer.name}. Actual discount - {self.actual_discount}"
+        )
+
+
+class Discounts(models.Model):
+    discount_date_from = models.DateField(verbose_name="Date of promotion start")
+    discount_date_to = models.DateField(verbose_name="Date of promotion ending")
+    discount_percentage =
+    name = models.CharField(max_length=100, verbose_name="Promotion naming")
+    description = models.CharField(
+        max_length=1000, verbose_name="Promotion description"
+    )
+
+    def __str__(self):
+        return (
+            f"{self.provider.name} have a discount from {self.discount_date_from} to "
+            f"{self.discount_date_to} a {self.car.car} - {self.price_during_discount} USD"
+        )
+
+
+class ProviderPersonalDiscounts(models.Model):
+    """Model of personal discounts according to quantity of bought cars."""
+
+    PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
+    provider = models.ForeignKey(
+        Provider, on_delete=models.CASCADE, verbose_name="Provider"
+    )
+    dealership = models.ForeignKey(
+        "dealership.CarDealership", on_delete=models.CASCADE, verbose_name="Dealership"
+    )
+    actual_discount = models.IntegerField(
+        validators=PERCENTAGE_VALIDATOR, verbose_name="Actual discount"
+    )
+    quantity_of_bought_cars = models.IntegerField(
+        verbose_name="Quantity of bought cars"
+    )
+
+    def __str__(self):
+        return (
+            f"For all time {self.dealership.name} bought {self.quantity_of_bought_cars}"
+            f" cars from {self.provider.name}. Actual discount - {self.actual_discount}"
+        )

@@ -37,7 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cars'
+    'autoshops',
+    'cars',
+    'discounts',
+    'sales',
+    'suppliers',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -50,7 +55,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'autoshop_v2.urls'
+ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     {
