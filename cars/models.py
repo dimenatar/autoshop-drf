@@ -1,8 +1,10 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from core.models import BaseModel
 
-class Car(models.Model):
+
+class Car(BaseModel):
     mark = models.CharField(max_length=30)
     brand = models.CharField(max_length=30)
     horsepower = models.IntegerField(validators=[MinValueValidator(0)])

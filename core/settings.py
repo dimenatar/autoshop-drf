@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'discounts',
     'sales',
     'suppliers',
-    'users'
+    'users',
+    'available_cars'
 ]
 
 MIDDLEWARE = [
@@ -93,6 +94,7 @@ DATABASES = {
     }
 }
 
+#AUTH_USER_MODEL = 'users.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

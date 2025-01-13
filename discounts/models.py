@@ -1,11 +1,10 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
-from cars.models import Car
-from users.models import User
+from core.models import BaseModel
 
 
-class Discount(models.Model):
+class BaseDiscount(BaseModel):
     percent = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     def __str__(self):
@@ -14,7 +13,7 @@ class Discount(models.Model):
     class Meta:
         abstract = True
 
-class GeneralDiscount(Discount):
+class GeneralDiscount(BaseDiscount):
     start_date = models.DateField()
     end_date = models.DateField()
     name = models.TextField()
@@ -23,14 +22,15 @@ class GeneralDiscount(Discount):
     def __str__(self):
         return f"name: {self.name} {super()} dates:{self.start_date}/{self.end_date}, description: {self.description}"
 
-class UserPersonalDiscount(Discount):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class UserPersonalDiscount(BaseDiscount):
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    autoshop_id = models.ForeignKey('autoshops.AutoShop', on_delete=models.CASCADE, default=0, null=True)
 
     def __str__(self):
         return f"user:{self.user} {super()}"
 
-class CarDiscount(Discount):
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+class CarDiscount(BaseDiscount):
+    car = models.ForeignKey('cars.Car', on_delete=models.CASCADE)
 
     def __str__(self):
         return f"car:{self.car} {super()}"
