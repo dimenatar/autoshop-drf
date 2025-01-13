@@ -1,16 +1,17 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+from django_countries.fields import CountryField
 
 from available_cars.models import AvailableCars
-from core.models import BaseModel
+from cars.models import CarDetails
 from discounts.models import CarDiscount
 from users.models import User
 
 
 
-class AutoShop(BaseModel):
+class AutoShop(CarDetails):
     name = models.CharField(max_length=100)
-    location = models.CharField(max_length=100)
+    location = CountryField()
     balance = models.FloatField(validators=[MinValueValidator(0.0)] )
     cars_in_stock = models.ManyToManyField(AvailableCars)
     car_discounts = models.ManyToManyField(CarDiscount)
@@ -18,4 +19,4 @@ class AutoShop(BaseModel):
     buyers = models.ManyToManyField(User)
 
     def __str__(self):
-        return f"name: {self.name}, location: {self.location}, balance: {self.balance}, available_cars: {self.cars_in_stock}, discounts: {self.car_discounts}, general_discount {self.general_discount_id}"
+        return f"{super().__str__()}, name: {self.name}, location: {self.location}, balance: {self.balance}, available_cars: {self.cars_in_stock}, discounts: {self.car_discounts}, general_discount {self.general_discount_id}"

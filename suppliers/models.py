@@ -7,9 +7,9 @@ from discounts.models import CarDiscount
 
 class Supplier(BaseModel):
     name = models.TextField(blank=True, null=True)
-    cars = models.ManyToManyField(AvailableCars)
+    cars_in_stock = models.ManyToManyField(AvailableCars)
     car_discounts = models.ManyToManyField(CarDiscount)
     general_discount_id = models.ForeignKey('discounts.GeneralDiscount', on_delete=models.CASCADE, null = True)
 
     def __str__(self):
-        return f"name: {self.name}, cars: {self.cars}, car discounts: {self.car_discounts}, general discount id: {self.general_discount_id}"
+        return f"{super().__str__()}, name: {self.name}, cars: {self.cars_in_stock}, car discounts: {self.car_discounts}, general discount id: {self.general_discount_id}"
