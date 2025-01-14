@@ -11,7 +11,7 @@ class CarDetails(BaseModel):
     min_horsepower = models.IntegerField(validators=[MinValueValidator(0)], null=True)
     max_horsepower = models.IntegerField(validators=[MinValueValidator(0)], null=True)
     min_year = models.IntegerField(validators=[MinValueValidator(0)], null=True)
-    max_year = models.IntegerField(validators=[MinValueValidator(0)], null=True)
+    max_year = models.IntegerField(validators=[MinValueValidator(0)],null=True)
 
     class Meta:
         abstract = True
