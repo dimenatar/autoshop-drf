@@ -12,7 +12,7 @@ ROLE_CHOICES = (
     ('customer', 'Customer'),
 )
 
-class User(BaseModel):#, AbstractBaseUser, PermissionsMixin):
+class User(BaseModel):
     name = models.CharField(max_length=100)
     age = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)]) #sorry drandma
     telephone = models.CharField(max_length=13)
@@ -27,11 +27,3 @@ class User(BaseModel):#, AbstractBaseUser, PermissionsMixin):
 class UserRole(enum.Enum):
     Admin = 0
     Customer = 1
-
-# class UserManager(BaseUserManager):
-#     def create_user(self, name, age, telephone, balance, role, password, email):
-#         user = self.model(name = name, age = age, telephone = telephone, balance = balance, role = role, email = email)
-#         user.set_password(password)
-#         user.save(using = self._db)
-#
-#         return user

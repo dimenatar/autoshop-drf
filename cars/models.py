@@ -3,11 +3,10 @@ from django.db import models
 
 from core.models import BaseModel
 
-# Create your models here.
 class CarDetails(BaseModel):
     max_price = models.FloatField(validators=[MinValueValidator(0.0)], null=True, blank=True)
-    desired_brand = models.CharField(null = True, max_length = 50)
-    desired_mark = models.CharField(null = True, max_length = 50)
+    desired_brand = models.CharField(null=True, max_length=50)
+    desired_mark = models.CharField(null=True, max_length=50)
     min_horsepower = models.IntegerField(validators=[MinValueValidator(0)], null=True)
     max_horsepower = models.IntegerField(validators=[MinValueValidator(0)], null=True)
     min_year = models.IntegerField(validators=[MinValueValidator(0)], null=True)
