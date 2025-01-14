@@ -42,6 +42,8 @@ class UserPersonalDiscount(BasePersonalDiscount):
 class AutoShopPersonalDiscount(BasePersonalDiscount):
     autoshop = models.ForeignKey('autoshops.AutoShop', on_delete=models.CASCADE, default=0, null=True)
     supplier = models.ForeignKey('suppliers.Supplier', on_delete=models.CASCADE)
+    required_cars_bought_amount = models.IntegerField(validators=[MinValueValidator(0)])
+    increasing_percent_per_requirements_fulfilled = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     def __str__(self):
         return f"{super().__str__()} autoshop:{self.autoshop} supplier:{self.supplier}"
