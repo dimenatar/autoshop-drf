@@ -37,7 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cars'
+    'autoshops',
+    'cars',
+    'discounts',
+    'sales',
+    'suppliers',
+    'users',
+    'available_cars',
+    'offers'
 ]
 
 MIDDLEWARE = [
@@ -50,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'autoshop_v2.urls'
+ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     {
@@ -88,6 +95,7 @@ DATABASES = {
     }
 }
 
+#AUTH_USER_MODEL = 'users.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
