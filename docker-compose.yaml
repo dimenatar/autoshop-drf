@@ -11,8 +11,10 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
       DB_PASSWORD: ${DB_PASSWORD}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+    user: "myuser"
     #command:
       #- rm ./pgdata:/var/lib/postgresql/data
     volumes:
@@ -26,6 +28,7 @@ services:
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
     depends_on:
       - postgres
+    user: "myuser"
 
 volumes:
   pgdata:
