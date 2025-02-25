@@ -5,9 +5,9 @@ from users.models import User, UserRole
 class BaseValidatedSerializer(serializers.Serializer):
 
     password = serializers.CharField(
-        max_length=128,
-        min_length=8,
-        write_only=True
+        #ax_length=128,
+        #min_length=8,
+        #write_only=True
     )
     token = serializers.CharField(max_length=255, read_only=True)
     age = serializers.IntegerField()
@@ -15,6 +15,7 @@ class BaseValidatedSerializer(serializers.Serializer):
     role = serializers.CharField()
     email = serializers.EmailField()
     name = serializers.CharField()
+    balance = serializers.FloatField()
 
     def validate(self, data):
         email = data.get('email', None)
@@ -64,6 +65,7 @@ class RegistrationSerializer(BaseValidatedSerializer):
         return User.objects.create_user(**validated_data)
 
 class LoginSerializer(BaseValidatedSerializer):
+
 
     def validate(self, data):
 
