@@ -1,38 +1,41 @@
 import enum
 
 from datetime import datetime, timedelta
+from typing import Type, Dict
 
 import jwt
-
 from django.conf import settings
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from jwt import JWT, jwk_from_dict
+from jwt.jwk import OctetJWK
 
 from core.models import BaseModel
 
 ROLE_CHOICES = (
-    ('admin', 'Admin'),
-    ('customer', 'Customer'),
+    ('Admin', 'Admin'),
+    ('Customer', 'Customer'),
 )
 
 
 
 
-class UserRole(enum.Enum):
+class UserRole(enum.IntEnum):
     Admin = 0
     Customer = 1
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None):
-        user = self.model(username=username, email=self.normalize_email(email), role=UserRole.Customer)
+    def create_user(self, name, email, telephone, age, balance, role=None, password=None):
+        role = role or UserRole.Customer
+        user = self.model(name=name, email=self.normalize_email(email), role=role, telephone=telephone, age=age, balance=balance)
         user.set_password(password)
         user.save()
 
         return user
 
-    def create_superuser(self, username, email, password):
-        user = self.create_user(username, email, password)
+    def create_superuser(self, name, email, telephone, age, balance, role=None, password=None):
+        user = self.create_user(name, email, telephone, age, balance, role=role, password=password)
         user.role = UserRole.Admin
         user.is_staff = True
         user.save()
@@ -40,6 +43,9 @@ class UserManager(BaseUserManager):
         return user
 
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
+
+    jwt_instance = JWT()
+
     name = models.CharField(max_length=100)
     age = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)]) #sorry drandma
     telephone = models.CharField(max_length=13)
@@ -69,9 +75,13 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     def _generate_jwt_token(self):
         dt = datetime.now() + timedelta(days=1)
 
-        token = jwt.encode({
-            'id': self.pk,
-            'exp': int(dt.strftime('%s'))
-        }, settings.SECRET_KEY, algorithm='HS256')
+        key = OctetJWK.from_dict({
+            'k':settings.SECRET_KEY,
+        })
 
-        return token.decode('utf-8')
+        token: str = self.jwt_instance.encode({
+            'id': self.pk,
+            'exp': int(dt.strftime('%S'))
+        }, key=key, alg='HS256')
+
+        return token

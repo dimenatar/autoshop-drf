@@ -1,47 +1,75 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from users.models import User
+from users.models import User, UserRole
+
+class BaseValidatedSerializer(serializers.Serializer):
+
+    password = serializers.CharField(
+        max_length=128,
+        min_length=8,
+        write_only=True
+    )
+    token = serializers.CharField(max_length=255, read_only=True)
+    age = serializers.IntegerField()
+    telephone = serializers.CharField()
+    role = serializers.CharField()
+    email = serializers.EmailField()
+    name = serializers.CharField()
+
+    def validate(self, data):
+        email = data.get('email', None)
+        password = data.get('password', None)
+        name = data.get('name', None)
+        age = data.get('age', None)
+        telephone = data.get('telephone', None)
+        role = data.get('role', None)
+        balance = data.get('balance', None)
+        token = data.get('token', None)
+
+        if (email is None ) or (password is None) or (name is None) or (telephone is None):
+            raise serializers.ValidationError('Email, password, telephone and name are required')
+
+        if role is None:
+            role = str(UserRole.Customer.name)
+        if balance is None:
+            balance = 0.0
+        if age is None:
+            age = 18
 
 
-class RegistrationSerializer(serializers.ModelSerializer):
+        return {
+            'email': email,
+            'name': name,
+            #'token': token,
+            'age': age,
+            'password': password,
+            'telephone': telephone,
+            'balance': balance,
+            'role': role,
+        }
+
+
+class RegistrationSerializer(BaseValidatedSerializer):
     password = serializers.CharField(
         max_length=128,
         min_length=8,
         write_only=True
     )
 
-    token = serializers.CharField(max_length=255, read_only=True)
-
     class Meta:
         model = User
-        fields = ['email', 'name', 'age', 'telephone', 'password', 'token', 'role', 'balance',]
+        fields = ['email', 'name', 'age', 'telephone', 'token', 'password', 'role', 'balance',]
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
 
-class LoginSerializer(serializers.Serializer):
-    email = serializers.CharField(max_length=255)
-    name = serializers.CharField(max_length=255, read_only=True)
-    telephone = serializers.CharField(max_length=255, read_only=True)
-    balance = serializers.IntegerField(max_length=255, read_only=True)
-    age = serializers.IntegerField(max_length=3, read_only=True)
-    role = serializers.CharField(max_length=255, read_only=True)
-    password = serializers.CharField(max_length=128, write_only=True)
-    token = serializers.CharField(max_length=255, read_only=True)
+class LoginSerializer(BaseValidatedSerializer):
 
     def validate(self, data):
+
         email = data.get('email', None)
         password = data.get('password', None)
 
-        if email is None:
-            raise serializers.ValidationError(
-                'An email address is required to log in.'
-            )
-
-        if password is None:
-            raise serializers.ValidationError(
-                'A password is required to log in.'
-            )
         user = authenticate(username=email, password=password)
 
         if user is None:
@@ -54,22 +82,10 @@ class LoginSerializer(serializers.Serializer):
                 'This user has been deactivated.'
             )
 
-        return {
-            'email': user.email,
-            'username': user.name,
-            'token': user.token,
-            'telephone': user.telephone,
-            'balance': user.balance,
-            'role': user.role,
-        }
 
-class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(
-        max_length=128,
-        min_length=8,
-        write_only=True
-    )
+        return super().validate(data)
 
+class UserSerializer(BaseValidatedSerializer):
     class Meta:
         model = User
         fields = ('email', 'name', 'age', 'telephone', 'password', 'role', 'balance',)
