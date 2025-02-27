@@ -7,28 +7,18 @@ services:
     env_file:
       - .env
     environment:
-      DB_ENGINE: ${DB_ENGINE}
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
-      DB_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    user: "myuser"
-    #command:
-      #- rm ./pgdata:/var/lib/postgresql/data
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - ./pgdata:/var/lib/postgresql/data
-  autoshop:
+  web:
     build: .
     ports:
       - "8000:8000"
     command: python manage.py runserver 0.0.0.0:8000
-    environment:
-      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+    env_file:
+      - .env
     depends_on:
       - postgres
-    user: "myuser"
 
 volumes:
   pgdata:
