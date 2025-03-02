@@ -22,7 +22,7 @@ class UsersSerializersTestCase(APITestCase):
         return expectedData, serializedData
 
     def getSerializedData(self, serializer):
-        user1 = User.objects.create_user(name='test', email='email', telephone='++', age=11, balance=0, password='pass')
+        user1 = User.objects.create_user(username='test', email='email', telephone='++', age=11, balance=0, password='pass')
         serializedData = serializer(user1).data
         return serializedData
 
