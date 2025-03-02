@@ -26,7 +26,7 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username, email, telephone, age, balance, role=None, password=None):
+    def create_superuser(self, username, email, telephone='', age=18, balance=0, role=None, password=None):
         user = self.create_user(username, email, telephone, age, balance, role=role, password=password)
         user.role = UserRole.Admin
         user.is_staff = True
@@ -42,6 +42,8 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     role = models.CharField(choices = ROLE_CHOICES)
     password = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
+
+    is_staff = True
 
     def __str__(self):
         return f"{super().__str__()} name: {self.username}, age: {self.age}, telephone: {self.telephone}, balance: {self.balance}, role: {self.role}, password: {self.password}, email: {self.email}"
