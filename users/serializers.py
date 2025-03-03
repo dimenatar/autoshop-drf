@@ -4,31 +4,25 @@ from users.models import User, UserRole
 
 class BaseValidatedSerializer(serializers.Serializer):
 
-    password = serializers.CharField(
-        #ax_length=128,
-        #min_length=8,
-        #write_only=True
-    )
-    token = serializers.CharField(max_length=255, read_only=True)
+    password = serializers.CharField()
     age = serializers.IntegerField()
     telephone = serializers.CharField()
     role = serializers.CharField()
     email = serializers.EmailField()
-    name = serializers.CharField()
+    username = serializers.CharField()
     balance = serializers.FloatField()
 
     def validate(self, data):
         email = data.get('email', None)
         password = data.get('password', None)
-        name = data.get('name', None)
+        username = data.get('username', None)
         age = data.get('age', None)
         telephone = data.get('telephone', None)
         role = data.get('role', None)
         balance = data.get('balance', None)
-        token = data.get('token', None)
 
-        if (email is None ) or (password is None) or (name is None) or (telephone is None):
-            raise serializers.ValidationError('Email, password, telephone and name are required')
+        if (email is None ) or (password is None) or (username is None) or (telephone is None):
+            raise serializers.ValidationError('Email, password, telephone and username are required')
 
         if role is None:
             role = str(UserRole.Customer.name)
@@ -40,8 +34,7 @@ class BaseValidatedSerializer(serializers.Serializer):
 
         return {
             'email': email,
-            'name': name,
-            #'token': token,
+            'username': username,
             'age': age,
             'password': password,
             'telephone': telephone,
@@ -59,7 +52,7 @@ class RegistrationSerializer(BaseValidatedSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'name', 'age', 'telephone', 'token', 'password', 'role', 'balance',]
+        fields = ['email', 'username', 'age', 'telephone', 'password', 'role', 'balance',]
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
@@ -90,8 +83,7 @@ class LoginSerializer(BaseValidatedSerializer):
 class UserSerializer(BaseValidatedSerializer):
     class Meta:
         model = User
-        fields = ('email', 'name', 'age', 'telephone', 'password', 'role', 'balance',)
-        read_only_fields = ('token',)
+        fields = ('email', 'username', 'age', 'telephone', 'password', 'role', 'balance',)
 
     def update(self, instance, validated_data):
         password = validated_data.pop('password', None)

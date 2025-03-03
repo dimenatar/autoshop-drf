@@ -7,40 +7,38 @@ from users.serializers import LoginSerializer, UserSerializer, RegistrationSeria
 
 class UsersSerializersTestCase(APITestCase):
     def testLogin(self):
-        expectedData, serializedData = self.getTestDatas(LoginSerializer)
+        expected_data, serialized_data = self.getTestDatas(LoginSerializer)
 
-        self.assertEqual(sorted(serializedData), sorted(expectedData))
+        assert sorted(expected_data) == sorted(serialized_data)
 
     def testUpdateUserData(self):
-        expectedData, serializedData = self.getTestDatas(UserSerializer)
+        expected_data, serialized_data = self.getTestDatas(UserSerializer)
 
-        self.assertEqual(sorted(serializedData), sorted(expectedData))
+        assert sorted(expected_data) == sorted(serialized_data)
 
     def getTestDatas(self, serializer):
-        serializedData = self.getSerializedData(serializer)
-        expectedData = self.getTestData(serializedData['token'], serializedData['password'])
-        return expectedData, serializedData
+        serialized_data = self.getSerializedData(serializer)
+        expected_data = self.getTestData(serialized_data['password'])
+        return expected_data, serialized_data
 
     def getSerializedData(self, serializer):
         user1 = User.objects.create_user(username='test', email='email', telephone='++', age=11, balance=0, password='pass')
-        serializedData = serializer(user1).data
-        return serializedData
+        serialized_data = serializer(user1).data
+        return serialized_data
 
     def testRegistration(self):
-        expectedData, serializedData = self.getTestDatas(RegistrationSerializer)
-        self.assertEqual(sorted(serializedData), sorted(expectedData))
+        expected_data, serialized_data = self.getTestDatas(RegistrationSerializer)
+        assert sorted(expected_data) == sorted(serialized_data)
         pass
 
 
-    def getTestData(self, token, password):
+    def getTestData(self, password):
         return {
-                'token': token,
-                'name':'test',
+                'username':'test',
                 'email':'email',
                 'telephone':'++',
                 'age':'11',
                 'balance': 0.0,
                 'password':password,
                 'role':str(UserRole.Customer),
-
         }
