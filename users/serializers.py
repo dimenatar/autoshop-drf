@@ -45,14 +45,11 @@ class BaseValidatedSerializer(serializers.Serializer):
 
 class RegistrationSerializer(BaseValidatedSerializer):
     password = serializers.CharField(
-        #max_length=128,
-        #min_length=8,
-        #write_only=True
     )
 
     class Meta:
         model = User
-        fields = ['email', 'username', 'age', 'telephone', 'password', 'role', 'balance',]
+        fields = '__all__'
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
@@ -83,8 +80,7 @@ class LoginSerializer(BaseValidatedSerializer):
 class UserSerializer(BaseValidatedSerializer):
     class Meta:
         model = User
-        fields = ('email', 'username', 'age', 'telephone', 'password', 'role', 'balance',)
-
+        fields = '__all__'
     def update(self, instance, validated_data):
         password = validated_data.pop('password', None)
 

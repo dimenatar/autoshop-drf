@@ -1,71 +1,72 @@
+import pytest
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.test import APITestCase
+from rest_framework.test import APIClient
 
-class UsersApiTestCase(APITestCase):
+client = APIClient()
+BASE_URL = 'http://localhost:8000'
 
-    BASE_URL = 'http://localhost:8000'
+@pytest.fixture(autouse=True)
+def enable_db_access_for_all_tests(transactional_db):
+    pass
 
-    def test_registration(self):
+@pytest.fixture()
+def get_test_user():
+    return {
+        "user":
+            {
+                "username": "test_user",
+                "email": "test_email@sobaka.ru",
+                "telephone": "telephone",
+                "age": 11,
+                "balance": "0",
+                "role": "Customer",
+                "password": "test_password",
+            }
+    }
 
-        url = UsersApiTestCase.BASE_URL + '/api/users/'
+def test_registration(get_test_user):
+    url = BASE_URL + '/api/users/'
 
-        test_user = self.getTestUser()
-        test_user['user'].pop('email')
-        test_user['user'].pop('username')
+    test_user = dict(get_test_user)
 
-        response = self.client.post(url, test_user, format='json')
+    response = client.post(url, {"user": test_user["user"]["username"]}, format='json')
 
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
 
-        response:Response = self.client.post(url, self.getTestUser(), format='json')
+    response: Response = client.post(url, get_test_user, format='json')
 
-        assert response.status_code == status.HTTP_201_CREATED
+    assert response.status_code == status.HTTP_201_CREATED
 
-    def getTestUser(self):
-        return {
-            "user":
-                {
-                    "username": "test_user",
-                    "email": "test_email@sobaka.ru",
-                    "telephone": "telephone",
-                    "age": 11,
-                    "balance": "0",
-                    "role": "Customer",
-                    "password": "test_password",
-                }
-        }
 
-    def test_login(self):
-        url_register = UsersApiTestCase.BASE_URL + '/api/users/'
-        url_login = UsersApiTestCase.BASE_URL + '/api/users/login/'
+def test_login(get_test_user):
+    url_register = BASE_URL + '/api/users/'
+    url_login = BASE_URL + '/api/users/login/'
 
-        user = self.getTestUser()
+    response_login = client.post(url_login, get_test_user, format='json')
 
-        response_login = self.client.post(url_login, user, format='json')
+    assert response_login.status_code == status.HTTP_400_BAD_REQUEST
+    response: Response = client.post(url_register, get_test_user, format='json')
+    response_login = client.post(url_login, get_test_user, format='json')
 
-        assert response_login.status_code == status.HTTP_400_BAD_REQUEST
-        response: Response = self.client.post(url_register, self.getTestUser(), format='json')
-        response_login = self.client.post(url_login, user, format='json')
+    assert response_login.status_code == status.HTTP_200_OK
 
-        assert response_login.status_code == status.HTTP_200_OK
 
-    def test_update_user(self):
+def test_update_user(get_test_user):
+    url_register = BASE_URL + '/api/users/'
+    url_token = 'https://localhost:8000/api/token/'
 
-        user = self.getTestUser()
-        url_register = UsersApiTestCase.BASE_URL + '/api/users/'
-        url_token = 'https://localhost:8000/api/token/'
+    response: Response = client.post(url_register, get_test_user, format='json')
+    token_response: Response = client.post(url_token, {"password": get_test_user["user"].get("password"),
+                                                       "email": get_test_user["user"].get("email")}, format='json')
+    access_token = 'Bearer ' + str(token_response.data['access'])
 
-        response: Response = self.client.post(url_register, self.getTestUser(), format='json')
-        token_response: Response = self.client.post(url_token, {"password":user["user"].get("password"), "email":user["user"].get("email")}, format='json')
-        access_token = 'Bearer ' + str(token_response.data['access'])
+    url = BASE_URL + '/api/user/'
 
-        url =  UsersApiTestCase.BASE_URL + '/api/user/'
+    get_test_user['user']['password'] = 'updated_password'
+    get_test_user['user']['telephone'] = 'mmmmmmmmmm'
 
-        user['user']['password'] = 'updated_password'
-        user['user']['telephone'] = 'mmmmmmmmmm'
+    token_headers = {'Authorization': access_token}
+    response = client.put(path=url, data=get_test_user, headers=token_headers, format='json')
 
-        token_headers = {'Authorization': access_token}
-        response = self.client.put(path=url, data=user, headers=token_headers, format='json')
-
-        assert response.status_code == status.HTTP_200_OK
+    assert response.status_code == status.HTTP_200_OK
