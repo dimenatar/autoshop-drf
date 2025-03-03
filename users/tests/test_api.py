@@ -54,7 +54,7 @@ def test_login(get_test_user):
 
 def test_update_user(get_test_user):
     url_register = BASE_URL + '/api/users/'
-    url_token = 'https://localhost:8000/api/token/'
+    url_token = BASE_URL + '/api/token/'
 
     response: Response = client.post(url_register, get_test_user, format='json')
     token_response: Response = client.post(url_token, {"password": get_test_user["user"].get("password"),

@@ -12,35 +12,39 @@ class BaseValidatedSerializer(serializers.Serializer):
     username = serializers.CharField()
     balance = serializers.FloatField()
 
-    def validate(self, data):
-        email = data.get('email', None)
-        password = data.get('password', None)
-        username = data.get('username', None)
-        age = data.get('age', None)
-        telephone = data.get('telephone', None)
-        role = data.get('role', None)
-        balance = data.get('balance', None)
 
-        if (email is None ) or (password is None) or (username is None) or (telephone is None):
+    def validate_required_attr(self, data, attr_name):
+        if data is None:
             raise serializers.ValidationError('Email, password, telephone and username are required')
+        return data
 
-        if role is None:
-            role = str(UserRole.Customer.name)
+    def validate_email(self, email):
+        print(email)
+        return self.validate_required_attr(email, 'email')
+
+    def validate_password(self, password):
+        return self.validate_required_attr(password, 'password')
+
+    def validate_telephone(self, telephone):
+        return self.validate_required_attr(telephone, 'telephone')
+
+    def validate_username(self, username):
+        return self.validate_required_attr(username, 'username')
+
+    def validate_balance(self, balance):
         if balance is None:
-            balance = 0.0
+            balance = 0
+        return balance
+
+    def validate_age(self, age):
         if age is None:
             age = 18
+        return age
 
-
-        return {
-            'email': email,
-            'username': username,
-            'age': age,
-            'password': password,
-            'telephone': telephone,
-            'balance': balance,
-            'role': role,
-        }
+    def validate_role(self, role):
+        if role is None:
+            role = str(UserRole.Customer.name)
+        return role
 
 
 class RegistrationSerializer(BaseValidatedSerializer):
