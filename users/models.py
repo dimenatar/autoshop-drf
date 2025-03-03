@@ -1,15 +1,10 @@
 import enum
 
 from datetime import datetime, timedelta
-from typing import Type, Dict
-
-import jwt
-from django.conf import settings
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from jwt import JWT, jwk_from_dict
-from jwt.jwk import OctetJWK
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from core.models import BaseModel
 
@@ -18,24 +13,21 @@ ROLE_CHOICES = (
     ('Customer', 'Customer'),
 )
 
-
-
-
 class UserRole(enum.IntEnum):
     Admin = 0
     Customer = 1
 
 class UserManager(BaseUserManager):
-    def create_user(self, name, email, telephone, age, balance, role=None, password=None):
+    def create_user(self, username, email, telephone, age, balance, role=None, password=None):
         role = role or UserRole.Customer
-        user = self.model(name=name, email=self.normalize_email(email), role=role, telephone=telephone, age=age, balance=balance)
+        user = self.model(username=username, email=self.normalize_email(email), role=role, telephone=telephone, age=age, balance=balance)
         user.set_password(password)
         user.save()
 
         return user
 
-    def create_superuser(self, name, email, telephone, age, balance, role=None, password=None):
-        user = self.create_user(name, email, telephone, age, balance, role=role, password=password)
+    def create_superuser(self, username, email, telephone='', age=18, balance=0, role=None, password=None):
+        user = self.create_user(username, email, telephone, age, balance, role=role, password=password)
         user.role = UserRole.Admin
         user.is_staff = True
         user.save()
@@ -43,10 +35,7 @@ class UserManager(BaseUserManager):
         return user
 
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
-
-    jwt_instance = JWT()
-
-    name = models.CharField(max_length=100)
+    username = models.CharField(max_length=100)
     age = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)]) #sorry drandma
     telephone = models.CharField(max_length=13)
     balance = models.FloatField(validators=[MinValueValidator(0)])
@@ -54,34 +43,18 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
 
+    is_staff = True
+
     def __str__(self):
-        return f"{super().__str__()} name: {self.name}, age: {self.age}, telephone: {self.telephone}, balance: {self.balance}, role: {self.role}, password: {self.password}, email: {self.email}"
+        return f"{super().__str__()} name: {self.username}, age: {self.age}, telephone: {self.telephone}, balance: {self.balance}, role: {self.role}, password: {self.password}, email: {self.email}"
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
     objects = UserManager()
 
-    @property
-    def token(self):
-        return self._generate_jwt_token()
-
     def get_full_name(self):
-        return self.name
+        return self.username
 
     def get_short_name(self):
-        return self.name
-
-    def _generate_jwt_token(self):
-        dt = datetime.now() + timedelta(days=1)
-
-        key = OctetJWK.from_dict({
-            'k':settings.SECRET_KEY,
-        })
-
-        token: str = self.jwt_instance.encode({
-            'id': self.pk,
-            'exp': int(dt.strftime('%S'))
-        }, key=key, alg='HS256')
-
-        return token
+        return self.username
