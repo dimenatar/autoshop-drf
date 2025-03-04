@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
     'autoshops',
     'cars',
     'discounts',
@@ -87,11 +88,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("DB_NAME"),
-        'USER': os.environ.get("DB_USER"),
-        'HOST': os.environ.get("DB_HOST"),
-        "PASSWORD": os.environ.get("DB_PASSWORD"),
-        'PORT': os.environ.get("DB_PORT"),
+        'NAME': os.environ.get("POSTGRES_NAME"),
+        'USER': os.environ.get("POSTGRES_USER"),
+        'HOST': os.environ.get("POSTGRES_HOST"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        'PORT': os.environ.get("POSTGRES_PORT"),
         "OPTIONS": {
             "options": "-c client_encoding=utf8"
         }
