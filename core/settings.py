@@ -58,12 +58,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config("POSTGRES_NAME"),
-        'USER': config("POSTGRES_USER"),
+        'NAME': config('POSTGRES_NAME'),
+        'USER': config('POSTGRES_USER'),
         'HOST': config("POSTGRES_HOST"),
-        'PASSWORD': config("POSTGRES_PASSWORD"),
-        'PORT': config("POSTGRES_PORT"),
-        'POSTGRES_DB': config("POSTGRES_DB"),
+        'PASSWORD': config('POSTGRES_PASSWORD'),
+        'PORT': config('POSTGRES_PORT'),
+        'POSTGRES_DB': config('POSTGRES_DB'),
         "OPTIONS": {
             "options": "-c client_encoding=utf8"
         }
