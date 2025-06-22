@@ -63,7 +63,7 @@ DATABASES = {
         'HOST': config("POSTGRES_HOST"),
         'PASSWORD': config('POSTGRES_PASSWORD'),
         'PORT': config('POSTGRES_PORT'),
-        'POSTGRES_DB': config('POSTGRES_DB'),
+        'POSTGRES_DB': config('POSTGRES_DB', default='autoshop'),
         "OPTIONS": {
             "options": "-c client_encoding=utf8"
         }
