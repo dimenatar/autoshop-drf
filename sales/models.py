@@ -1,5 +1,4 @@
 from django.db import models
-
 from core.models import BaseModel
 
 class Sale(BaseModel):
@@ -12,7 +11,8 @@ class Sale(BaseModel):
         abstract = True
 
     def __str__(self):
-        return f"{super().__str__()}, date: {self.date}, car_id: {self.car_id} actual_price: {self.price}, discount_percent: {self.discount_percent}"
+        return (f"{super().__str__()}, date: {self.date}, car_id: {self.car_id},"
+                f" actual_price: {self.price}, discount_percent: {self.discount_percent}")
 
 class AutoShopSale(Sale):
     autoshop_id = models.ForeignKey('autoshops.AutoShop', on_delete=models.CASCADE)
@@ -26,4 +26,5 @@ class SupplierSale(Sale):
     autoshop_id = models.ForeignKey('autoshops.AutoShop', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{super().__str__()}, autoshop: {self.autoshop_id}, supplier_id {self.supplier_id}"
+        return (f"{super().__str__()}, autoshop: {self.autoshop_id},"
+                f" supplier_id {self.supplier_id}")

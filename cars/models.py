@@ -1,6 +1,5 @@
 from django.core.validators import MinValueValidator
 from django.db import models
-
 from core.models import BaseModel
 
 class CarDetails(BaseModel):
@@ -16,7 +15,9 @@ class CarDetails(BaseModel):
         abstract = True
 
     def __str__(self):
-        return f'{super().__str__()}, max price: {self.max_price}, desired brand: {self.desired_brand}, desired mark: {self.desired_mark}, min year: {self.min_year}, max year: {self.max_year}'
+        return (f'{super().__str__()}, max price: {self.max_price},'
+                f' desired brand: {self.desired_brand}, desired mark: {self.desired_mark},'
+                f' min year: {self.min_year}, max year: {self.max_year}')
 
 class Car(BaseModel):
     mark = models.CharField(max_length=30)
@@ -25,7 +26,8 @@ class Car(BaseModel):
     year = models.IntegerField(validators=[MinValueValidator(0)], default=1800)
 
     def __str__(self):
-         return f"{super().__str__()}, brand: {self.brand}, mark: {self.mark}, horsepower: {self.horsepower}, year: {self.year}"
+        return (f"{super().__str__()}, brand: {self.brand}, mark: {self.mark}, "
+                 f"horsepower: {self.horsepower}, year: {self.year}")
 
     class Meta:
         verbose_name = "Cars"

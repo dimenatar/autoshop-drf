@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class BaseModel(models.Model):
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -10,4 +9,5 @@ class BaseModel(models.Model):
         abstract = True
 
     def __str__(self):
-        return f'is active: {self.is_active}, created_at: {self.created_at}, updated_at: {self.updated_at}'
+        return (f'is active: {self.is_active}, created_at: {self.created_at},'
+                f' updated_at: {self.updated_at}')

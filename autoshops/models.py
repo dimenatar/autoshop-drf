@@ -15,8 +15,11 @@ class AutoShop(CarDetails):
     balance = models.FloatField(validators=[MinValueValidator(0.0)] )
     cars_in_stock = models.ManyToManyField(AvailableCars)
     car_discounts = models.ManyToManyField(CarDiscount)
-    general_discount_id = models.ForeignKey('discounts.GeneralDiscount', on_delete=models.CASCADE, null = True)
+    general_discount_id = models.ForeignKey('discounts.GeneralDiscount',
+                                            on_delete=models.CASCADE, null = True)
     buyers = models.ManyToManyField(User)
 
     def __str__(self):
-        return f"{super().__str__()}, name: {self.name}, location: {self.location}, balance: {self.balance}, available_cars: {self.cars_in_stock}, discounts: {self.car_discounts}, general_discount {self.general_discount_id}"
+        return (f"{super().__str__()}, name: {self.name}, location: {self.location},"
+                f" balance: {self.balance}, available_cars: {self.cars_in_stock}, "
+                f"discounts: {self.car_discounts}, general_discount {self.general_discount_id}")

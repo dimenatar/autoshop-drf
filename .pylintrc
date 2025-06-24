@@ -1,2 +1,3 @@
 [MASTER]
 ignore=urls.py, migrations
+disable=C0114, C0115, R0903
