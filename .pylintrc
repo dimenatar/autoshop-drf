@@ -1,3 +1,14 @@
 [MASTER]
-ignore=urls.py, migrations
-disable=C0114, C0115, R0903
+enable=useless-suppression
+exclude =
+    .github
+    .git
+    .idea
+    __pycache__
+    .env
+    pytest.ini
+    Dockerfile
+    docker-compose.yml
+    settings.py
+    */migrations/*
+    */tests/*

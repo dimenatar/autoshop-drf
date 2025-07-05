@@ -19,7 +19,6 @@ repos:
     rev: v1.8.0
     hooks:
       - id: mypy
-        exclude: ^(docs/|example-plugin/)
   - repo: https://github.com/pycqa/pylint
     rev: v3.3.2
     hooks:

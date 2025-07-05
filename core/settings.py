@@ -1,13 +1,12 @@
 from pathlib import Path
-from dotenv import load_dotenv
-from decouple import config
 
-load_dotenv()
+from core.configs.DBConfig import DBConfig
+from core.configs.djangoConfig import DjangoConfig
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = config("DJANGO_SECRET_KEY")
-DEBUG = config("DJANGO_IS_DEBUG", cast=bool, default=False)
-ALLOWED_HOSTS = list(config("ALLOWED_HOSTS").split(','))
+SECRET_KEY = DjangoConfig.DJANGO_SECRET_KEY
+DEBUG = DjangoConfig.DJANGO_IS_DEBUG
+ALLOWED_HOSTS = DjangoConfig.ALLOWED_HOSTS
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -23,7 +22,10 @@ INSTALLED_APPS = [
     'suppliers',
     'users',
     'available_cars',
-    'offers'
+    'offers',
+    'core.configs.djangoConfig',
+    'core.configs.mailConfig',
+    'core.configs.DBConfig',
 ]
 
 MIDDLEWARE = [
@@ -57,12 +59,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('POSTGRES_NAME'),
-        'USER': config('POSTGRES_USER'),
-        'HOST': config("POSTGRES_HOST"),
-        'PASSWORD': config('POSTGRES_PASSWORD'),
-        'PORT': config('POSTGRES_PORT'),
-        'POSTGRES_DB': config('POSTGRES_DB', default='autoshop'),
+        'NAME': DBConfig.POSTGRES_NAME,
+        'USER': DBConfig.POSTGRES_USER,
+        'HOST': DBConfig.POSTGRES_HOST,
+        'PASSWORD': DBConfig.POSTGRES_PASSWORD,
+        'PORT': DBConfig.POSTGRES_PORT,
+        'POSTGRES_DB': DBConfig.POSTGRES_DB,
         "OPTIONS": {
             "options": "-c client_encoding=utf8"
         }
