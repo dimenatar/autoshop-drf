@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from users.models import User, UserRole
+from users.models import User
+from users.user_manager import UserRole
+
 
 class BaseValidatedSerializer(serializers.Serializer):
 
@@ -12,24 +14,22 @@ class BaseValidatedSerializer(serializers.Serializer):
     username = serializers.CharField()
     balance = serializers.FloatField()
 
-
-    def validate_required_attr(self, data, attr_name):
+    def validate_required_attr(self, data):
         if data is None:
-            raise serializers.ValidationError('Email, password, telephone and username are required')
+            raise serializers.ValidationError(f"{data=}".split('=')[0] + " is required")
         return data
 
     def validate_email(self, email):
-        print(email)
-        return self.validate_required_attr(email, 'email')
+        return self.validate_required_attr(email)
 
     def validate_password(self, password):
-        return self.validate_required_attr(password, 'password')
+        return self.validate_required_attr(password)
 
     def validate_telephone(self, telephone):
-        return self.validate_required_attr(telephone, 'telephone')
+        return self.validate_required_attr(telephone)
 
     def validate_username(self, username):
-        return self.validate_required_attr(username, 'username')
+        return self.validate_required_attr(username)
 
     def validate_balance(self, balance):
         if balance is None:
@@ -48,24 +48,22 @@ class BaseValidatedSerializer(serializers.Serializer):
 
 
 class RegistrationSerializer(BaseValidatedSerializer):
-    password = serializers.CharField(
-    )
+    password = serializers.CharField()
 
     class Meta:
         model = User
         fields = '__all__'
 
     def create(self, validated_data):
+        #Поискать примеры сериализаторов
+        #
         return User.objects.create_user(**validated_data)
 
 class LoginSerializer(BaseValidatedSerializer):
 
-
     def validate(self, data):
-
         email = data.get('email', None)
         password = data.get('password', None)
-
         user = authenticate(username=email, password=password)
 
         if user is None:
@@ -94,6 +92,6 @@ class UserSerializer(BaseValidatedSerializer):
         if password is not None:
             instance.set_password(password)
 
-        instance.save()
+        instance.save() # это действие по идее должно происходить в сервисном слое
 
         return instance
