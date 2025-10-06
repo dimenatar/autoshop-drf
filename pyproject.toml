@@ -100,6 +100,14 @@ ignore_missing_imports = true
 
 
 [tool.pylint.'MESSAGES CONTROL']
+enable = [
+    "useless-suppression"
+]
+ignore =[
+
+    "manage.py",
+]
+
 disable = [
     "missing-module-docstring",
     "missing-class-docstring",
@@ -109,7 +117,9 @@ disable = [
     "too-many-ancestors",
     "import-error",
     "invalid-name",
-    "fixme"
+    "fixme",
+    "C0114",
+    "C0415",
 ]
 
 [tool.pylint.'MASTER']
@@ -125,13 +135,12 @@ ignore = [
     "migrations",
     "tests",
     "settings",
-    "manage.py",  # добавьте это
+    "manage.py",
     "celery.py",
     "pytest.ini",
     "Dockerfile",
     "docker-compose.yml"
 ]
-load-plugins = ["pylint_django"]
 
 [tool.pylint.BASIC]
 good-names = ["db", "qs", "ex", "pk", "id"]
