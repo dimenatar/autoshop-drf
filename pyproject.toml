@@ -97,3 +97,41 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = "psycopg2.*"
 ignore_missing_imports = true
+
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = [
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "import-outside-toplevel",
+    "too-few-public-methods",
+    "too-many-ancestors",
+    "import-error",
+    "invalid-name",
+    "fixme"
+]
+
+[tool.pylint.'MASTER']
+ignore = [
+    ".git",
+    ".github",
+    ".idea",
+    "__pycache__",
+    ".env",
+    "venv",
+    ".venv",
+    "env",
+    "migrations",
+    "tests",
+    "settings",
+    "manage.py",  # добавьте это
+    "celery.py",
+    "pytest.ini",
+    "Dockerfile",
+    "docker-compose.yml"
+]
+load-plugins = ["pylint_django"]
+
+[tool.pylint.BASIC]
+good-names = ["db", "qs", "ex", "pk", "id"]
