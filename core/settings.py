@@ -1,11 +1,11 @@
 from pathlib import Path
 
-from core.configs.DBConfig import DBConfig
-from core.configs.djangoConfig import DjangoConfig
+from core.configs.DB_config import DBConfig
+from core.configs.django_config import DjangoConfig
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = DjangoConfig.DJANGO_SECRET_KEY
-DEBUG = DjangoConfig.DJANGO_IS_DEBUG
+SECRET_KEY = DjangoConfig.SECRET_KEY
+DEBUG = DjangoConfig.IS_DEBUG
 ALLOWED_HOSTS = DjangoConfig.ALLOWED_HOSTS
 
 INSTALLED_APPS = [
@@ -23,9 +23,9 @@ INSTALLED_APPS = [
     'users',
     'available_cars',
     'offers',
-    'core.configs.djangoConfig',
-    'core.configs.mailConfig',
-    'core.configs.DBConfig',
+    'core.configs.django_config',
+    'core.configs.smtp_config',
+    'core.configs.DB_config',
 ]
 
 MIDDLEWARE = [

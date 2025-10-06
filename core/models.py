@@ -7,7 +7,3 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
-
-    def __str__(self):
-        return (f'is active: {self.is_active}, created_at: {self.created_at},'
-                f' updated_at: {self.updated_at}')

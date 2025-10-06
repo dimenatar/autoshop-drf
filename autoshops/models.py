@@ -1,13 +1,10 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 from django_countries.fields import CountryField
-
 from available_cars.models import AvailableCars
 from cars.models import CarDetails
 from discounts.models import CarDiscount
 from users.models import User
-
-
 
 class AutoShop(CarDetails):
     name = models.CharField(max_length=100)
@@ -20,6 +17,6 @@ class AutoShop(CarDetails):
     buyers = models.ManyToManyField(User)
 
     def __str__(self):
-        return (f"{super().__str__()}, name: {self.name}, location: {self.location},"
-                f" balance: {self.balance}, available_cars: {self.cars_in_stock}, "
-                f"discounts: {self.car_discounts}, general_discount {self.general_discount_id}")
+        return (f"{super().__str__()}, name: {self.name},"
+                f" balance: {self.balance}")
+

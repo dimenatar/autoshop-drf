@@ -19,10 +19,9 @@ class User(BaseModel):
     email = models.EmailField()
 
     def __str__(self):
-        return (f"{super().__str__()} name: {self.name}, age: {self.age},"
-                f" telephone: {self.telephone}, balance: {self.balance},"
-                f" role: {self.role}, password: {self.password}, email: {self.email}")
+        return (f"name: {self.name}"
+                f" role: {self.role} email: {self.email}")
 
 class UserRole(enum.Enum):
-    ADMIN = 0
-    CUSTOMER = 1
+    ADMIN = 'Admin'
+    CUSTOMER = 'Customer'

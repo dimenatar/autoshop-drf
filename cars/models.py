@@ -5,7 +5,7 @@ from core.models import BaseModel
 class CarDetails(BaseModel):
     max_price = models.FloatField(validators=[MinValueValidator(0.0)], null=True, blank=True)
     desired_brand = models.CharField(null=True, max_length=50)
-    desired_mark = models.CharField(null=True, max_length=50)
+    desired_model = models.CharField(null=True, max_length=50)
     min_horsepower = models.IntegerField(validators=[MinValueValidator(0)], null=True)
     max_horsepower = models.IntegerField(validators=[MinValueValidator(0)], null=True)
     min_year = models.IntegerField(validators=[MinValueValidator(0)], null=True)
@@ -15,19 +15,18 @@ class CarDetails(BaseModel):
         abstract = True
 
     def __str__(self):
-        return (f'{super().__str__()}, max price: {self.max_price},'
-                f' desired brand: {self.desired_brand}, desired mark: {self.desired_mark},'
-                f' min year: {self.min_year}, max year: {self.max_year}')
+        return (f'{super().__str__()},'
+                f' desired brand: {self.desired_brand}, desired model: {self.desired_model}')
 
 class Car(BaseModel):
-    mark = models.CharField(max_length=30)
+    model = models.CharField(max_length=30)
     brand = models.CharField(max_length=30)
     horsepower = models.IntegerField(validators=[MinValueValidator(0)])
     year = models.IntegerField(validators=[MinValueValidator(0)], default=1800)
 
     def __str__(self):
-        return (f"{super().__str__()}, brand: {self.brand}, mark: {self.mark}, "
-                 f"horsepower: {self.horsepower}, year: {self.year}")
+        return (f"{super().__str__()}, brand: {self.brand}, model: {self.model}, "
+                 f"year: {self.year}")
 
     class Meta:
         verbose_name = "Cars"

@@ -11,8 +11,8 @@ class Sale(BaseModel):
         abstract = True
 
     def __str__(self):
-        return (f"{super().__str__()}, date: {self.date}, car_id: {self.car_id},"
-                f" actual_price: {self.price}, discount_percent: {self.discount_percent}")
+        return (f"date: {self.date}, car_id: {self.car_id},"
+                f" price: {self.price}")
 
 class AutoShopSale(Sale):
     autoshop_id = models.ForeignKey('autoshops.AutoShop', on_delete=models.CASCADE)
