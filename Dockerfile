@@ -15,4 +15,4 @@ COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
 COPY entry_point.sh /entry_point.sh
-RUN chmod +x /entry_point.sh
+RUN chmod +x "/entry_point.sh"
