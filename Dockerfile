@@ -11,8 +11,8 @@ USER myuser
 
 COPY requirements.txt .
 COPY .env /.env
-COPY entry_point.sh /entry_point.sh
 COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
-ENTRYPOINT ["/entry_point.sh"]
+COPY entry_point.sh /entry_point.sh
+RUN chmod +x /entry_point.sh
