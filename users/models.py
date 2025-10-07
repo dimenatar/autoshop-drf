@@ -9,18 +9,20 @@ ROLE_CHOICES = (
     ('customer', 'Customer'),
 )
 
+
 class User(BaseModel):
     name = models.CharField(max_length=100)
     age = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
     telephone = models.CharField(max_length=13)
     balance = models.FloatField(validators=[MinValueValidator(0)])
-    role = models.CharField(choices = ROLE_CHOICES)
+    role = models.CharField(choices=ROLE_CHOICES)
     password = models.CharField(max_length=100)
     email = models.EmailField()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (f"name: {self.name}"
                 f" role: {self.role} email: {self.email}")
+
 
 class UserRole(enum.Enum):
     ADMIN = 'Admin'

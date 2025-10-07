@@ -1,6 +1,7 @@
 from django.apps import AppConfig
 from decouple import config
 
+
 class SMTPClientConfig(AppConfig):
     HOST_USER = config('EMAIL_HOST_USER')
     PASSWORD = config('EMAIL_PASSWORD')

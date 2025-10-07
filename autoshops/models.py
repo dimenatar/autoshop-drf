@@ -6,17 +6,17 @@ from cars.models import CarDetails
 from discounts.models import CarDiscount
 from users.models import User
 
+
 class AutoShop(CarDetails):
     name = models.CharField(max_length=100)
     location = CountryField()
-    balance = models.FloatField(validators=[MinValueValidator(0.0)] )
+    balance = models.FloatField(validators=[MinValueValidator(0.0)])
     cars_in_stock = models.ManyToManyField(AvailableCars)
     car_discounts = models.ManyToManyField(CarDiscount)
     general_discount_id = models.ForeignKey('discounts.GeneralDiscount',
-                                            on_delete=models.CASCADE, null = True)
+                                            on_delete=models.CASCADE, null=True)
     buyers = models.ManyToManyField(User)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (f"{super().__str__()}, name: {self.name},"
                 f" balance: {self.balance}")
-

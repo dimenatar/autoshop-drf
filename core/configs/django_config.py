@@ -1,6 +1,7 @@
 from django.apps import AppConfig
 from decouple import config
 
+
 class DjangoConfig(AppConfig):
     IS_DEBUG = config('DJANGO_IS_DEBUG', default=True, cast=bool)
     ALLOWED_HOSTS = list(config('ALLOWED_HOSTS').split(','))

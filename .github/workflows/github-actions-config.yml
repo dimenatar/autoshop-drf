@@ -32,7 +32,7 @@ jobs:
           isort *.py
       - name: Analysing the code with mypy
         run: |
-          mypy *.py
+          mypy .
       - name: Analysing the code with flake8
         run: |
           flake8 *.py

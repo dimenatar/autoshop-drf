@@ -3,14 +3,16 @@ from django.db import models
 from cars.models import Car
 from core.models import BaseModel
 
+
 class BaseDiscount(BaseModel):
     percent = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'percent: {self.percent}%'
 
     class Meta:
         abstract = True
+
 
 class GeneralDiscount(BaseDiscount):
     start_date = models.DateField()
@@ -18,39 +20,46 @@ class GeneralDiscount(BaseDiscount):
     name = models.TextField()
     description = models.TextField()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{super().__str__()} name: {self.name}"
+
 
 class BasePersonalDiscount(BaseDiscount):
     purchases_amount = models.IntegerField(validators=[MinValueValidator(0)])
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{super().__str__()}, purchases_amount: {self.purchases_amount}"
 
     class Meta:
         abstract = True
+
 
 class UserPersonalDiscount(BasePersonalDiscount):
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)
     autoshop = models.ForeignKey('autoshops.AutoShop', on_delete=models.CASCADE,
                                  default=0, null=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"user:{self.user} {super().__str__()}, autoshop: {self.autoshop}"
+
 
 class AutoShopPersonalDiscount(BasePersonalDiscount):
     autoshop = models.ForeignKey('autoshops.AutoShop', on_delete=models.CASCADE,
                                  default=0, null=True)
     supplier = models.ForeignKey('suppliers.Supplier', on_delete=models.CASCADE)
     required_cars_bought_amount = models.IntegerField(validators=[MinValueValidator(0)])
-    increasing_percent_per_requirements_fulfilled = (models.FloatField
-                                    (validators=[MinValueValidator(0), MaxValueValidator(100)]))
+    increasing_percent_per_requirements_fulfilled = (
+        models.FloatField
+        (
+            validators=[MinValueValidator(0), MaxValueValidator(100)]
+        ))
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{super().__str__()} autoshop:{self.autoshop} supplier:{self.supplier}"
+
 
 class CarDiscount(BaseDiscount):
     car = models.ManyToManyField(Car)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"car:{self.car} {super().__str__()}"
