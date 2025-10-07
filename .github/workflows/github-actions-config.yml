@@ -38,4 +38,4 @@ jobs:
           flake8 *.py
       - name: Build and run Docker containers
         run: |
-           docker dompose up -d --build
+           docker compose up -d --build
