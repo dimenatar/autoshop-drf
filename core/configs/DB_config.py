@@ -4,9 +4,9 @@ from decouple import config
 
 class DBConfig(AppConfig):
     DB_ENGINE = config('DB_ENGINE')
-    POSTGRES_NAME = config('POSTGRES_NAME')
-    POSTGRES_USER = config('POSTGRES_USER')
-    POSTGRES_HOST = config('POSTGRES_HOST')
-    POSTGRES_PASSWORD = config('POSTGRES_PASSWORD')
-    POSTGRES_PORT = config('POSTGRES_PORT')
-    POSTGRES_DB = config('POSTGRES_DB')
+    DB_NAME = config('POSTGRES_NAME')
+    USER = config('POSTGRES_USER')
+    HOST = config('POSTGRES_HOST')
+    PASSWORD = config('POSTGRES_PASSWORD')
+    PORT = config('POSTGRES_PORT')
+    DB = config('POSTGRES_DB')

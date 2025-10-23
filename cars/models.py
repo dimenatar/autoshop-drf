@@ -16,8 +16,7 @@ class CarDetails(BaseModel):
         abstract = True
 
     def __str__(self) -> str:
-        return (f'{super().__str__()},'
-                f' desired brand: {self.desired_brand}, desired model: {self.desired_model}')
+        return f'desired brand: {self.desired_brand}, desired model: {self.desired_model}'
 
 
 class Car(BaseModel):
@@ -27,8 +26,7 @@ class Car(BaseModel):
     year = models.IntegerField(validators=[MinValueValidator(0)], default=1800)
 
     def __str__(self) -> str:
-        return (f"{super().__str__()}, brand: {self.brand}, model: {self.model}, "
-                f"year: {self.year}")
+        return f"brand: {self.brand}, model: {self.model}, year: {self.year}"
 
     class Meta:
         verbose_name = "Cars"

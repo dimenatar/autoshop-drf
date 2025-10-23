@@ -20,8 +20,7 @@ class User(BaseModel):
     email = models.EmailField()
 
     def __str__(self) -> str:
-        return (f"name: {self.name}"
-                f" role: {self.role} email: {self.email}")
+        return f"name: {self.name}, role: {self.role} email: {self.email}"
 
 
 class UserRole(enum.Enum):

@@ -12,8 +12,7 @@ class Sale(BaseModel):
         abstract = True
 
     def __str__(self) -> str:
-        return (f"date: {self.date}, car_id: {self.car_id},"
-                f" price: {self.price}")
+        return f"date: {self.date}, car_id: {self.car_id}, price: {self.price}"
 
 
 class AutoShopSale(Sale):
@@ -29,5 +28,4 @@ class SupplierSale(Sale):
     autoshop_id = models.ForeignKey('autoshops.AutoShop', on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return (f"{super().__str__()}, autoshop: {self.autoshop_id},"
-                f" supplier_id {self.supplier_id}")
+        return f"{super().__str__()}, autoshop: {self.autoshop_id}, supplier_id {self.supplier_id}"

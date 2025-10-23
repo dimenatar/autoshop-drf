@@ -15,6 +15,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core.configs.django_config',
+    'core.configs.smtp_config',
+    'core.configs.DB_config',
     'autoshops',
     'cars',
     'discounts',
@@ -23,9 +26,6 @@ INSTALLED_APPS = [
     'users',
     'available_cars',
     'offers',
-    'core.configs.django_config',
-    'core.configs.smtp_config',
-    'core.configs.DB_config',
 ]
 
 MIDDLEWARE = [
@@ -59,12 +59,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DBConfig.POSTGRES_NAME,
-        'USER': DBConfig.POSTGRES_USER,
-        'HOST': DBConfig.POSTGRES_HOST,
-        'PASSWORD': DBConfig.POSTGRES_PASSWORD,
-        'PORT': DBConfig.POSTGRES_PORT,
-        'POSTGRES_DB': DBConfig.POSTGRES_DB,
+        'NAME': DBConfig.DB_NAME,
+        'USER': DBConfig.USER,
+        'HOST': DBConfig.HOST,
+        'PASSWORD': DBConfig.PASSWORD,
+        'PORT': DBConfig.PORT,
+        'POSTGRES_DB': DBConfig.DB,
         "OPTIONS": {
             "options": "-c client_encoding=utf8"
         }

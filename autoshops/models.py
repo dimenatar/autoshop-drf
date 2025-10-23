@@ -18,5 +18,4 @@ class AutoShop(CarDetails):
     buyers = models.ManyToManyField(User)
 
     def __str__(self) -> str:
-        return (f"{super().__str__()}, name: {self.name},"
-                f" balance: {self.balance}")
+        return f"{super().__str__()}, name: {self.name}, balance: {self.balance}"

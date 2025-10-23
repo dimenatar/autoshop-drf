@@ -12,5 +12,4 @@ class AvailableCars(BaseModel):
         verbose_name_plural = "Available Cars"
 
     def __str__(self) -> str:
-        return (f'car: {self.car_id}, '
-                f'amount: {self.amount}')
+        return f'car: {self.car_id}, amount: {self.amount}'

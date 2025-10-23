@@ -10,8 +10,7 @@ class UserOffer(BaseModel):
     max_price = models.FloatField(validators=[MinValueValidator(0.0)])
 
     def __str__(self) -> str:
-        return (f'user: {self.user}, '
-                f'car: {self.car}, max_price: {self.max_price}')
+        return f'user: {self.user}, car: {self.car}, max_price: {self.max_price}'
 
 
 class AutoShopOffer(CarDetails):

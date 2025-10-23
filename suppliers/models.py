@@ -12,5 +12,4 @@ class Supplier(BaseModel):
                                             on_delete=models.CASCADE, null=True)
 
     def __str__(self) -> str:
-        return (f"name: {self.name}"
-                f"general discount id: {self.general_discount_id}")
+        return f"name: {self.name}, general discount id: {self.general_discount_id}"
