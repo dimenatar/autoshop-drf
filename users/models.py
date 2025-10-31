@@ -13,16 +13,21 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     age = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)]) #sorry drandma
     telephone = models.CharField(max_length=13)
     balance = models.FloatField(validators=[MinValueValidator(0)])
-    role = models.CharField(choices = ROLE_CHOICES)
+    role = models.CharField(choices=ROLE_CHOICES)
     password = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
 
     is_staff = True
 
-    def __str__(self):
-        return f"{super().__str__()} name: {self.username}, age: {self.age}, telephone: {self.telephone}, balance: {self.balance}, role: {self.role}, password: {self.password}, email: {self.email}"
+    def __str__(self) -> str:
+        return f"name: {self.username}, role: {self.role} email: {self.email}"
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
     objects = UserManager()
+
+class UserRole(enum.Enum):
+    ADMIN = 'Admin'
+    CUSTOMER = 'Customer'
+
