@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'core.configs.django_config',
     'core.configs.smtp_config',
     'core.configs.DB_config',
+    'rest_framework_simplejwt',
     'autoshops',
     'cars',
     'discounts',
