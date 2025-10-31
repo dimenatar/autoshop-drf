@@ -58,13 +58,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': DBConfig.DB_ENGINE,
         'NAME': DBConfig.DB_NAME,
         'USER': DBConfig.USER,
         'HOST': DBConfig.HOST,
         'PASSWORD': DBConfig.PASSWORD,
         'PORT': DBConfig.PORT,
-        'POSTGRES_DB': DBConfig.DB,
         "OPTIONS": {
             "options": "-c client_encoding=utf8"
         }
