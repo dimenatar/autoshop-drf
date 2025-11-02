@@ -3,11 +3,6 @@ import enum
 from django.contrib.auth.base_user import BaseUserManager
 from users.models import User
 
-ROLE_CHOICES = (
-    ('Admin', 'Admin'),
-    ('Customer', 'Customer'),
-)
-
 class UserRole(enum.IntEnum):
     Admin = 0
     Customer = 1
@@ -28,3 +23,5 @@ class UserManager(BaseUserManager):
         user.save()
 
         return user
+
+    #objects = UserManager()

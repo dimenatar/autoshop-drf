@@ -5,7 +5,11 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from core.models import BaseModel
-from users.user_manager import UserManager, ROLE_CHOICES
+
+ROLE_CHOICES = (
+    ('Admin', 'Admin'),
+    ('Customer', 'Customer'),
+)
 
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=100)
@@ -24,7 +28,7 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
-    objects = UserManager()
+
 
 class UserRole(enum.Enum):
     ADMIN = 'Admin'
