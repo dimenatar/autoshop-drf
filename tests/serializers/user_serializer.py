@@ -1,7 +1,8 @@
 import pytest
 
-from users.models import User, UserRole
+from users.models import User
 from users.serializers import LoginSerializer, UserSerializer, RegistrationSerializer
+from users.user_manager import UserRole
 
 @pytest.fixture(autouse=True)
 def enable_db_access_for_all_tests(transactional_db):

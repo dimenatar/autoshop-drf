@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from users.models import User, UserRole
+from users.models import User
+from users.user_manager import UserRole
+
 
 class BaseValidatedSerializer(serializers.Serializer):
 
@@ -12,60 +14,58 @@ class BaseValidatedSerializer(serializers.Serializer):
     username = serializers.CharField()
     balance = serializers.FloatField()
 
-
-    def validate_required_attr(self, data, attr_name):
+    @staticmethod
+    def validate_required_attr(data: str) -> str:
         if data is None:
-            raise serializers.ValidationError('Email, password, telephone and username are required')
+            raise serializers.ValidationError(f"{data=}".split('=')[0] + " is required")
         return data
 
-    def validate_email(self, email):
-        print(email)
-        return self.validate_required_attr(email, 'email')
+    def validate_email(self, email: str) -> str:
+        return self.validate_required_attr(email)
 
-    def validate_password(self, password):
-        return self.validate_required_attr(password, 'password')
+    def validate_password(self, password: str) -> str:
+        return self.validate_required_attr(password)
 
-    def validate_telephone(self, telephone):
-        return self.validate_required_attr(telephone, 'telephone')
+    def validate_telephone(self, telephone: str) -> str:
+        return self.validate_required_attr(telephone)
 
-    def validate_username(self, username):
-        return self.validate_required_attr(username, 'username')
+    def validate_username(self, username: str) -> str:
+        return self.validate_required_attr(username)
 
-    def validate_balance(self, balance):
+    @staticmethod
+    def validate_balance(balance: float) -> float:
         if balance is None:
             balance = 0
         return balance
 
-    def validate_age(self, age):
+    @staticmethod
+    def validate_age(age: int) -> int:
         if age is None:
             age = 18
         return age
 
-    def validate_role(self, role):
+    @staticmethod
+    def validate_role(role: UserRole) -> UserRole:
         if role is None:
-            role = str(UserRole.Customer.name)
+            role = UserRole.Customer
         return role
 
 
 class RegistrationSerializer(BaseValidatedSerializer):
-    password = serializers.CharField(
-    )
+    password = serializers.CharField()
 
     class Meta:
         model = User
         fields = '__all__'
 
-    def create(self, validated_data):
+    def create(self, validated_data: dict) -> User:
         return User.objects.create_user(**validated_data)
 
 class LoginSerializer(BaseValidatedSerializer):
 
-
-    def validate(self, data):
-
+    def validate(self, data: dict) -> dict:
         email = data.get('email', None)
         password = data.get('password', None)
-
         user = authenticate(username=email, password=password)
 
         if user is None:
@@ -79,21 +79,9 @@ class LoginSerializer(BaseValidatedSerializer):
             )
 
 
-        return super().validate(data)
+        return super().validate(data) # type: ignore
 
 class UserSerializer(BaseValidatedSerializer):
     class Meta:
         model = User
         fields = '__all__'
-    def update(self, instance, validated_data):
-        password = validated_data.pop('password', None)
-
-        for key, value in validated_data.items():
-            setattr(instance, key, value)
-
-        if password is not None:
-            instance.set_password(password)
-
-        instance.save()
-
-        return instance

@@ -1,32 +1,11 @@
 import enum
 
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from core.models import BaseModel
-
-ROLE_CHOICES = (
-    ('Admin', 'Admin'),
-    ('Customer', 'Customer'),
-)
-
-class UserManager(BaseUserManager):
-    def create_user(self, username, email, telephone, age, balance, role=None, password=None):
-        role = role or UserRole.Customer
-        user = self.model(username=username, email=self.normalize_email(email), role=role, telephone=telephone, age=age, balance=balance)
-        user.set_password(password)
-        user.save()
-
-        return user
-
-    def create_superuser(self, username, email, telephone='', age=18, balance=0, role=None, password=None):
-        user = self.create_user(username, email, telephone, age, balance, role=role, password=password)
-        user.role = UserRole.Admin
-        user.is_staff = True
-        user.save()
-
-        return user
+from users.user_manager import UserManager, ROLE_CHOICES
 
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=100)
@@ -39,14 +18,15 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
 
     is_staff = True
 
-    objects = UserManager()
-
-    def __str__(self):
-        return f"{self.username}, age: {self.age}, telephone: {self.telephone}, balance: {self.balance}, role: {self.role}, password: {self.password}, email: {self.email}"
+    def __str__(self) -> str:
+        return f"name: {self.username}, role: {self.role} email: {self.email}"
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
+    objects = UserManager()
+
 class UserRole(enum.Enum):
-    Admin = 'Admin'
-    Customer = 'Customer'
+    ADMIN = 'Admin'
+    CUSTOMER = 'Customer'
+

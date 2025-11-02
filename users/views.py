@@ -1,20 +1,22 @@
+from rest_framework.request import Request
+from rest_framework.response import Response
+from typing import Any
 from rest_framework import status
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.response import Response
 from rest_framework.views import APIView
 from .renderers import UserJSONRenderer
 
-from users.serializers import RegistrationSerializer, UserSerializer
 from .serializers import LoginSerializer, RegistrationSerializer
+from .services import user_service
+
 
 class RegistrationAPIView(APIView):
-
     permission_classes = (AllowAny,)
     renderer_classes = (UserJSONRenderer,)
     serializer_class = RegistrationSerializer
 
-    def post(self, request):
+    def post(self, request: Request) -> Response:
         user = request.data.get('user', {})
         serializer = self.serializer_class(data=user)
 
@@ -28,31 +30,21 @@ class LoginAPIView(APIView):
     renderer_classes = (UserJSONRenderer,)
     serializer_class = LoginSerializer
 
-    def post(self, request):
-        user = request.data.get('user', {})
+    def post(self, request: Request) -> Response:
+        data = user_service.login_user(request)
 
-        serializer = self.serializer_class(data=user)
-        serializer.is_valid(raise_exception=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)
 
 class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
     renderer_classes = (UserJSONRenderer,)
-    serializer_class = UserSerializer
 
-    def retrieve(self, request, *args, **kwargs):
-        serializer = self.serializer_class(request.user)
+    def retrieve(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+        data = user_service.get_user_data(request)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)
 
-    def update(self, request, *args, **kwargs):
-        serializer_data = request.data.get('user', {})
+    def update(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+        data = user_service.update_user_data(request)
 
-        serializer = self.serializer_class(
-            request.user, data=serializer_data, partial=True
-        )
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)
