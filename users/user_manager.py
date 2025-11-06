@@ -1,11 +1,6 @@
-import enum
-
 from django.contrib.auth.base_user import BaseUserManager
-from users.models import User
+from users.models import User, UserRole
 
-class UserRole(enum.IntEnum):
-    Admin = 0
-    Customer = 1
 
 class UserManager(BaseUserManager):
     def create_user(self, username: str, email: str, telephone: str, age: int, balance: float, role:UserRole=UserRole.Customer, password:str='') -> User:
@@ -24,4 +19,5 @@ class UserManager(BaseUserManager):
 
         return user
 
-    #objects = UserManager()
+    def get_by_natural_key(self, email):
+        return self.get(email=email)

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+
+{% block title %}Главная - AutoShop{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="bi bi-car-front"></i> AutoShop
+        </a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="{% url 'login' %}">Войти</a>
+            <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <h1 class="display-4 fw-bold mb-4">Добро пожаловать в AutoShop</h1>
+            <p class="lead mb-4">Лучший автомобильный маркетплейс с широким выбором машин и выгодными предложениями.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                {% bootstrap_button "Начать покупки" href=register_url button_class="btn-primary btn-lg px-4 me-md-2" %}
+                {% bootstrap_button "Войти в аккаунт" href=login_url button_class="btn-outline-secondary btn-lg px-4" %}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <img src="https://via.placeholder.com/500x300/667eea/ffffff?text=AutoShop" 
+                 alt="AutoShop" class="img-fluid rounded shadow">
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,8 +1,15 @@
-from rest_framework import serializers
+from allauth.account.adapter import get_adapter
+from allauth.account.utils import setup_user_email
 from django.contrib.auth import authenticate
-from users.models import User
-from users.user_manager import UserRole
+from core.configs.django_config import DjangoConfig
+from dj_rest_auth.serializers import PasswordResetSerializer
+from dj_rest_auth.registration.serializers import RegisterSerializer
+from rest_framework import serializers
+from django.contrib.auth import get_user_model
+from users.models import UserRole
+from dj_rest_auth.serializers import LoginSerializer as BaseLoginSerializer
 
+User = get_user_model()
 
 class BaseValidatedSerializer(serializers.Serializer):
 
@@ -51,21 +58,88 @@ class BaseValidatedSerializer(serializers.Serializer):
         return role
 
 
-class RegistrationSerializer(BaseValidatedSerializer):
-    password = serializers.CharField()
+class UserSerializer(BaseValidatedSerializer):
+    is_email_verified = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['id', 'username', 'email', 'age', 'telephone', 'balance', 'role', 'is_email_verified']
+        read_only_fields = ['id', 'is_email_verified']
 
-    def create(self, validated_data: dict) -> User:
-        return User.objects.create_user(**validated_data)
+    def update(self, instance, validated_data):
+        password = validated_data.pop('password', None)
 
-class LoginSerializer(BaseValidatedSerializer):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
 
-    def validate(self, data: dict) -> dict:
-        email = data.get('email', None)
-        password = data.get('password', None)
+        if password is not None:
+            instance.set_password(password)
+
+        instance.save()
+        return instance
+
+class CustomRegisterSerializer(RegisterSerializer):
+    username = serializers.CharField(required=True)
+    age = serializers.IntegerField(required=True, min_value=1, max_value=100)
+    telephone = serializers.CharField(required=True, max_length=13)
+    balance = serializers.FloatField(required=False, default=0, min_value=0)
+    role = serializers.ChoiceField(
+        choices=[(role.value, role.value) for role in UserRole],
+        required=False,
+        default=UserRole.Customer.value
+    )
+
+    def get_cleaned_data(self):
+        data = super().get_cleaned_data()
+        data.update({
+            'username': self.validated_data.get('username', ''),
+            'age': self.validated_data.get('age', 18),
+            'telephone': self.validated_data.get('telephone', ''),
+            'balance': self.validated_data.get('balance', 0),
+            'role': self.validated_data.get('role', UserRole.Customer.value),
+        })
+        return data
+
+    def validate_email(self, email):
+        if User.objects.filter(email=email).exists():
+            raise serializers.ValidationError("Пользователь с таким email уже существует")
+        return email
+
+    def save(self, request):
+        adapter = get_adapter()
+        user = adapter.new_user(request)
+        self.cleaned_data = self.get_cleaned_data()
+
+        user.username = self.cleaned_data['username']
+        user.age = self.cleaned_data['age']
+        user.telephone = self.cleaned_data['telephone']
+        user.balance = self.cleaned_data['balance']
+        user.role = self.cleaned_data['role']
+        user.email = self.cleaned_data['email']
+        user.set_password(self.cleaned_data['password1'])
+        user.is_email_verified = False
+        user.save()
+
+        self.custom_signup(request, user)
+        setup_user_email(request, user, [])
+        return user
+
+
+class CustomLoginSerializer(BaseLoginSerializer):
+    username = None
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(style={'input_type': 'password'})
+
+    def get_cleaned_data(self):
+        return {
+            'email': self.validated_data.get('email', ''),
+            'password': self.validated_data.get('password', ''),
+        }
+
+    def validate(self, attrs):
+        email = attrs.get('email')
+        password = attrs.get('password')
+
         user = authenticate(username=email, password=password)
 
         if user is None:
@@ -78,10 +152,42 @@ class LoginSerializer(BaseValidatedSerializer):
                 'This user has been deactivated.'
             )
 
+        if not user.is_email_verified:
+            raise serializers.ValidationError(
+                'Please verify your email address before logging in.'
+            )
 
-        return super().validate(data) # type: ignore
+        attrs['user'] = user
+        return attrs
 
-class UserSerializer(BaseValidatedSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'
+
+class EmailVerificationSerializer(serializers.Serializer):
+    token = serializers.UUIDField()
+
+
+class PasswordResetRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    token = serializers.UUIDField()
+    new_password = serializers.CharField(min_length=6)
+    confirm_password = serializers.CharField(min_length=6)
+
+    def validate(self, data):
+        if data['new_password'] != data['confirm_password']:
+            raise serializers.ValidationError("Passwords don't match")
+        return data
+
+
+class CustomPasswordResetSerializer(PasswordResetSerializer):
+    def get_email_options(self):
+        link = DjangoConfig.BASE_URL
+        return {
+            'email_template_name': 'registration/password_reset_email.html',
+            'html_email_template_name': 'registration/password_reset_email.html',
+            'subject_template_name': 'registration/password_reset_subject.txt',
+            'extra_email_context': {
+                'frontend_url': str(link),
+            }
+        }

@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+
+{% block title %}Регистрация - AutoShop{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2><i class="bi bi-car-front"></i> AutoShop</h2>
+            <p class="mb-0">Создайте новый аккаунт</p>
+        </div>
+        
+        <div class="auth-body">
+            <form id="registerForm">
+                {% csrf_token %}
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="username" class="form-label">Имя пользователя</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="age" class="form-label">Возраст</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                            <input type="number" class="form-control" id="age" name="age" min="18" max="100" value="18" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="telephone" class="form-label">Телефон</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                        <input type="tel" class="form-control" id="telephone" name="telephone" 
+                               pattern="[\+\-0-9\s]{10,13}" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password1" class="form-label">Пароль</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" class="form-control" id="password1" name="password1" required>
+                        <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('password1')">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                    <div class="form-text">Минимум 8 символов</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password2" class="form-label">Подтвердите пароль</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input type="password" class="form-control" id="password2" name="password2" required>
+                        <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('password2')">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="role" class="form-label">Роль</label>
+                    <select class="form-select" id="role" name="role">
+                        <option value="Customer">Покупатель</option>
+                        <option value="Admin">Администратор</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="terms" required>
+                    <label class="form-check-label" for="terms">
+                        Я согласен с <a href="#" class="text-decoration-none">условиями использования</a>
+                    </label>
+                </div>
+                
+                {% bootstrap_button "Зарегистрироваться" button_type="submit" button_class="btn-primary w-100 py-2 mb-3" %}
+                
+                <div class="text-center">
+                    Уже есть аккаунт? <a href="{% url 'login' %}" class="text-decoration-none">Войти</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const password1 = document.getElementById('password1').value;
+        const password2 = document.getElementById('password2').value;
+        
+        if (password1 !== password2) {
+            showAlert('Пароли не совпадают!', 'danger');
+            return;
+        }
+        
+        if (password1.length < 8) {
+            showAlert('Пароль должен содержать минимум 8 символов', 'danger');
+            return;
+        }
+        
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Регистрация...';
+        submitBtn.disabled = true;
+        
+        const age = document.getElementById('age').value
+        
+        const formData = {
+            username: document.getElementById('username').value,
+            email: document.getElementById('email').value,
+            password1: password1,
+            password2: password2,
+            age: parseInt(age),
+            telephone: document.getElementById('telephone').value,
+            role: document.getElementById('role').value,
+            balance: 0
+        };
+        
+        try {
+            const response = await fetch('/api/v1/auth/registration/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                showAlert('Регистрация успешна! Проверьте вашу почту для подтверждения аккаунта.', 'success');
+                setTimeout(() => {
+                    window.location.href = '{% url "login" %}';
+                }, 3000);
+            } else {
+                const errorMessage = Object.values(data).flat().join(' ') || 'Ошибка регистрации';
+                throw new Error(errorMessage);
+            }
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        } finally {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    // Маска для телефона
+    document.getElementById('telephone').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.startsWith('7') || value.startsWith('8')) {
+            value = '+7' + value.substring(1);
+        }
+        e.target.value = value;
+    });
+</script>
+{% endblock %}

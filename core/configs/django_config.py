@@ -8,3 +8,4 @@ class DjangoConfig(AppConfig):
     SECRET_KEY = config('DJANGO_SECRET_KEY')
     PG_DATA = config('PG_DATA')
     SETTINGS_MODULE = config('DJANGO_SETTINGS_MODULE')
+    BASE_URL = config('BASE_URL')

@@ -1,6 +1,7 @@
 import enum
+import uuid
 
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
@@ -20,7 +21,7 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
 
-    is_staff = True
+    is_staff = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return f"name: {self.username}, role: {self.role} email: {self.email}"
@@ -28,9 +29,20 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
+    objects = UserManager()
 
+
+class EmailVerificationToken(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    token = models.UUIDField(default=uuid.uuid4, unique=True)
+    is_used = models.BooleanField(default=False)
+
+class PasswordResetToken(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    token = models.UUIDField(default=uuid.uuid4, unique=True)
+    is_used = models.BooleanField(default=False)
 
 class UserRole(enum.Enum):
-    ADMIN = 'Admin'
-    CUSTOMER = 'Customer'
+    Admin = 'Admin'
+    Customer = 'Customer'
 
