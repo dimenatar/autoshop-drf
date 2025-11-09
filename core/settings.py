@@ -1,18 +1,28 @@
 import os
-from datetime import timedelta
 from pathlib import Path
 
 from core.configs.DB_config import DBConfig
 from core.configs.django_config import DjangoConfig
 from core.configs.smtp_config import SMTPClientConfig
+from core.configs.allauth_config import AllAuthConfig
+from core.configs.jwt_config import JWTConfig
+from core.configs.rest_auth_config import RestAuthConfig
+
+django_config = DjangoConfig()
+db_config = DBConfig()
+smtp_config = SMTPClientConfig()
+allauth_config = AllAuthConfig()
+jwt_config = JWTConfig()
+rest_auth_config = RestAuthConfig()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = DjangoConfig.SECRET_KEY
-DEBUG = DjangoConfig.IS_DEBUG
-ALLOWED_HOSTS = DjangoConfig.ALLOWED_HOSTS
+
+SECRET_KEY = django_config.SECRET_KEY
+DEBUG = django_config.IS_DEBUG
+ALLOWED_HOSTS = django_config.ALLOWED_HOSTS
 
 INSTALLED_APPS = [
-    #django
+    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -20,21 +30,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    #configs
-    'core.configs.django_config',
-    'core.configs.smtp_config',
-    'core.configs.DB_config',
-    #tools
+
+    # Third-party apps
+    'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework.authtoken',
     'allauth',
     'allauth.account',
-    'rest_framework',
-    'rest_framework.authtoken',
     'allauth.socialaccount',
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'bootstrap5',
-    #my apps
+
+    # Local apps
     'autoshops',
     'cars',
     'discounts',
@@ -55,7 +63,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
 ]
+
 ROOT_URLCONF = 'core.urls'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -67,6 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -74,21 +85,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+# Database
 DATABASES = {
     'default': {
-        'ENGINE': DBConfig.DB_ENGINE,
-        'NAME': DBConfig.DB_NAME,
-        'USER': DBConfig.USER,
-        'HOST': DBConfig.HOST,
-        'PASSWORD': DBConfig.PASSWORD,
-        'PORT': DBConfig.PORT,
-        "OPTIONS": {
-            "options": "-c client_encoding=utf8"
-        }
+        'ENGINE': db_config.DB_ENGINE,
+        'NAME': db_config.DB_NAME,
+        'USER': db_config.USER,
+        'HOST': db_config.HOST,
+        'PASSWORD': db_config.PASSWORD,
+        'PORT': db_config.PORT,
     }
 }
 
 AUTH_USER_MODEL = "users.User"
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -104,56 +114,61 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
-STATIC_URL = 'static/'
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ACCOUNT_LOGIN_METHODS = {'email'}
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+LANGUAGE_CODE = django_config.LANGUAGE_CODE
+TIME_ZONE = django_config.TIME_ZONE
+USE_I18N = django_config.USE_I18N
+USE_TZ = django_config.USE_TZ
+
+
+STATIC_URL = django_config.STATIC_URL
+DEFAULT_AUTO_FIELD = django_config.DEFAULT_AUTO_FIELD
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-}
-# ВЫНЕСТИ ВСЕ В КОНФИГИ
-REST_AUTH = {
-    'USE_JWT': True,
-    'JWT_AUTH_HTTPONLY': False,
-    'JWT_AUTH_COOKIE': 'autoshop-auth',
-    'JWT_AUTH_REFRESH_COOKIE': 'autoshop-refresh',
-    'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer',
-'LOGIN_SERIALIZER': 'users.serializers.CustomLoginSerializer',
-    'PASSWORD_RESET_SERIALIZER': 'dj_rest_auth.serializers.PasswordResetSerializer',
-}
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': True,
+    ),
+    'EXCEPTION_HANDLER': 'core.exceptions.core_exception_handler',
+    'NON_FIELD_ERRORS_KEY': 'error',
 }
 
-REST_USE_JWT = True
-JWT_AUTH_COOKIE = 'my-app-auth'
 
+SIMPLE_JWT = jwt_config.simple_jwt
+
+REST_AUTH = rest_auth_config.rest_auth
+REST_USE_JWT = rest_auth_config.USE_JWT
+JWT_AUTH_COOKIE = rest_auth_config.JWT_AUTH_COOKIE
+
+# Bootstrap5
 BOOTSTRAP5 = {
     'include_jquery': True,
 }
 
-SITE_ID = 1
+SITE_ID = allauth_config.SITE_ID
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = allauth_config.ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS
+ACCOUNT_EMAIL_REQUIRED = allauth_config.ACCOUNT_EMAIL_REQUIRED
+ACCOUNT_EMAIL_VERIFICATION = allauth_config.ACCOUNT_EMAIL_VERIFICATION
+ACCOUNT_AUTHENTICATION_METHOD = allauth_config.ACCOUNT_AUTHENTICATION_METHOD
+ACCOUNT_EMAIL_SUBJECT_PREFIX = allauth_config.ACCOUNT_EMAIL_SUBJECT_PREFIX
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = allauth_config.ACCOUNT_DEFAULT_HTTP_PROTOCOL
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = allauth_config.ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = allauth_config.ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL
+LOGIN_REDIRECT_URL = allauth_config.LOGIN_REDIRECT_URL
+ACCOUNT_LOGOUT_REDIRECT_URL = allauth_config.ACCOUNT_LOGOUT_REDIRECT_URL
+ACCOUNT_USERNAME_REQUIRED = allauth_config.ACCOUNT_USERNAME_REQUIRED
+ACCOUNT_UNIQUE_EMAIL = allauth_config.ACCOUNT_UNIQUE_EMAIL
 
-ACCOUNT_EMAIL_CONFIRMATION_URL = '/api/v1/auth/registration/account-confirm-email/{}/'
-ACCOUNT_EMAIL_SUBJECT_PREFIX = '[AutoShop] '
-
-EMAIL_BACKEND = SMTPClientConfig.BACKEND
-EMAIL_HOST = SMTPClientConfig.HOST
-EMAIL_PORT = SMTPClientConfig.PORT
-EMAIL_USE_TLS = bool(SMTPClientConfig.USE_TLS)
-EMAIL_HOST_USER = SMTPClientConfig.HOST_USER
-EMAIL_HOST_PASSWORD = SMTPClientConfig.PASSWORD
-DEFAULT_FROM_EMAIL = SMTPClientConfig.HOST_USER
+EMAIL_BACKEND = smtp_config.BACKEND
+EMAIL_HOST = smtp_config.HOST
+EMAIL_PORT = smtp_config.PORT
+EMAIL_USE_TLS = smtp_config.USE_TLS
+EMAIL_HOST_USER = smtp_config.HOST_USER
+EMAIL_HOST_PASSWORD = smtp_config.PASSWORD
+DEFAULT_FROM_EMAIL = smtp_config.HOST_USER

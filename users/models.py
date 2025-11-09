@@ -1,5 +1,4 @@
 import enum
-import uuid
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -12,14 +11,16 @@ ROLE_CHOICES = (
     ('Customer', 'Customer'),
 )
 
+
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=100)
-    age = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)]) #sorry drandma
+    age = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])  # sorry drandma
     telephone = models.CharField(max_length=13)
     balance = models.FloatField(validators=[MinValueValidator(0)])
     role = models.CharField(choices=ROLE_CHOICES)
     password = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
+    is_email_verified = models.BooleanField(default=False)
 
     is_staff = models.BooleanField(default=False)
 
@@ -32,17 +33,6 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
 
-class EmailVerificationToken(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    token = models.UUIDField(default=uuid.uuid4, unique=True)
-    is_used = models.BooleanField(default=False)
-
-class PasswordResetToken(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    token = models.UUIDField(default=uuid.uuid4, unique=True)
-    is_used = models.BooleanField(default=False)
-
 class UserRole(enum.Enum):
     Admin = 'Admin'
     Customer = 'Customer'
-

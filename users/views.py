@@ -1,13 +1,14 @@
+from django.views.generic import TemplateView
 from rest_framework import status
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import serializers
 from .renderers import UserJSONRenderer
 from .services import user_service
 from .serializers import (
-    EmailVerificationSerializer,
     PasswordResetRequestSerializer,
     PasswordResetConfirmSerializer
 )
@@ -17,7 +18,7 @@ class RegistrationAPIView(APIView):
     permission_classes = (AllowAny,)
     renderer_classes = (UserJSONRenderer,)
 
-    def post(self, request):
+    def post(self, request: Request) -> Response:
         try:
             data = user_service.register_user(request)
             return Response(data, status=status.HTTP_201_CREATED)
@@ -37,7 +38,7 @@ class LoginAPIView(APIView):
     permission_classes = (AllowAny,)
     renderer_classes = (UserJSONRenderer,)
 
-    def post(self, request):
+    def post(self, request: Request) -> Response:
         try:
             data = user_service.login_user(request)
             return Response(data, status=status.HTTP_200_OK)
@@ -52,11 +53,11 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
     renderer_classes = (UserJSONRenderer,)
 
-    def retrieve(self, request, *args, **kwargs):
+    def retrieve(self, request: Request, *args: dict, **kwargs: dict) -> Response:
         data = user_service.get_user_data(request)
         return Response(data, status=status.HTTP_200_OK)
 
-    def update(self, request, *args, **kwargs):
+    def update(self, request: Request, *args: dict, **kwargs: dict) -> Response:
         try:
             data = user_service.update_user_data(request)
             return Response(data, status=status.HTTP_200_OK)
@@ -70,8 +71,8 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
 class EmailVerificationAPIView(APIView):
     permission_classes = (AllowAny,)
 
-    def get(self, request, token):
-        success = user_service.verify_email(token)
+    def get(self, request: Request, token: str) -> Response:
+        success = user_service.verify_email(request, token)
         if success:
             return Response(
                 {'message': 'Email verified successfully'},
@@ -86,7 +87,7 @@ class EmailVerificationAPIView(APIView):
 class PasswordResetRequestAPIView(APIView):
     permission_classes = (AllowAny,)
 
-    def post(self, request):
+    def post(self, request: Request) -> Response:
         serializer = PasswordResetRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -103,7 +104,7 @@ class PasswordResetRequestAPIView(APIView):
 class PasswordResetConfirmAPIView(APIView):
     permission_classes = (AllowAny,)
 
-    def post(self, request, token):
+    def post(self, request: Request, token: str) -> Response:
         serializer = PasswordResetConfirmSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -119,3 +120,7 @@ class PasswordResetConfirmAPIView(APIView):
             {'error': 'Invalid or expired reset token'},
             status=status.HTTP_400_BAD_REQUEST
         )
+
+
+class EmailVerifiedView(TemplateView):
+    template_name = 'account/email_verified.html'

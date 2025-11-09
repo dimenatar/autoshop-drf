@@ -1,6 +1,10 @@
+from typing import Dict, Any
+
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from django.contrib.auth import authenticate
+from django.http import HttpRequest
+
 from core.configs.django_config import DjangoConfig
 from dj_rest_auth.serializers import PasswordResetSerializer
 from dj_rest_auth.registration.serializers import RegisterSerializer
@@ -10,6 +14,7 @@ from users.models import UserRole
 from dj_rest_auth.serializers import LoginSerializer as BaseLoginSerializer
 
 User = get_user_model()
+
 
 class BaseValidatedSerializer(serializers.Serializer):
 
@@ -66,7 +71,7 @@ class UserSerializer(BaseValidatedSerializer):
         fields = ['id', 'username', 'email', 'age', 'telephone', 'balance', 'role', 'is_email_verified']
         read_only_fields = ['id', 'is_email_verified']
 
-    def update(self, instance, validated_data):
+    def update(self, instance: Any, validated_data: Dict[str, Any]) -> Any:
         password = validated_data.pop('password', None)
 
         for key, value in validated_data.items():
@@ -77,6 +82,7 @@ class UserSerializer(BaseValidatedSerializer):
 
         instance.save()
         return instance
+
 
 class CustomRegisterSerializer(RegisterSerializer):
     username = serializers.CharField(required=True)
@@ -89,7 +95,7 @@ class CustomRegisterSerializer(RegisterSerializer):
         default=UserRole.Customer.value
     )
 
-    def get_cleaned_data(self):
+    def get_cleaned_data(self) -> Any:
         data = super().get_cleaned_data()
         data.update({
             'username': self.validated_data.get('username', ''),
@@ -100,12 +106,12 @@ class CustomRegisterSerializer(RegisterSerializer):
         })
         return data
 
-    def validate_email(self, email):
+    def validate_email(self, email: str) -> str:
         if User.objects.filter(email=email).exists():
             raise serializers.ValidationError("Пользователь с таким email уже существует")
         return email
 
-    def save(self, request):
+    def save(self, request: HttpRequest) -> Any:
         adapter = get_adapter()
         user = adapter.new_user(request)
         self.cleaned_data = self.get_cleaned_data()
@@ -130,13 +136,13 @@ class CustomLoginSerializer(BaseLoginSerializer):
     email = serializers.EmailField(required=True)
     password = serializers.CharField(style={'input_type': 'password'})
 
-    def get_cleaned_data(self):
+    def get_cleaned_data(self) -> Dict[str, str]:
         return {
             'email': self.validated_data.get('email', ''),
             'password': self.validated_data.get('password', ''),
         }
 
-    def validate(self, attrs):
+    def validate(self, attrs: Dict[str, Any]) -> Dict[str, Any]:
         email = attrs.get('email')
         password = attrs.get('password')
 
@@ -174,14 +180,14 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
     new_password = serializers.CharField(min_length=6)
     confirm_password = serializers.CharField(min_length=6)
 
-    def validate(self, data):
+    def validate(self, data: Dict[str, Any]) -> Any:
         if data['new_password'] != data['confirm_password']:
             raise serializers.ValidationError("Passwords don't match")
         return data
 
 
 class CustomPasswordResetSerializer(PasswordResetSerializer):
-    def get_email_options(self):
+    def get_email_options(self) -> Dict[str, Any]:
         link = DjangoConfig.BASE_URL
         return {
             'email_template_name': 'registration/password_reset_email.html',

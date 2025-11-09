@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Подтверждение Email - AutoShop</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            line-height: 1.6; 
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container { 
+            max-width: 500px; 
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header { 
+            background: #007bff; 
+            color: white; 
+            padding: 30px; 
+            text-align: center; 
+        }
+        .content { 
+            padding: 40px; 
+            text-align: center;
+        }
+        .success-icon {
+            font-size: 48px;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        .button { 
+            display: inline-block; 
+            padding: 12px 30px; 
+            background: #007bff; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            margin: 20px 0; 
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        .footer { 
+            text-align: center; 
+            padding: 20px; 
+            font-size: 12px; 
+            color: #666;
+            border-top: 1px solid #eee;
+        }
+        .loading {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AutoShop</h1>
+            <p>Подтверждение Email</p>
+        </div>
+        
+        <div class="content">
+            {% if confirmation %}
+                <div class="success-icon">✓</div>
+                <h2>Подтверждение Email</h2>
+                <p>Пожалуйста, подтвердите, что <strong>{{ confirmation.email_address.email }}</strong> является вашим email адресом.</p>
+                
+                <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                    {% csrf_token %}
+                    <button type="submit" class="button" onclick="showLoading()">Подтвердить</button>
+                </form>
+                
+                <div id="loading" class="loading">
+                    <p>Выполняется подтверждение...</p>
+                </div>
+            {% else %}
+                <div style="color: #dc3545; font-size: 48px;">⚠️</div>
+                <h2>Ошибка</h2>
+                <p>Ссылка для подтверждения email недействительна или устарела.</p>
+                <a href="{% url 'account_email' %}" class="button">Запросить новую ссылку</a>
+            {% endif %}
+        </div>
+        
+        <div class="footer">
+            <p>&copy; {% now "Y" %} AutoShop. Все права защищены.</p>
+        </div>
+    </div>
+
+    <script>
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

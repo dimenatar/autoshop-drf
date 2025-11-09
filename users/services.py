@@ -1,24 +1,27 @@
-from typing import Dict, Any
-from django.core.mail import send_mail
-from django.conf import settings
+from typing import Any
+
+from allauth.account.internal.flows.email_verification import send_verification_email_to_address
+from allauth.account.models import EmailConfirmation, EmailAddress
+from django.http import HttpRequest
+from django.utils import timezone
 from rest_framework.request import Request
-from core.configs.django_config import DjangoConfig
-from users.models import User, EmailVerificationToken, PasswordResetToken
+
+from users.models import User
 from users.serializers import UserSerializer, CustomRegisterSerializer, CustomLoginSerializer
 
 
 class UserService:
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.user_serializer = UserSerializer
         self.register_serializer = CustomRegisterSerializer
         self.login_serializer = CustomLoginSerializer
 
-    def get_user_data(self, request: Request) -> Dict[str, Any]:
+    def get_user_data(self, request: Request) -> Any:
         serializer = self.user_serializer(request.user)
         return serializer.data
 
-    def update_user_data(self, request: Request) -> Dict[str, Any]:
+    def update_user_data(self, request: Request) -> Any:
         serializer_data = request.data.get('user', {})
 
         serializer = self.user_serializer(
@@ -42,7 +45,7 @@ class UserService:
 
         return self.user_serializer(request.user).data
 
-    def login_user(self, request: Request) -> Dict[str, Any]:
+    def login_user(self, request: Request) -> Any:
         user_data = request.data.get('user', {})
 
         serializer = self.login_serializer(
@@ -56,7 +59,7 @@ class UserService:
 
         return user_serializer.data
 
-    def register_user(self, request: Request) -> Dict[str, Any]:
+    def register_user(self, request: Request) -> Any:
         user_data = request.data.get('user', {})
 
         serializer = self.register_serializer(
@@ -66,99 +69,78 @@ class UserService:
         serializer.is_valid(raise_exception=True)
         user = serializer.save(request)
 
-        self._send_verification_email(user)
+        self._send_email_confirmation(request._request, user)
 
         user_serializer = self.user_serializer(user)
         return user_serializer.data
 
-    @staticmethod
-    def _send_verification_email(user: User) -> None:
-        verification_token = EmailVerificationToken.objects.create(user=user)
-
-        verification_url = f"http://localhost:8000/api/users/verify-email/{verification_token.token}/"
-        subject = 'Verify your email address'
-        message = f'''
-        Hello {user.username},
-
-        Please verify your email address by clicking the link below:
-        {verification_url}
-
-        Thank you!
-        '''
-        send_mail(
-            subject,
-            message,
-            settings.DEFAULT_FROM_EMAIL,
-            [user.email],
-            fail_silently=False,
-        )
-
-    @staticmethod
-    def verify_email(token: str) -> bool:
+    def _send_email_confirmation(self, request: HttpRequest, user: User) -> None:
         try:
-            verification_token = EmailVerificationToken.objects.get(
-                token=token,
-                is_used=False
+            email = EmailAddress.objects.get_or_create(
+                user=user,
+                email=user.email,
+                defaults={'primary': True, 'verified': False}
             )
-            user = verification_token.user
-            user.is_email_verified = True
-            user.save()
+            send_verification_email_to_address(request, email[0])
 
-            verification_token.is_used = True
-            verification_token.save()
+        except Exception as e:
+            print(f"Failed to send email confirmation: {e}")
 
+    @staticmethod
+    def verify_email(request: Request, key: str) -> bool:
+        try:
+            confirmation = EmailConfirmation.objects.get(key=key)
+            confirmation.sent = timezone.now()
+            confirmation.confirm(request)
             return True
-        except EmailVerificationToken.DoesNotExist:
+        except EmailConfirmation.DoesNotExist:
             return False
 
-    def request_password_reset(self, email: str) -> bool:
-        try:
-            user = User.objects.get(email=email)
-            reset_token = PasswordResetToken.objects.create(user=user)
-            self._send_password_reset_email(user, reset_token.token)
-            return True
-        except User.DoesNotExist:
-            return True
-
     @staticmethod
-    def reset_password(token: str, new_password: str) -> bool:
+    def request_password_reset(email: str) -> bool:
+        from allauth.account.forms import ResetPasswordForm
+
+        form = ResetPasswordForm(data={'email': email})
+        if form.is_valid():
+            form.save(request=None)
+            return True
+        return False
+
+    def reset_password(self, token: str, new_password: str) -> bool:
         try:
-            reset_token = PasswordResetToken.objects.get(
-                token=token,
-                is_used=False
-            )
-            user = reset_token.user
+            from allauth.account.models import EmailConfirmation
+            confirmation = EmailConfirmation.objects.get(key=token, is_used=False)
+
+            user = confirmation.email_address.user
             user.set_password(new_password)
             user.save()
 
-            reset_token.is_used = True
-            reset_token.save()
+            confirmation.is_used = True
+            confirmation.save()
 
             return True
-        except PasswordResetToken.DoesNotExist:
+
+        except EmailConfirmation.DoesNotExist:
+            try:
+                return self._reset_password_alternative(token, new_password)
+            except Exception:
+                return False
+
+    def _reset_password_alternative(self, token: str, new_password: str) -> bool:
+        try:
+            from allauth.account.models import EmailConfirmation
+            confirmation = EmailConfirmation.objects.get(key=token, is_used=False)
+            user = confirmation.email_address.user
+
+            user.set_password(new_password)
+            user.save()
+
+            confirmation.is_used = True
+            confirmation.save()
+
+            return True
+        except Exception:
             return False
-
-    @staticmethod
-    def _send_password_reset_email(user: User, token: str) -> None:
-        reset_url = f"{DjangoConfig.BASE_URL}/api/users/reset-password/{token}/"
-        subject = 'Password Reset Request'
-        message = f'''
-        Hello {user.username},
-
-        You requested a password reset. Click the link below to reset your password:
-        {reset_url}
-
-        If you didn't request this, please ignore this email.
-
-        Thank you!
-        '''
-        send_mail(
-            subject,
-            message,
-            settings.DEFAULT_FROM_EMAIL,
-            [user.email],
-            fail_silently=False,
-        )
 
 
 user_service = UserService()

@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.14-slim
 RUN mkdir -p /usr/src/app/
 WORKDIR /usr/src/app/
 RUN apt-get update && apt-get install -y netcat-traditional && apt-get clean

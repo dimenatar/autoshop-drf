@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.views.generic import TemplateView
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -17,7 +18,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
 
-    #FRONT
+    # FRONT
     path('', HomeView.as_view(), name='home'),
     path('login/', LoginView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
@@ -26,16 +27,20 @@ urlpatterns = [
          PasswordResetConfirmView.as_view(),
          name='password_reset_confirm'),
 
-    #API
+    # API
     path('api/v1/auth/', include('dj_rest_auth.urls')),
     path('api/v1/auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('api/users/email-verified/', TemplateView.as_view(
+        template_name='account/email_verified.html'),
+        name='email_verified'),
+    path('api/', include('users.urls', namespace='authentication')),
 
-    #SWAGGER
+    # SWAGGER
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
-    #OTHER
+    # OTHER
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
 ]
