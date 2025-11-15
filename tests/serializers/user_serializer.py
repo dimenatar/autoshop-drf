@@ -1,4 +1,5 @@
 import pytest
+from allauth.account.models import EmailAddress
 from django.contrib.auth import authenticate
 
 from users.serializers import (
@@ -62,9 +63,17 @@ class TestCustomRegisterSerializer:
 class TestCustomLoginSerializer:
 
     def test_valid_login_data(self, existing_user):
-        existing_user.is_email_verified = True
-        existing_user.save()
-
+        if not EmailAddress.objects.filter(email=existing_user.email).exists():
+            EmailAddress.objects.create(
+                user=existing_user,
+                email=existing_user.email,
+                verified=True,
+                primary=True
+            )
+        else:
+            found = EmailAddress.objects.get(email=existing_user.email)
+            found.verified = True
+            found.save()
         login_data = {
             "email": existing_user.email,
             "password": "existingpassword123"
@@ -84,24 +93,51 @@ class TestCustomLoginSerializer:
         assert not serializer.is_valid()
 
     def test_unverified_email(self, login_data, existing_user):
-        existing_user.is_email_verified = False
-        existing_user.save()
+        if not EmailAddress.objects.filter(email=existing_user.email).exists():
+            EmailAddress.objects.create(
+                user=existing_user,
+                email=existing_user.email,
+                verified=False,
+                primary=True
+            )
+
+        login_data = {
+            "email": existing_user.email,
+            "password": "existingpassword123"
+        }
 
         serializer = CustomLoginSerializer(data=login_data)
         assert not serializer.is_valid()
+        assert 'non_field_errors' in serializer.errors or 'error' in serializer.errors
 
     def test_inactive_user(self, login_data, existing_user):
+        if not EmailAddress.objects.filter(email=existing_user.email).exists():
+            EmailAddress.objects.create(
+                user=existing_user,
+                email=existing_user.email,
+                verified=True,
+                primary=True
+            )
+
         existing_user.is_active = False
-        existing_user.is_email_verified = True
         existing_user.save()
 
         serializer = CustomLoginSerializer(data=login_data)
         assert not serializer.is_valid()
+        assert 'non_field_errors' in serializer.errors or 'error' in serializer.errors
 
 
 class TestUserSerializer:
 
     def test_user_serialization(self, existing_user):
+        if not EmailAddress.objects.filter(email=existing_user.email).exists():
+            EmailAddress.objects.create(
+                user=existing_user,
+                email=existing_user.email,
+                verified=True,
+                primary=True
+            )
+
         serializer = UserSerializer(existing_user)
         data = serializer.data
 
@@ -111,9 +147,16 @@ class TestUserSerializer:
         assert data['telephone'] == existing_user.telephone
         assert data['balance'] == existing_user.balance
         assert data['role'] == existing_user.role
-        assert 'is_email_verified' in data
 
     def test_user_deserialization(self, existing_user):
+        if not EmailAddress.objects.filter(email=existing_user.email).exists():
+            EmailAddress.objects.create(
+                user=existing_user,
+                email=existing_user.email,
+                verified=True,
+                primary=True
+            )
+
         update_data = {
             "username": "updateduser",
             "age": 35,
@@ -133,6 +176,14 @@ class TestUserSerializer:
         assert updated_user.telephone == "+0987654321"
 
     def test_password_update(self, existing_user):
+        if not EmailAddress.objects.filter(email=existing_user.email).exists():
+            EmailAddress.objects.create(
+                user=existing_user,
+                email=existing_user.email,
+                verified=True,
+                primary=True
+            )
+
         new_password = "newpassword123"
         update_data = {
             "password": new_password

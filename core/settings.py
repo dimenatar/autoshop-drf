@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth',
     'dj_rest_auth.registration',
-    'bootstrap5',
 
     # Local apps
     'autoshops',
@@ -85,7 +84,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# Database
 DATABASES = {
     'default': {
         'ENGINE': db_config.DB_ENGINE,
@@ -114,22 +112,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = django_config.LANGUAGE_CODE
 TIME_ZONE = django_config.TIME_ZONE
 USE_I18N = django_config.USE_I18N
 USE_TZ = django_config.USE_TZ
-
-
 STATIC_URL = django_config.STATIC_URL
 DEFAULT_AUTO_FIELD = django_config.DEFAULT_AUTO_FIELD
-
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -139,17 +132,11 @@ REST_FRAMEWORK = {
     'NON_FIELD_ERRORS_KEY': 'error',
 }
 
-
 SIMPLE_JWT = jwt_config.simple_jwt
 
 REST_AUTH = rest_auth_config.rest_auth
 REST_USE_JWT = rest_auth_config.USE_JWT
 JWT_AUTH_COOKIE = rest_auth_config.JWT_AUTH_COOKIE
-
-# Bootstrap5
-BOOTSTRAP5 = {
-    'include_jquery': True,
-}
 
 SITE_ID = allauth_config.SITE_ID
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = allauth_config.ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS

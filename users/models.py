@@ -14,13 +14,12 @@ ROLE_CHOICES = (
 
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=100)
-    age = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])  # sorry drandma
+    age = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
     telephone = models.CharField(max_length=13)
     balance = models.FloatField(validators=[MinValueValidator(0)])
     role = models.CharField(choices=ROLE_CHOICES)
     password = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    is_email_verified = models.BooleanField(default=False)
 
     is_staff = models.BooleanField(default=False)
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Подтверждение Email - AutoShop</title>
+    <title>Email Confirmation - AutoShop</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -68,33 +68,33 @@
     <div class="container">
         <div class="header">
             <h1>AutoShop</h1>
-            <p>Подтверждение Email</p>
+            <p>Email Confirmation</p>
         </div>
         
         <div class="content">
             {% if confirmation %}
                 <div class="success-icon">✓</div>
-                <h2>Подтверждение Email</h2>
-                <p>Пожалуйста, подтвердите, что <strong>{{ confirmation.email_address.email }}</strong> является вашим email адресом.</p>
+                <h2>Email Confirmation</h2>
+                <p>Please confirm that <strong>{{ confirmation.email_address.email }}</strong> is your email address.</p>
                 
                 <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
                     {% csrf_token %}
-                    <button type="submit" class="button" onclick="showLoading()">Подтвердить</button>
+                    <button type="submit" class="button" onclick="showLoading()">Confirm</button>
                 </form>
                 
                 <div id="loading" class="loading">
-                    <p>Выполняется подтверждение...</p>
+                    <p>Confirming...</p>
                 </div>
             {% else %}
                 <div style="color: #dc3545; font-size: 48px;">⚠️</div>
-                <h2>Ошибка</h2>
-                <p>Ссылка для подтверждения email недействительна или устарела.</p>
-                <a href="{% url 'account_email' %}" class="button">Запросить новую ссылку</a>
+                <h2>Error</h2>
+                <p>This email confirmation link is invalid or has expired.</p>
+                <a href="{% url 'account_email' %}" class="button">Request New Link</a>
             {% endif %}
         </div>
         
         <div class="footer">
-            <p>&copy; {% now "Y" %} AutoShop. Все права защищены.</p>
+            <p>&copy; {% now "Y" %} AutoShop. All rights reserved.</p>
         </div>
     </div>
 

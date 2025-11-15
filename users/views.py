@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from rest_framework import status
 from rest_framework.generics import RetrieveUpdateAPIView
@@ -37,6 +38,9 @@ class RegistrationAPIView(APIView):
 class LoginAPIView(APIView):
     permission_classes = (AllowAny,)
     renderer_classes = (UserJSONRenderer,)
+
+    def get(self, request: Request) -> Response:
+        return redirect('/login')
 
     def post(self, request: Request) -> Response:
         try:

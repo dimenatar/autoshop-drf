@@ -63,7 +63,7 @@ def login_data():
 
 @pytest.fixture
 def existing_user(db):
-    return User.objects.create_user(
+    user = User.objects.create_user(
         username="existinguser",
         email="existing@example.com",
         telephone="+1234567890",
@@ -72,6 +72,15 @@ def existing_user(db):
         role=UserRole.Customer.value,
         password="existingpassword123"
     )
+
+    EmailAddress.objects.create(
+        user=user,
+        email=user.email,
+        primary=True,
+        verified=False
+    )
+
+    return user
 
 
 @pytest.fixture
@@ -130,6 +139,82 @@ def verified_user(db):
         role=UserRole.Customer.value,
         password="password123"
     )
-    user.is_email_verified = True
-    user.save()
+
+    EmailAddress.objects.create(
+        user=user,
+        email=user.email,
+        primary=True,
+        verified=True
+    )
+
     return user
+
+
+@pytest.fixture
+def user_with_verified_email(db):
+    user = User.objects.create_user(
+        username="verifieduser2",
+        email="verified2@example.com",
+        telephone="+1234567891",
+        age=35,
+        balance=75.0,
+        role=UserRole.Customer.value,
+        password="password123"
+    )
+
+    EmailAddress.objects.create(
+        user=user,
+        email=user.email,
+        primary=True,
+        verified=True
+    )
+
+    return user
+
+
+@pytest.fixture
+def admin_user(db):
+    user = User.objects.create_user(
+        username="adminuser",
+        email="admin@example.com",
+        telephone="+1234567892",
+        age=40,
+        balance=1000.0,
+        role=UserRole.Admin.value,
+        password="adminpassword123"
+    )
+
+    EmailAddress.objects.create(
+        user=user,
+        email=user.email,
+        primary=True,
+        verified=True
+    )
+
+    return user
+
+
+@pytest.fixture
+def multiple_users(db):
+    users = []
+    for i in range(3):
+        user = User.objects.create_user(
+            username=f"user{i}",
+            email=f"user{i}@example.com",
+            telephone=f"+123456789{i}",
+            age=25 + i,
+            balance=100.0 * i,
+            role=UserRole.Customer.value,
+            password=f"password{i}123"
+        )
+
+        EmailAddress.objects.create(
+            user=user,
+            email=user.email,
+            primary=True,
+            verified=(i % 2 == 0)
+        )
+
+        users.append(user)
+
+    return users

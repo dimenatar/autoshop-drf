@@ -1,14 +1,13 @@
 {% extends "base.html" %}
-{% load bootstrap5 %}
 
-{% block title %}Вход - AutoShop{% endblock %}
+{% block title %}Login - AutoShop{% endblock %}
 
 {% block content %}
 <div class="auth-container">
     <div class="auth-card">
         <div class="auth-header">
             <h2><i class="bi bi-car-front"></i> AutoShop</h2>
-            <p class="mb-0">Добро пожаловать назад!</p>
+            <p class="mb-0">Wellcum back!</p>
         </div>
         
         <div class="auth-body">
@@ -25,11 +24,11 @@
                 </div>
                 
                 <div class="mb-3">
-                    <label for="password" class="form-label">Пароль</label>
+                    <label for="password" class="form-label">Password</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-lock"></i></span>
                         <input type="password" class="form-control" id="password" name="password" required 
-                               placeholder="Введите пароль">
+                               placeholder="Enter your password">
                         <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('password')">
                             <i class="bi bi-eye"></i>
                         </button>
@@ -38,17 +37,17 @@
                 
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="rememberMe">
-                    <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+                    <label class="form-check-label" for="rememberMe">Remember me</label>
                 </div>
                 
                 <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
-                    <i class="bi bi-box-arrow-in-right"></i> Войти
+                    <i class="bi bi-box-arrow-in-right"></i> Login
                 </button>
                 
                 <div class="text-center">
-                    <a href="{% url 'password_reset' %}" class="text-decoration-none">Забыли пароль?</a>
+                    <a href="{% url 'password_reset' %}" class="text-decoration-none">Forgot password?</a>
                     <span class="mx-2">•</span>
-                    <a href="{% url 'register' %}" class="text-decoration-none">Создать аккаунт</a>
+                    <a href="{% url 'register' %}" class="text-decoration-none">Create account</a>
                 </div>
             </form>
         </div>
@@ -61,7 +60,7 @@
     
     const submitBtn = this.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Вход...';
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Logging in...';
     submitBtn.disabled = true;
     
     const formData = {
@@ -69,7 +68,7 @@
         password: document.getElementById('password').value
     };
     
-    console.log('Отправляемые данные:', formData);  // Для отладки
+    console.log('Sending data:', formData);  // For debugging
     
     try {
         const response = await fetch('/api/v1/auth/login/', {
@@ -82,33 +81,23 @@
         });
         
         const data = await response.json();
-        console.log('Ответ сервера:', data);  // Для отладки
+        console.log('Server response:', data);  // For debugging
         
         if (response.ok) {
             localStorage.setItem('access_token', data.access_token || data.access);
             localStorage.setItem('refresh_token', data.refresh_token || data.refresh);
             localStorage.setItem('user', JSON.stringify(data.user));
             
-            showAlert('Успешный вход! Перенаправляем...', 'success');
+            showAlert('Login successful! Redirecting...', 'success');
             setTimeout(() => {
                 window.location.href = '/';
             }, 1000);
         } else {
-            // Более детальная обработка ошибок
-            let errorMessage = 'Ошибка входа';
-            if (data.non_field_errors) {
-                errorMessage = data.non_field_errors.join(', ');
-            } else if (data.detail) {
-                errorMessage = data.detail;
-            } else if (data.email) {
-                errorMessage = data.email.join(', ');
-            } else if (data.password) {
-                errorMessage = data.password.join(', ');
-            }
+            const errorMessage = Object.values(data['errors']).flat().join("<br>") || 'Registration error';
             throw new Error(errorMessage);
         }
     } catch (error) {
-        console.error('Ошибка входа:', error);
+        console.error('Login error:', error);
         showAlert(error.message, 'danger');
     } finally {
         submitBtn.innerHTML = originalText;

@@ -4,7 +4,7 @@ from unittest.mock import patch, MagicMock
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from rest_framework.exceptions import ValidationError
-from allauth.account.models import EmailConfirmation
+from allauth.account.models import EmailConfirmation, EmailAddress
 
 from users.models import UserRole
 
@@ -28,7 +28,6 @@ class TestUserService:
         mock_user.telephone = '+1234567890'
         mock_user.balance = 100.0
         mock_user.role = UserRole.Customer.value
-        mock_user.is_email_verified = False
 
         mock_register_instance = MagicMock()
         mock_register_instance.is_valid.return_value = True
@@ -38,7 +37,8 @@ class TestUserService:
         expected_user_data = {
             'username': 'testuser', 'email': 'test@example.com',
             'age': 25, 'telephone': '+1234567890', 'balance': 100.0,
-            'role': UserRole.Customer.value, 'is_email_verified': False
+            'role': UserRole.Customer.value,
+            'is_email_verified': False
         }
         mock_user_serializer.return_value.data = expected_user_data
 
@@ -65,8 +65,14 @@ class TestUserService:
             role=UserRole.Customer.value,
             password="testpassword123"
         )
-        user.is_email_verified = True
-        user.save()
+
+        if not EmailAddress.objects.filter(email=user.email).exists():
+            EmailAddress.objects.create(
+                user=user,
+                email=user.email,
+                verified=True,
+                primary=True
+            )
 
         mock_login_instance = MagicMock()
         mock_login_instance.is_valid.return_value = True
@@ -80,7 +86,6 @@ class TestUserService:
             'telephone': user.telephone,
             'balance': user.balance,
             'role': user.role,
-            'is_email_verified': user.is_email_verified
         }
         mock_user_serializer.return_value.data = expected_user_data
 
@@ -97,6 +102,14 @@ class TestUserService:
         assert result == expected_user_data
 
     def test_get_user_data(self, user_service, verified_user, mock_request):
+        if not EmailAddress.objects.filter(email=verified_user.email).exists():
+            EmailAddress.objects.create(
+                user=verified_user,
+                email=verified_user.email,
+                verified=True,
+                primary=True
+            )
+
         mock_request.user = verified_user
 
         result = user_service.get_user_data(mock_request)
@@ -106,6 +119,14 @@ class TestUserService:
         assert result['email'] == verified_user.email
 
     def test_update_user_data(self, user_service, verified_user, mock_request):
+        if not EmailAddress.objects.filter(email=verified_user.email).exists():
+            EmailAddress.objects.create(
+                user=verified_user,
+                email=verified_user.email,
+                verified=True,
+                primary=True
+            )
+
         mock_request.user = verified_user
         mock_request.data = {
             'user': {
@@ -123,6 +144,15 @@ class TestUserService:
         assert verified_user.age == 35
 
     def test_update_user_data_with_password(self, user_service, verified_user, mock_request):
+
+        if not EmailAddress.objects.filter(email=verified_user.email).exists():
+            EmailAddress.objects.create(
+                user=verified_user,
+                email=verified_user.email,
+                verified=True,
+                primary=True
+            )
+
         mock_request.user = verified_user
         new_password = "newpassword123"
         mock_request.data = {

@@ -16,28 +16,28 @@
     <div class="container">
         <div class="header">
             <h1>AutoShop</h1>
-            <p>Подтверждение регистрации</p>
+            <p>Registration Confirmation</p>
         </div>
         
         <div class="content">
-            <p>Здравствуйте, <strong>{{ user.username }}</strong>!</p>
-            <p>Вы получили это письмо, потому что зарегистрировались в AutoShop.</p>
-            <p>Для завершения регистрации и подтверждения вашего email адреса, нажмите на кнопку ниже:</p>
+            <p>Hello, <strong>{{ user.username }}</strong>!</p>
+            <p>You received this email because you registered at AutoShop.</p>
+            <p>To complete your registration and confirm your email address, click the button below:</p>
             
             <div style="text-align: center;">
-                <a href="{{ activate_url }}" class="button">Подтвердить Email</a>
+                <a href="{{ activate_url }}" class="button">Confirm Email</a>
             </div>
             
-            <p>Если кнопка не работает, скопируйте и вставьте в браузер следующую ссылку:</p>
+            <p>If the button doesn't work, copy and paste the following link into your browser:</p>
             <p style="word-break: break-all; font-size: 12px; background: #eee; padding: 10px;">
                 {{ activate_url }}
             </p>
             
-            <p>Если вы не регистрировались в AutoShop, просто проигнорируйте это письмо.</p>
+            <p>If you didn't register at AutoShop, please ignore this email.</p>
         </div>
         
         <div class="footer">
-            <p>&copy; {% now "Y" %} AutoShop. Все права защищены.</p>
+            <p>&copy; {% now "Y" %} AutoShop. All rights reserved.</p>
         </div>
     </div>
 </body>

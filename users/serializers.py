@@ -1,6 +1,7 @@
 from typing import Dict, Any
 
 from allauth.account.adapter import get_adapter
+from allauth.account.models import EmailAddress
 from allauth.account.utils import setup_user_email
 from django.contrib.auth import authenticate
 from django.http import HttpRequest
@@ -108,7 +109,7 @@ class CustomRegisterSerializer(RegisterSerializer):
 
     def validate_email(self, email: str) -> str:
         if User.objects.filter(email=email).exists():
-            raise serializers.ValidationError("Пользователь с таким email уже существует")
+            raise serializers.ValidationError("This email is already used")
         return email
 
     def save(self, request: HttpRequest) -> Any:
@@ -158,9 +159,15 @@ class CustomLoginSerializer(BaseLoginSerializer):
                 'This user has been deactivated.'
             )
 
-        if not user.is_email_verified:
+        try:
+            email_address = EmailAddress.objects.get(user=user, email=user.email)
+            if not email_address.verified:
+                raise serializers.ValidationError(
+                    'Please verify your email address before logging in.'
+                )
+        except EmailAddress.DoesNotExist:
             raise serializers.ValidationError(
-                'Please verify your email address before logging in.'
+                'Email address not found. Please verify your email address.'
             )
 
         attrs['user'] = user

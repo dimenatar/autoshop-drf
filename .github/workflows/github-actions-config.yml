@@ -11,19 +11,78 @@ jobs:
       - uses: actions/checkout@v4
       - name: Create and setup .env file
         run: |
+          #POSTGRES
+          echo "DB_ENGINE=${{ secrets.DB_ENGINE }}" > .env
           echo "POSTGRES_ENGINE=${{ secrets.POSTGRES_ENGINE }}" > .env
           echo "POSTGRES_NAME=${{ secrets.POSTGRES_NAME }}" >> .env
           echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
           echo "POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}" >> .env
           echo "POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}" >> .env
           echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+          
+          #DJANGO
           echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> .env
           echo "ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}" >> .env
           echo "DJANGO_IS_DEBUG=${{ secrets.DJANGO_IS_DEBUG }}" >> .env
+          echo "PG_DATA=${{ secrets.PG_DATA }}" >> .env
+          echo "DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }}" >> .env
+          echo "PYTHON_FILES=${{ secrets.PYTHON_FILES }}" >> .env
+          echo "ADDOPTS=${{ secrets.ADDOPTS }}" >> .env
+          echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
+          echo "LANGUAGE_CODE=${{ secrets.LANGUAGE_CODE }}" >> .env
+          echo "TIME_ZONE=${{ secrets.TIME_ZONE }}" >> .env
+          echo "USE_I18N=${{ secrets.USE_I18N }}" >> .env
+          echo "USE_TZ=${{ secrets.USE_TZ }}" >> .env
+          
+          #EMAIL
+          echo "EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }}" >> .env
+          echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
+          echo "EMAIL_PORT=${{ secrets.EMAIL_PORT }}" >> .env
+          echo "EMAIL_USE_TLS=${{ secrets.EMAIL_USE_TLS }}" >> .env
+          echo "EMAIL_HOST=${{ secrets.EMAIL_HOST }}" >> .env
+          echo "EMAIL_BACKEND=${{ secrets.EMAIL_BACKEND }}" >> .env
+          
+          #ALLAUTH
+          echo "ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS=${{ secrets.ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS }}" >> .env
+          echo "ACCOUNT_EMAIL_REQUIRED=${{ secrets.ACCOUNT_EMAIL_REQUIRED }}" >> .env
+          echo "ACCOUNT_EMAIL_VERIFICATION=${{ secrets.ACCOUNT_EMAIL_VERIFICATION }}" >> .env
+          echo "ACCOUNT_AUTHENTICATION_METHOD=${{ secrets.ACCOUNT_AUTHENTICATION_METHOD }}" >> .env
+          echo "ACCOUNT_EMAIL_SUBJECT_PREFIX=${{ secrets.ACCOUNT_EMAIL_SUBJECT_PREFIX }}" >> .env
+          echo "ACCOUNT_DEFAULT_HTTP_PROTOCOL=${{ secrets.ACCOUNT_DEFAULT_HTTP_PROTOCOL }}" >> .env
+          echo "ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL=${{ secrets.ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL }}" >> .env
+          echo "ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL=${{ secrets.ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL }}" >> .env
+          echo "LOGIN_REDIRECT_URL=${{ secrets.LOGIN_REDIRECT_URL }}" >> .env
+          echo "ACCOUNT_LOGOUT_REDIRECT_URL=${{ secrets.ACCOUNT_LOGOUT_REDIRECT_URL }}" >> .env
+          echo "ACCOUNT_USERNAME_REQUIRED=${{ secrets.ACCOUNT_USERNAME_REQUIRED }}" >> .env
+          echo "ACCOUNT_UNIQUE_EMAIL=${{ secrets.ACCOUNT_UNIQUE_EMAIL }}" >> .env
+          echo "SITE_NAME=${{ secrets.SITE_NAME }}" >> .env
+          echo "SITE_ID=${{ secrets.SITE_ID }}" >> .env
+          
+          #JWT
+          echo "ACCESS_TOKEN_LIFETIME_MINUTES=${{ secrets.ACCESS_TOKEN_LIFETIME_MINUTES }}" >> .env
+          echo "REFRESH_TOKEN_LIFETIME_DAYS=${{ secrets.REFRESH_TOKEN_LIFETIME_DAYS }}" >> .env
+          echo "ROTATE_REFRESH_TOKENS=${{ secrets.ROTATE_REFRESH_TOKENS }}" >> .env
+          echo "BLACKLIST_AFTER_ROTATION=${{ secrets.BLACKLIST_AFTER_ROTATION }}" >> .env
+          echo "JWT_ALGORITHM=${{ secrets.JWT_ALGORITHM }}" >> .env
+          echo "JWT_AUTH_HEADER_TYPES=${{ secrets.JWT_AUTH_HEADER_TYPES }}" >> .env
+          echo "JWT_AUTH_HEADER_NAME=${{ secrets.JWT_AUTH_HEADER_NAME }}" >> .env
+          echo "JWT_USER_ID_FIELD=${{ secrets.JWT_USER_ID_FIELD }}" >> .env
+          echo "JWT_USER_ID_CLAIM=${{ secrets.JWT_USER_ID_CLAIM }}" >> .env
+          
+          #REST AUTH
+          echo "REST_AUTH_USE_JWT=${{ secrets.REST_AUTH_USE_JWT }}" >> .env
+          echo "REST_AUTH_JWT_HTTPONLY=${{ secrets.REST_AUTH_JWT_HTTPONLY }}" >> .env
+          echo "REST_AUTH_JWT_COOKIE=${{ secrets.REST_AUTH_JWT_COOKIE }}" >> .env
+          echo "REST_AUTH_JWT_REFRESH_COOKIE=${{ secrets.REST_AUTH_JWT_REFRESH_COOKIE }}" >> .env
+          
+
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+      - name: Run Django Tests
+        run: |
+          pytest -v
       - name: Analysing the code with pylint
         run: |
           pylint *.py
