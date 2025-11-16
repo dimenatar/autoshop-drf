@@ -5,10 +5,14 @@ on:
   pull_request:
     branches: [ "master", "dev" ]
 jobs:
+
   build:
     runs-on: ubuntu-latest
+    env:
+      EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
