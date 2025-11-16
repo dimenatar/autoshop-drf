@@ -89,8 +89,39 @@ jobs:
           source venv/bin/activate
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Print all environment variables
-        run: cat .env
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          source venv/bin/activate
+          python -c "
+          import time
+          import psycopg2
+          from psycopg2 import OperationalError
+            
+          for i in range(10):
+            try:
+                conn = psycopg2.connect(
+                    dbname='autoshop',
+                    user='postgres', 
+                    password='root',
+                    host='localhost',
+                    port=5432
+                )
+                conn.close()
+                print('PostgreSQL is ready!')
+                break
+            except OperationalError as e:
+                print(f'Waiting for PostgreSQL... {e}')
+                time.sleep(2)
+            else:
+             print('PostgreSQL is not ready after 20 seconds')
+             exit(1)
+            "
+
+      - name: Run Database Migrations
+        run: |
+          source venv/bin/activate
+          python manage.py makemigrations
+          python manage.py migrate
       - name: Run Django Tests
         run: |
           source venv/bin/activate
