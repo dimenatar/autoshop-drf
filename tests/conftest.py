@@ -1,12 +1,19 @@
+import os
 from unittest.mock import MagicMock
 
+import django
 import pytest
 from allauth.account.models import EmailAddress, EmailConfirmation
+from django.conf import settings
 from django.utils import timezone
 
 from users.models import UserRole, User
 from users.services import UserService
 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+
+if not settings.configured:
+    django.setup()
 
 @pytest.fixture
 def user_with_unverified_email(db):
