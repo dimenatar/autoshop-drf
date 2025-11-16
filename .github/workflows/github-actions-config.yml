@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
       - name: Create and setup .env file
         run: |
           #POSTGRES
@@ -75,16 +79,17 @@ jobs:
           echo "REST_AUTH_JWT_COOKIE=${{ secrets.REST_AUTH_JWT_COOKIE }}" >> .env
           echo "REST_AUTH_JWT_REFRESH_COOKIE=${{ secrets.REST_AUTH_JWT_REFRESH_COOKIE }}" >> .env
           
-      - name: Create and activate virtual environment
+      - name: Create virtual environment
         run: |
           python -m venv venv
-          . .venv/bin/activate
       - name: Install Dependencies
         run: |
+          source venv/bin/activate
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run Django Tests
         run: |
+          source venv/bin/activate
           pytest -v
       - name: Analysing the code with pylint
         run: |
