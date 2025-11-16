@@ -144,15 +144,19 @@ jobs:
           DATABASE_URL: postgres://postgres:root@localhost:5432/autoshop
       - name: Analysing the code with pylint
         run: |
+          source venv/bin/activate
           pylint *.py
       - name: Analysing the code with isort
         run: |
+          source venv/bin/activate
           isort *.py
       - name: Analysing the code with mypy
         run: |
+          source venv/bin/activate
           mypy .
       - name: Analysing the code with flake8
         run: |
+          source venv/bin/activate
           flake8 *.py
       - name: Build and run Docker containers
         run: |
