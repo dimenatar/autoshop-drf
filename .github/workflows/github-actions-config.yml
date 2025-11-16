@@ -5,11 +5,9 @@ on:
   pull_request:
     branches: [ "master", "dev" ]
 jobs:
-
   build:
     runs-on: ubuntu-latest
-    env:
-      EMAIL_PORT: 587
+    environment: production
     steps:
       - uses: actions/checkout@v4
 
