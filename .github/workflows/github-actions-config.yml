@@ -12,10 +12,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.14'
+          python-version: '3.11'
       - name: Create and setup .env file
         run: |
-                  cat > .env << EOF
+          cat > .env << EOF
           # POSTGRES (production)
           DB_ENGINE=${{ secrets.DB_ENGINE }}
           POSTGRES_NAME=${{ secrets.POSTGRES_NAME }}
