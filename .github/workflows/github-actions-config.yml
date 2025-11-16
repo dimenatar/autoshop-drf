@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+      EMAIL_PORT: 587
     steps:
       - uses: actions/checkout@v4
 
