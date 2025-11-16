@@ -71,7 +71,8 @@ exclude = [
     "tests/",
     "settings/",
     "manage.py",
-    "celery.py"
+    "celery.py",
+    "venv/"
 ]
 
 disable_error_code = [

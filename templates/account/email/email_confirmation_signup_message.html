@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #007bff; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; background: #f9f9f9; }
+        .button { display: inline-block; padding: 12px 24px; background: #007bff; 
+                 color: white; text-decoration: none; border-radius: 4px; margin: 20px 0; }
+        .footer { text-align: center; padding: 20px; font-size: 12px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AutoShop</h1>
+            <p>Registration Confirmation</p>
+        </div>
+        
+        <div class="content">
+            <p>Hello, <strong>{{ user.username }}</strong>!</p>
+            <p>You received this email because you registered at AutoShop.</p>
+            <p>To complete your registration and confirm your email address, click the button below:</p>
+            
+            <div style="text-align: center;">
+                <a href="{{ activate_url }}" class="button">Confirm Email</a>
+            </div>
+            
+            <p>If the button doesn't work, copy and paste the following link into your browser:</p>
+            <p style="word-break: break-all; font-size: 12px; background: #eee; padding: 10px;">
+                {{ activate_url }}
+            </p>
+            
+            <p>If you didn't register at AutoShop, please ignore this email.</p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; {% now "Y" %} AutoShop. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

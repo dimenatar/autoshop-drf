@@ -7,34 +7,156 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: production
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: ${{secrets.POSTGRES_USER}}
+          POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+          POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
       - name: Create and setup .env file
         run: |
-          echo "POSTGRES_ENGINE=${{ secrets.POSTGRES_ENGINE }}" > .env
-          echo "POSTGRES_NAME=${{ secrets.POSTGRES_NAME }}" >> .env
-          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
-          echo "POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}" >> .env
-          echo "POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}" >> .env
-          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
-          echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> .env
-          echo "ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}" >> .env
-          echo "DJANGO_IS_DEBUG=${{ secrets.DJANGO_IS_DEBUG }}" >> .env
+          cat > .env << EOF
+          # POSTGRES (production)
+          DB_ENGINE=${{ secrets.DB_ENGINE }}
+          POSTGRES_NAME=${{ secrets.POSTGRES_NAME }}
+          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+          PG_DATA=${{ secrets.PG_DATA }}
+
+          # DJANGO (production)
+          DJANGO_IS_DEBUG=${{ secrets.DJANGO_IS_DEBUG }}
+          ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}
+          DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}
+          DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }}
+          BASE_URL=${{ secrets.BASE_URL }}
+          LANGUAGE_CODE=${{ secrets.LANGUAGE_CODE }}
+          TIME_ZONE=${{ secrets.TIME_ZONE }}
+          USE_I18N=${{ secrets.USE_I18N }}
+          USE_TZ=${{ secrets.USE_TZ }}
+
+          # EMAIL (production)
+          EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }}
+          EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_PORT=${{ secrets.EMAIL_PORT }}
+          EMAIL_USE_TLS=${{ secrets.EMAIL_USE_TLS }}
+          EMAIL_HOST=${{ secrets.EMAIL_HOST }}
+          EMAIL_BACKEND=${{ secrets.EMAIL_BACKEND }}
+
+          # ALLAUTH (production)
+          ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS=${{ secrets.ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS }}
+          ACCOUNT_EMAIL_REQUIRED=${{ secrets.ACCOUNT_EMAIL_REQUIRED }}
+          ACCOUNT_EMAIL_VERIFICATION=${{ secrets.ACCOUNT_EMAIL_VERIFICATION }}
+          ACCOUNT_AUTHENTICATION_METHOD=${{ secrets.ACCOUNT_AUTHENTICATION_METHOD }}
+          ACCOUNT_EMAIL_SUBJECT_PREFIX=${{ secrets.ACCOUNT_EMAIL_SUBJECT_PREFIX }}
+          ACCOUNT_DEFAULT_HTTP_PROTOCOL=${{ secrets.ACCOUNT_DEFAULT_HTTP_PROTOCOL }}
+          ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL=${{ secrets.ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL }}
+          ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL=${{ secrets.ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL }}
+          LOGIN_REDIRECT_URL=${{ secrets.LOGIN_REDIRECT_URL }}
+          ACCOUNT_LOGOUT_REDIRECT_URL=${{ secrets.ACCOUNT_LOGOUT_REDIRECT_URL }}
+          ACCOUNT_USERNAME_REQUIRED=${{ secrets.ACCOUNT_USERNAME_REQUIRED }}
+          ACCOUNT_UNIQUE_EMAIL=${{ secrets.ACCOUNT_UNIQUE_EMAIL }}
+          SITE_NAME=${{ secrets.SITE_NAME }}
+          SITE_ID=${{ secrets.SITE_ID }}
+
+          # JWT (production)
+          ACCESS_TOKEN_LIFETIME_MINUTES=${{ secrets.ACCESS_TOKEN_LIFETIME_MINUTES }}
+          REFRESH_TOKEN_LIFETIME_DAYS=${{ secrets.REFRESH_TOKEN_LIFETIME_DAYS }}
+          ROTATE_REFRESH_TOKENS=${{ secrets.ROTATE_REFRESH_TOKENS }}
+          BLACKLIST_AFTER_ROTATION=${{ secrets.BLACKLIST_AFTER_ROTATION }}
+          JWT_ALGORITHM=${{ secrets.JWT_ALGORITHM }}
+          JWT_AUTH_HEADER_TYPES=${{ secrets.JWT_AUTH_HEADER_TYPES }}
+          JWT_AUTH_HEADER_NAME=${{ secrets.JWT_AUTH_HEADER_NAME }}
+          JWT_USER_ID_FIELD=${{ secrets.JWT_USER_ID_FIELD }}
+          JWT_USER_ID_CLAIM=${{ secrets.JWT_USER_ID_CLAIM }}
+
+          # REST AUTH (production)
+          REST_AUTH_USE_JWT=${{ secrets.REST_AUTH_USE_JWT }}
+          REST_AUTH_JWT_HTTPONLY=${{ secrets.REST_AUTH_JWT_HTTPONLY }}
+          REST_AUTH_JWT_COOKIE=${{ secrets.REST_AUTH_JWT_COOKIE }}
+          REST_AUTH_JWT_REFRESH_COOKIE=${{ secrets.REST_AUTH_JWT_REFRESH_COOKIE }}
+          EOF
+          
+      - name: Create virtual environment
+        run: |
+          python -m venv venv
       - name: Install Dependencies
         run: |
+          source venv/bin/activate
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          source venv/bin/activate
+          python -c "
+          import time
+          import psycopg2
+          from psycopg2 import OperationalError
+            
+          for i in range(10):
+            try:
+                conn = psycopg2.connect(
+                    dbname='autoshop',
+                    user='postgres', 
+                    password='root',
+                    host='localhost',
+                    port=5432
+                )
+                conn.close()
+                print('PostgreSQL is ready!')
+                break
+            except OperationalError as e:
+                print(f'Waiting for PostgreSQL... {e}')
+                time.sleep(2)
+            else:
+             print('PostgreSQL is not ready after 20 seconds')
+             exit(1)
+            "
+
+      - name: Run Database Migrations
+        run: |
+          source venv/bin/activate
+          python manage.py makemigrations
+          python manage.py migrate
+      - name: Run Django Tests
+        run: |
+          source venv/bin/activate
+          pytest -v --ds=core.settings
+        env:
+          DATABASE_URL: postgres://postgres:root@localhost:5432/autoshop
       - name: Analysing the code with pylint
         run: |
+          source venv/bin/activate
           pylint *.py
       - name: Analysing the code with isort
         run: |
+          source venv/bin/activate
           isort *.py
       - name: Analysing the code with mypy
         run: |
+          source venv/bin/activate
           mypy .
       - name: Analysing the code with flake8
         run: |
+          source venv/bin/activate
           flake8 *.py
       - name: Build and run Docker containers
         run: |

@@ -1,8 +1,7 @@
-from django.apps import AppConfig
 from decouple import config
 
 
-class DBConfig(AppConfig):
+class DBConfig:
     DB_ENGINE = config('DB_ENGINE')
     DB_NAME = config('POSTGRES_NAME')
     USER = config('POSTGRES_USER')
