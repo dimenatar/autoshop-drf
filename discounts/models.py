@@ -21,7 +21,7 @@ class GeneralDiscount(BaseDiscount):
     description = models.TextField()
 
     def __str__(self) -> str:
-        return f"{super().__str__()} name: {self.name}"
+        return f"{super().__str__()}, name: {self.name}"
 
 
 class BasePersonalDiscount(BaseDiscount):
@@ -57,6 +57,8 @@ class AutoShopPersonalDiscount(BasePersonalDiscount):
     def __str__(self) -> str:
         return f"{super().__str__()} autoshop:{self.autoshop} supplier:{self.supplier}"
 
+    def get_full_discount_percent(self) -> float:
+        return (self.purchases_amount // self.purchases_amount) + self.percent
 
 class CarDiscount(BaseDiscount):
     car = models.ManyToManyField(Car)
