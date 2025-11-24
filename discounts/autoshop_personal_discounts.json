@@ -1,0 +1,802 @@
+[
+  {
+    "percent": 6.43,
+    "purchases_amount": 16,
+    "autoshop_id": 64,
+    "supplier_id": 64,
+    "required_cars_bought_amount": 13,
+    "increasing_percent_per_requirements_fulfilled": 2.63
+  },
+  {
+    "percent": 1.82,
+    "purchases_amount": 14,
+    "autoshop_id": 56,
+    "supplier_id": 42,
+    "required_cars_bought_amount": 27,
+    "increasing_percent_per_requirements_fulfilled": 1.46
+  },
+  {
+    "percent": 6.18,
+    "purchases_amount": 10,
+    "autoshop_id": 69,
+    "supplier_id": 34,
+    "required_cars_bought_amount": 5,
+    "increasing_percent_per_requirements_fulfilled": 0.57
+  },
+  {
+    "percent": 4.82,
+    "purchases_amount": 10,
+    "autoshop_id": 84,
+    "supplier_id": 44,
+    "required_cars_bought_amount": 33,
+    "increasing_percent_per_requirements_fulfilled": 3.71
+  },
+  {
+    "percent": 7.93,
+    "purchases_amount": 16,
+    "autoshop_id": 21,
+    "supplier_id": 100,
+    "required_cars_bought_amount": 28,
+    "increasing_percent_per_requirements_fulfilled": 4.32
+  },
+  {
+    "percent": 7.6,
+    "purchases_amount": 14,
+    "autoshop_id": 15,
+    "supplier_id": 88,
+    "required_cars_bought_amount": 10,
+    "increasing_percent_per_requirements_fulfilled": 2.41
+  },
+  {
+    "percent": 9.46,
+    "purchases_amount": 8,
+    "autoshop_id": 23,
+    "supplier_id": 75,
+    "required_cars_bought_amount": 40,
+    "increasing_percent_per_requirements_fulfilled": 3.5
+  },
+  {
+    "percent": 3.73,
+    "purchases_amount": 17,
+    "autoshop_id": 83,
+    "supplier_id": 62,
+    "required_cars_bought_amount": 32,
+    "increasing_percent_per_requirements_fulfilled": 2.31
+  },
+  {
+    "percent": 6.77,
+    "purchases_amount": 20,
+    "autoshop_id": 35,
+    "supplier_id": 82,
+    "required_cars_bought_amount": 8,
+    "increasing_percent_per_requirements_fulfilled": 3.13
+  },
+  {
+    "percent": 7.27,
+    "purchases_amount": 3,
+    "autoshop_id": 54,
+    "supplier_id": 27,
+    "required_cars_bought_amount": 13,
+    "increasing_percent_per_requirements_fulfilled": 2.94
+  },
+  {
+    "percent": 4.35,
+    "purchases_amount": 16,
+    "autoshop_id": 36,
+    "supplier_id": 19,
+    "required_cars_bought_amount": 16,
+    "increasing_percent_per_requirements_fulfilled": 3.5
+  },
+  {
+    "percent": 5.11,
+    "purchases_amount": 4,
+    "autoshop_id": 40,
+    "supplier_id": 44,
+    "required_cars_bought_amount": 46,
+    "increasing_percent_per_requirements_fulfilled": 2.73
+  },
+  {
+    "percent": 1.46,
+    "purchases_amount": 16,
+    "autoshop_id": 16,
+    "supplier_id": 74,
+    "required_cars_bought_amount": 17,
+    "increasing_percent_per_requirements_fulfilled": 2.62
+  },
+  {
+    "percent": 2.02,
+    "purchases_amount": 7,
+    "autoshop_id": 57,
+    "supplier_id": 7,
+    "required_cars_bought_amount": 8,
+    "increasing_percent_per_requirements_fulfilled": 4.31
+  },
+  {
+    "percent": 7.76,
+    "purchases_amount": 5,
+    "autoshop_id": 4,
+    "supplier_id": 58,
+    "required_cars_bought_amount": 28,
+    "increasing_percent_per_requirements_fulfilled": 4.29
+  },
+  {
+    "percent": 4.38,
+    "purchases_amount": 11,
+    "autoshop_id": 19,
+    "supplier_id": 95,
+    "required_cars_bought_amount": 21,
+    "increasing_percent_per_requirements_fulfilled": 4.22
+  },
+  {
+    "percent": 5.0,
+    "purchases_amount": 1,
+    "autoshop_id": 26,
+    "supplier_id": 25,
+    "required_cars_bought_amount": 14,
+    "increasing_percent_per_requirements_fulfilled": 1.02
+  },
+  {
+    "percent": 4.83,
+    "purchases_amount": 20,
+    "autoshop_id": 27,
+    "supplier_id": 92,
+    "required_cars_bought_amount": 28,
+    "increasing_percent_per_requirements_fulfilled": 1.24
+  },
+  {
+    "percent": 2.62,
+    "purchases_amount": 10,
+    "autoshop_id": 28,
+    "supplier_id": 82,
+    "required_cars_bought_amount": 34,
+    "increasing_percent_per_requirements_fulfilled": 4.86
+  },
+  {
+    "percent": 7.67,
+    "purchases_amount": 11,
+    "autoshop_id": 39,
+    "supplier_id": 65,
+    "required_cars_bought_amount": 20,
+    "increasing_percent_per_requirements_fulfilled": 1.07
+  },
+  {
+    "percent": 5.13,
+    "purchases_amount": 11,
+    "autoshop_id": 83,
+    "supplier_id": 71,
+    "required_cars_bought_amount": 17,
+    "increasing_percent_per_requirements_fulfilled": 3.45
+  },
+  {
+    "percent": 3.5,
+    "purchases_amount": 19,
+    "autoshop_id": 14,
+    "supplier_id": 13,
+    "required_cars_bought_amount": 19,
+    "increasing_percent_per_requirements_fulfilled": 3.58
+  },
+  {
+    "percent": 3.84,
+    "purchases_amount": 18,
+    "autoshop_id": 78,
+    "supplier_id": 79,
+    "required_cars_bought_amount": 9,
+    "increasing_percent_per_requirements_fulfilled": 0.65
+  },
+  {
+    "percent": 1.27,
+    "purchases_amount": 12,
+    "autoshop_id": 6,
+    "supplier_id": 49,
+    "required_cars_bought_amount": 27,
+    "increasing_percent_per_requirements_fulfilled": 2.25
+  },
+  {
+    "percent": 3.09,
+    "purchases_amount": 10,
+    "autoshop_id": 25,
+    "supplier_id": 41,
+    "required_cars_bought_amount": 43,
+    "increasing_percent_per_requirements_fulfilled": 3.53
+  },
+  {
+    "percent": 9.76,
+    "purchases_amount": 17,
+    "autoshop_id": 48,
+    "supplier_id": 45,
+    "required_cars_bought_amount": 48,
+    "increasing_percent_per_requirements_fulfilled": 3.1
+  },
+  {
+    "percent": 4.61,
+    "purchases_amount": 14,
+    "autoshop_id": 21,
+    "supplier_id": 39,
+    "required_cars_bought_amount": 41,
+    "increasing_percent_per_requirements_fulfilled": 4.06
+  },
+  {
+    "percent": 4.59,
+    "purchases_amount": 10,
+    "autoshop_id": 37,
+    "supplier_id": 48,
+    "required_cars_bought_amount": 14,
+    "increasing_percent_per_requirements_fulfilled": 3.33
+  },
+  {
+    "percent": 7.16,
+    "purchases_amount": 19,
+    "autoshop_id": 63,
+    "supplier_id": 48,
+    "required_cars_bought_amount": 47,
+    "increasing_percent_per_requirements_fulfilled": 4.04
+  },
+  {
+    "percent": 6.62,
+    "purchases_amount": 11,
+    "autoshop_id": 87,
+    "supplier_id": 44,
+    "required_cars_bought_amount": 41,
+    "increasing_percent_per_requirements_fulfilled": 3.85
+  },
+  {
+    "percent": 5.3,
+    "purchases_amount": 3,
+    "autoshop_id": 50,
+    "supplier_id": 21,
+    "required_cars_bought_amount": 19,
+    "increasing_percent_per_requirements_fulfilled": 2.51
+  },
+  {
+    "percent": 5.78,
+    "purchases_amount": 18,
+    "autoshop_id": 28,
+    "supplier_id": 30,
+    "required_cars_bought_amount": 11,
+    "increasing_percent_per_requirements_fulfilled": 4.99
+  },
+  {
+    "percent": 1.81,
+    "purchases_amount": 4,
+    "autoshop_id": 35,
+    "supplier_id": 17,
+    "required_cars_bought_amount": 33,
+    "increasing_percent_per_requirements_fulfilled": 3.81
+  },
+  {
+    "percent": 1.34,
+    "purchases_amount": 8,
+    "autoshop_id": 87,
+    "supplier_id": 91,
+    "required_cars_bought_amount": 39,
+    "increasing_percent_per_requirements_fulfilled": 2.73
+  },
+  {
+    "percent": 9.92,
+    "purchases_amount": 5,
+    "autoshop_id": 79,
+    "supplier_id": 55,
+    "required_cars_bought_amount": 24,
+    "increasing_percent_per_requirements_fulfilled": 3.99
+  },
+  {
+    "percent": 1.7,
+    "purchases_amount": 17,
+    "autoshop_id": 12,
+    "supplier_id": 88,
+    "required_cars_bought_amount": 12,
+    "increasing_percent_per_requirements_fulfilled": 4.19
+  },
+  {
+    "percent": 8.69,
+    "purchases_amount": 4,
+    "autoshop_id": 17,
+    "supplier_id": 75,
+    "required_cars_bought_amount": 12,
+    "increasing_percent_per_requirements_fulfilled": 2.8
+  },
+  {
+    "percent": 4.5,
+    "purchases_amount": 6,
+    "autoshop_id": 9,
+    "supplier_id": 64,
+    "required_cars_bought_amount": 39,
+    "increasing_percent_per_requirements_fulfilled": 0.63
+  },
+  {
+    "percent": 2.88,
+    "purchases_amount": 14,
+    "autoshop_id": 89,
+    "supplier_id": 54,
+    "required_cars_bought_amount": 30,
+    "increasing_percent_per_requirements_fulfilled": 1.01
+  },
+  {
+    "percent": 4.45,
+    "purchases_amount": 5,
+    "autoshop_id": 78,
+    "supplier_id": 50,
+    "required_cars_bought_amount": 11,
+    "increasing_percent_per_requirements_fulfilled": 3.97
+  },
+  {
+    "percent": 8.24,
+    "purchases_amount": 4,
+    "autoshop_id": 46,
+    "supplier_id": 97,
+    "required_cars_bought_amount": 6,
+    "increasing_percent_per_requirements_fulfilled": 4.37
+  },
+  {
+    "percent": 7.02,
+    "purchases_amount": 19,
+    "autoshop_id": 27,
+    "supplier_id": 65,
+    "required_cars_bought_amount": 50,
+    "increasing_percent_per_requirements_fulfilled": 3.57
+  },
+  {
+    "percent": 6.62,
+    "purchases_amount": 19,
+    "autoshop_id": 96,
+    "supplier_id": 41,
+    "required_cars_bought_amount": 29,
+    "increasing_percent_per_requirements_fulfilled": 0.62
+  },
+  {
+    "percent": 2.2,
+    "purchases_amount": 20,
+    "autoshop_id": 98,
+    "supplier_id": 42,
+    "required_cars_bought_amount": 20,
+    "increasing_percent_per_requirements_fulfilled": 0.58
+  },
+  {
+    "percent": 8.29,
+    "purchases_amount": 18,
+    "autoshop_id": 84,
+    "supplier_id": 24,
+    "required_cars_bought_amount": 23,
+    "increasing_percent_per_requirements_fulfilled": 2.26
+  },
+  {
+    "percent": 8.15,
+    "purchases_amount": 2,
+    "autoshop_id": 100,
+    "supplier_id": 87,
+    "required_cars_bought_amount": 18,
+    "increasing_percent_per_requirements_fulfilled": 2.33
+  },
+  {
+    "percent": 7.61,
+    "purchases_amount": 7,
+    "autoshop_id": 34,
+    "supplier_id": 26,
+    "required_cars_bought_amount": 47,
+    "increasing_percent_per_requirements_fulfilled": 4.95
+  },
+  {
+    "percent": 2.62,
+    "purchases_amount": 18,
+    "autoshop_id": 85,
+    "supplier_id": 49,
+    "required_cars_bought_amount": 30,
+    "increasing_percent_per_requirements_fulfilled": 3.67
+  },
+  {
+    "percent": 1.6,
+    "purchases_amount": 11,
+    "autoshop_id": 96,
+    "supplier_id": 31,
+    "required_cars_bought_amount": 33,
+    "increasing_percent_per_requirements_fulfilled": 0.61
+  },
+  {
+    "percent": 4.31,
+    "purchases_amount": 18,
+    "autoshop_id": 15,
+    "supplier_id": 75,
+    "required_cars_bought_amount": 34,
+    "increasing_percent_per_requirements_fulfilled": 4.22
+  },
+  {
+    "percent": 6.62,
+    "purchases_amount": 5,
+    "autoshop_id": 15,
+    "supplier_id": 78,
+    "required_cars_bought_amount": 32,
+    "increasing_percent_per_requirements_fulfilled": 3.01
+  },
+  {
+    "percent": 1.59,
+    "purchases_amount": 19,
+    "autoshop_id": 1,
+    "supplier_id": 92,
+    "required_cars_bought_amount": 10,
+    "increasing_percent_per_requirements_fulfilled": 1.36
+  },
+  {
+    "percent": 6.97,
+    "purchases_amount": 17,
+    "autoshop_id": 26,
+    "supplier_id": 74,
+    "required_cars_bought_amount": 13,
+    "increasing_percent_per_requirements_fulfilled": 4.52
+  },
+  {
+    "percent": 4.74,
+    "purchases_amount": 17,
+    "autoshop_id": 26,
+    "supplier_id": 33,
+    "required_cars_bought_amount": 16,
+    "increasing_percent_per_requirements_fulfilled": 4.73
+  },
+  {
+    "percent": 3.5,
+    "purchases_amount": 10,
+    "autoshop_id": 82,
+    "supplier_id": 84,
+    "required_cars_bought_amount": 35,
+    "increasing_percent_per_requirements_fulfilled": 0.96
+  },
+  {
+    "percent": 5.5,
+    "purchases_amount": 7,
+    "autoshop_id": 71,
+    "supplier_id": 46,
+    "required_cars_bought_amount": 50,
+    "increasing_percent_per_requirements_fulfilled": 1.09
+  },
+  {
+    "percent": 1.62,
+    "purchases_amount": 7,
+    "autoshop_id": 48,
+    "supplier_id": 31,
+    "required_cars_bought_amount": 12,
+    "increasing_percent_per_requirements_fulfilled": 4.36
+  },
+  {
+    "percent": 4.63,
+    "purchases_amount": 5,
+    "autoshop_id": 17,
+    "supplier_id": 89,
+    "required_cars_bought_amount": 45,
+    "increasing_percent_per_requirements_fulfilled": 4.75
+  },
+  {
+    "percent": 9.17,
+    "purchases_amount": 12,
+    "autoshop_id": 65,
+    "supplier_id": 37,
+    "required_cars_bought_amount": 34,
+    "increasing_percent_per_requirements_fulfilled": 3.03
+  },
+  {
+    "percent": 3.8,
+    "purchases_amount": 19,
+    "autoshop_id": 65,
+    "supplier_id": 25,
+    "required_cars_bought_amount": 49,
+    "increasing_percent_per_requirements_fulfilled": 0.67
+  },
+  {
+    "percent": 5.59,
+    "purchases_amount": 7,
+    "autoshop_id": 70,
+    "supplier_id": 79,
+    "required_cars_bought_amount": 37,
+    "increasing_percent_per_requirements_fulfilled": 4.2
+  },
+  {
+    "percent": 6.21,
+    "purchases_amount": 7,
+    "autoshop_id": 7,
+    "supplier_id": 92,
+    "required_cars_bought_amount": 47,
+    "increasing_percent_per_requirements_fulfilled": 2.4
+  },
+  {
+    "percent": 3.32,
+    "purchases_amount": 1,
+    "autoshop_id": 33,
+    "supplier_id": 48,
+    "required_cars_bought_amount": 13,
+    "increasing_percent_per_requirements_fulfilled": 1.27
+  },
+  {
+    "percent": 5.48,
+    "purchases_amount": 6,
+    "autoshop_id": 46,
+    "supplier_id": 9,
+    "required_cars_bought_amount": 32,
+    "increasing_percent_per_requirements_fulfilled": 1.49
+  },
+  {
+    "percent": 5.63,
+    "purchases_amount": 11,
+    "autoshop_id": 31,
+    "supplier_id": 21,
+    "required_cars_bought_amount": 8,
+    "increasing_percent_per_requirements_fulfilled": 3.16
+  },
+  {
+    "percent": 4.71,
+    "purchases_amount": 11,
+    "autoshop_id": 93,
+    "supplier_id": 95,
+    "required_cars_bought_amount": 17,
+    "increasing_percent_per_requirements_fulfilled": 2.49
+  },
+  {
+    "percent": 7.14,
+    "purchases_amount": 18,
+    "autoshop_id": 63,
+    "supplier_id": 8,
+    "required_cars_bought_amount": 22,
+    "increasing_percent_per_requirements_fulfilled": 3.9
+  },
+  {
+    "percent": 3.88,
+    "purchases_amount": 8,
+    "autoshop_id": 10,
+    "supplier_id": 33,
+    "required_cars_bought_amount": 33,
+    "increasing_percent_per_requirements_fulfilled": 3.59
+  },
+  {
+    "percent": 4.98,
+    "purchases_amount": 13,
+    "autoshop_id": 19,
+    "supplier_id": 49,
+    "required_cars_bought_amount": 16,
+    "increasing_percent_per_requirements_fulfilled": 2.49
+  },
+  {
+    "percent": 4.96,
+    "purchases_amount": 16,
+    "autoshop_id": 59,
+    "supplier_id": 32,
+    "required_cars_bought_amount": 46,
+    "increasing_percent_per_requirements_fulfilled": 2.52
+  },
+  {
+    "percent": 5.85,
+    "purchases_amount": 4,
+    "autoshop_id": 45,
+    "supplier_id": 12,
+    "required_cars_bought_amount": 24,
+    "increasing_percent_per_requirements_fulfilled": 3.47
+  },
+  {
+    "percent": 4.58,
+    "purchases_amount": 17,
+    "autoshop_id": 47,
+    "supplier_id": 48,
+    "required_cars_bought_amount": 10,
+    "increasing_percent_per_requirements_fulfilled": 1.39
+  },
+  {
+    "percent": 1.6,
+    "purchases_amount": 16,
+    "autoshop_id": 61,
+    "supplier_id": 60,
+    "required_cars_bought_amount": 20,
+    "increasing_percent_per_requirements_fulfilled": 4.82
+  },
+  {
+    "percent": 9.84,
+    "purchases_amount": 2,
+    "autoshop_id": 30,
+    "supplier_id": 98,
+    "required_cars_bought_amount": 44,
+    "increasing_percent_per_requirements_fulfilled": 0.59
+  },
+  {
+    "percent": 2.82,
+    "purchases_amount": 4,
+    "autoshop_id": 8,
+    "supplier_id": 10,
+    "required_cars_bought_amount": 17,
+    "increasing_percent_per_requirements_fulfilled": 0.75
+  },
+  {
+    "percent": 6.65,
+    "purchases_amount": 10,
+    "autoshop_id": 71,
+    "supplier_id": 69,
+    "required_cars_bought_amount": 31,
+    "increasing_percent_per_requirements_fulfilled": 2.17
+  },
+  {
+    "percent": 4.27,
+    "purchases_amount": 8,
+    "autoshop_id": 90,
+    "supplier_id": 71,
+    "required_cars_bought_amount": 38,
+    "increasing_percent_per_requirements_fulfilled": 2.03
+  },
+  {
+    "percent": 2.65,
+    "purchases_amount": 11,
+    "autoshop_id": 30,
+    "supplier_id": 15,
+    "required_cars_bought_amount": 49,
+    "increasing_percent_per_requirements_fulfilled": 2.41
+  },
+  {
+    "percent": 1.2,
+    "purchases_amount": 5,
+    "autoshop_id": 12,
+    "supplier_id": 99,
+    "required_cars_bought_amount": 47,
+    "increasing_percent_per_requirements_fulfilled": 3.31
+  },
+  {
+    "percent": 2.94,
+    "purchases_amount": 3,
+    "autoshop_id": 72,
+    "supplier_id": 8,
+    "required_cars_bought_amount": 27,
+    "increasing_percent_per_requirements_fulfilled": 3.75
+  },
+  {
+    "percent": 2.23,
+    "purchases_amount": 18,
+    "autoshop_id": 81,
+    "supplier_id": 87,
+    "required_cars_bought_amount": 43,
+    "increasing_percent_per_requirements_fulfilled": 1.77
+  },
+  {
+    "percent": 9.78,
+    "purchases_amount": 10,
+    "autoshop_id": 1,
+    "supplier_id": 5,
+    "required_cars_bought_amount": 23,
+    "increasing_percent_per_requirements_fulfilled": 0.63
+  },
+  {
+    "percent": 9.98,
+    "purchases_amount": 7,
+    "autoshop_id": 35,
+    "supplier_id": 55,
+    "required_cars_bought_amount": 24,
+    "increasing_percent_per_requirements_fulfilled": 1.83
+  },
+  {
+    "percent": 7.96,
+    "purchases_amount": 1,
+    "autoshop_id": 80,
+    "supplier_id": 69,
+    "required_cars_bought_amount": 40,
+    "increasing_percent_per_requirements_fulfilled": 1.96
+  },
+  {
+    "percent": 4.15,
+    "purchases_amount": 4,
+    "autoshop_id": 92,
+    "supplier_id": 6,
+    "required_cars_bought_amount": 35,
+    "increasing_percent_per_requirements_fulfilled": 2.04
+  },
+  {
+    "percent": 3.64,
+    "purchases_amount": 4,
+    "autoshop_id": 66,
+    "supplier_id": 21,
+    "required_cars_bought_amount": 31,
+    "increasing_percent_per_requirements_fulfilled": 1.3
+  },
+  {
+    "percent": 4.38,
+    "purchases_amount": 2,
+    "autoshop_id": 72,
+    "supplier_id": 95,
+    "required_cars_bought_amount": 34,
+    "increasing_percent_per_requirements_fulfilled": 4.02
+  },
+  {
+    "percent": 3.26,
+    "purchases_amount": 20,
+    "autoshop_id": 90,
+    "supplier_id": 70,
+    "required_cars_bought_amount": 38,
+    "increasing_percent_per_requirements_fulfilled": 4.34
+  },
+  {
+    "percent": 2.95,
+    "purchases_amount": 17,
+    "autoshop_id": 48,
+    "supplier_id": 30,
+    "required_cars_bought_amount": 35,
+    "increasing_percent_per_requirements_fulfilled": 1.28
+  },
+  {
+    "percent": 5.39,
+    "purchases_amount": 10,
+    "autoshop_id": 79,
+    "supplier_id": 89,
+    "required_cars_bought_amount": 50,
+    "increasing_percent_per_requirements_fulfilled": 2.28
+  },
+  {
+    "percent": 2.17,
+    "purchases_amount": 13,
+    "autoshop_id": 60,
+    "supplier_id": 41,
+    "required_cars_bought_amount": 41,
+    "increasing_percent_per_requirements_fulfilled": 2.41
+  },
+  {
+    "percent": 5.48,
+    "purchases_amount": 15,
+    "autoshop_id": 81,
+    "supplier_id": 41,
+    "required_cars_bought_amount": 31,
+    "increasing_percent_per_requirements_fulfilled": 1.36
+  },
+  {
+    "percent": 6.14,
+    "purchases_amount": 15,
+    "autoshop_id": 44,
+    "supplier_id": 39,
+    "required_cars_bought_amount": 14,
+    "increasing_percent_per_requirements_fulfilled": 1.96
+  },
+  {
+    "percent": 7.86,
+    "purchases_amount": 7,
+    "autoshop_id": 84,
+    "supplier_id": 88,
+    "required_cars_bought_amount": 33,
+    "increasing_percent_per_requirements_fulfilled": 1.58
+  },
+  {
+    "percent": 2.52,
+    "purchases_amount": 8,
+    "autoshop_id": 54,
+    "supplier_id": 6,
+    "required_cars_bought_amount": 20,
+    "increasing_percent_per_requirements_fulfilled": 4.68
+  },
+  {
+    "percent": 5.85,
+    "purchases_amount": 12,
+    "autoshop_id": 54,
+    "supplier_id": 74,
+    "required_cars_bought_amount": 10,
+    "increasing_percent_per_requirements_fulfilled": 2.81
+  },
+  {
+    "percent": 5.21,
+    "purchases_amount": 1,
+    "autoshop_id": 7,
+    "supplier_id": 31,
+    "required_cars_bought_amount": 13,
+    "increasing_percent_per_requirements_fulfilled": 4.25
+  },
+  {
+    "percent": 4.15,
+    "purchases_amount": 14,
+    "autoshop_id": 79,
+    "supplier_id": 81,
+    "required_cars_bought_amount": 20,
+    "increasing_percent_per_requirements_fulfilled": 1.17
+  },
+  {
+    "percent": 2.33,
+    "purchases_amount": 7,
+    "autoshop_id": 24,
+    "supplier_id": 88,
+    "required_cars_bought_amount": 43,
+    "increasing_percent_per_requirements_fulfilled": 4.64
+  },
+  {
+    "percent": 6.55,
+    "purchases_amount": 18,
+    "autoshop_id": 69,
+    "supplier_id": 86,
+    "required_cars_bought_amount": 21,
+    "increasing_percent_per_requirements_fulfilled": 2.36
+  }
+]

@@ -1,0 +1,402 @@
+[
+  {
+    "name": "Carr, Mueller and Thompson",
+    "general_discount_id": 42
+  },
+  {
+    "name": "Lewis Ltd",
+    "general_discount_id": 33
+  },
+  {
+    "name": "Ramirez-Buck",
+    "general_discount_id": null
+  },
+  {
+    "name": "Riley PLC",
+    "general_discount_id": null
+  },
+  {
+    "name": "Williams-Brock",
+    "general_discount_id": 79
+  },
+  {
+    "name": "Aguilar-Johnson",
+    "general_discount_id": 30
+  },
+  {
+    "name": "Smith-Johnson",
+    "general_discount_id": 87
+  },
+  {
+    "name": "Ruiz-Hughes",
+    "general_discount_id": 79
+  },
+  {
+    "name": "Carter, Hernandez and Oliver",
+    "general_discount_id": 29
+  },
+  {
+    "name": "Campbell-Kelley",
+    "general_discount_id": 24
+  },
+  {
+    "name": "Cummings-Fernandez",
+    "general_discount_id": 52
+  },
+  {
+    "name": "Perry, Mcdonald and Ford",
+    "general_discount_id": null
+  },
+  {
+    "name": "Schmidt-Turner",
+    "general_discount_id": null
+  },
+  {
+    "name": "Olson, Landry and Farrell",
+    "general_discount_id": null
+  },
+  {
+    "name": "Morales and Sons",
+    "general_discount_id": 93
+  },
+  {
+    "name": "Miller, Thompson and Ritter",
+    "general_discount_id": null
+  },
+  {
+    "name": "Cook LLC",
+    "general_discount_id": 50
+  },
+  {
+    "name": "Hall, Hancock and Blevins",
+    "general_discount_id": 93
+  },
+  {
+    "name": "Taylor, Barnett and Warner",
+    "general_discount_id": 79
+  },
+  {
+    "name": "Walker PLC",
+    "general_discount_id": null
+  },
+  {
+    "name": "Ramirez-Walker",
+    "general_discount_id": null
+  },
+  {
+    "name": "Hayes Group",
+    "general_discount_id": null
+  },
+  {
+    "name": "Diaz Group",
+    "general_discount_id": null
+  },
+  {
+    "name": "Brown Group",
+    "general_discount_id": null
+  },
+  {
+    "name": "Collins, Smith and Baker",
+    "general_discount_id": 33
+  },
+  {
+    "name": "Pham-Davis",
+    "general_discount_id": 50
+  },
+  {
+    "name": "Hudson, Smith and Mills",
+    "general_discount_id": null
+  },
+  {
+    "name": "Clements and Sons",
+    "general_discount_id": null
+  },
+  {
+    "name": "Lopez Group",
+    "general_discount_id": null
+  },
+  {
+    "name": "Adkins, Johnson and Scott",
+    "general_discount_id": 78
+  },
+  {
+    "name": "Mccarty-Hardy",
+    "general_discount_id": null
+  },
+  {
+    "name": "Brown Inc",
+    "general_discount_id": 59
+  },
+  {
+    "name": "Bradshaw-Roberts",
+    "general_discount_id": 84
+  },
+  {
+    "name": "Watson, Morgan and Watson",
+    "general_discount_id": 12
+  },
+  {
+    "name": "Ruiz, Wilson and Kelly",
+    "general_discount_id": null
+  },
+  {
+    "name": "Bond, Wallace and Hill",
+    "general_discount_id": null
+  },
+  {
+    "name": "Davis-Barnes",
+    "general_discount_id": 38
+  },
+  {
+    "name": "Thomas Inc",
+    "general_discount_id": 35
+  },
+  {
+    "name": "Franco-Johnson",
+    "general_discount_id": 76
+  },
+  {
+    "name": "Sloan, Le and Valencia",
+    "general_discount_id": 19
+  },
+  {
+    "name": "Martinez-Walker",
+    "general_discount_id": null
+  },
+  {
+    "name": "Crawford LLC",
+    "general_discount_id": null
+  },
+  {
+    "name": "Brown-Armstrong",
+    "general_discount_id": null
+  },
+  {
+    "name": "Bennett, Wade and Porter",
+    "general_discount_id": null
+  },
+  {
+    "name": "Williams, Hickman and Tanner",
+    "general_discount_id": null
+  },
+  {
+    "name": "Davis, Ray and Griffith",
+    "general_discount_id": 45
+  },
+  {
+    "name": "Marshall, Sanchez and Henderson",
+    "general_discount_id": null
+  },
+  {
+    "name": "Gray-Wilson",
+    "general_discount_id": null
+  },
+  {
+    "name": "Bennett, Parker and Wilson",
+    "general_discount_id": null
+  },
+  {
+    "name": "Garza, Davis and Franklin",
+    "general_discount_id": 36
+  },
+  {
+    "name": "Fowler-Franklin",
+    "general_discount_id": null
+  },
+  {
+    "name": "Davis Group",
+    "general_discount_id": null
+  },
+  {
+    "name": "Blankenship, Howell and Rodriguez",
+    "general_discount_id": 11
+  },
+  {
+    "name": "Murphy Inc",
+    "general_discount_id": null
+  },
+  {
+    "name": "Scott-Flynn",
+    "general_discount_id": 68
+  },
+  {
+    "name": "Hoffman-Anderson",
+    "general_discount_id": null
+  },
+  {
+    "name": "Miller, Martinez and Stark",
+    "general_discount_id": 25
+  },
+  {
+    "name": "Odonnell PLC",
+    "general_discount_id": null
+  },
+  {
+    "name": "Rocha, Moody and Boone",
+    "general_discount_id": null
+  },
+  {
+    "name": "Duncan, Mcbride and Jennings",
+    "general_discount_id": null
+  },
+  {
+    "name": "Hart, Martin and Monroe",
+    "general_discount_id": 16
+  },
+  {
+    "name": "Cruz, Porter and Martin",
+    "general_discount_id": null
+  },
+  {
+    "name": "Ball, Duncan and Freeman",
+    "general_discount_id": 86
+  },
+  {
+    "name": "Harper-Cook",
+    "general_discount_id": 32
+  },
+  {
+    "name": "Harrell, Hodges and Washington",
+    "general_discount_id": 64
+  },
+  {
+    "name": "Martinez, Rogers and Scott",
+    "general_discount_id": null
+  },
+  {
+    "name": "Schneider Inc",
+    "general_discount_id": 60
+  },
+  {
+    "name": "Johns-Bright",
+    "general_discount_id": 22
+  },
+  {
+    "name": "Warner-Bell",
+    "general_discount_id": 42
+  },
+  {
+    "name": "Myers, Olsen and Jones",
+    "general_discount_id": 80
+  },
+  {
+    "name": "Young Group",
+    "general_discount_id": null
+  },
+  {
+    "name": "Shea, Gilmore and Newton",
+    "general_discount_id": null
+  },
+  {
+    "name": "James LLC",
+    "general_discount_id": 46
+  },
+  {
+    "name": "Gonzalez, Lewis and Parks",
+    "general_discount_id": 82
+  },
+  {
+    "name": "Morris-West",
+    "general_discount_id": 70
+  },
+  {
+    "name": "Davis, Jordan and Johnson",
+    "general_discount_id": 40
+  },
+  {
+    "name": "Sanders and Sons",
+    "general_discount_id": null
+  },
+  {
+    "name": "Perkins, Garcia and Jones",
+    "general_discount_id": null
+  },
+  {
+    "name": "Kelly, Obrien and Brown",
+    "general_discount_id": 19
+  },
+  {
+    "name": "Cook Group",
+    "general_discount_id": 40
+  },
+  {
+    "name": "Dorsey-Costa",
+    "general_discount_id": 7
+  },
+  {
+    "name": "Daniels-Lewis",
+    "general_discount_id": null
+  },
+  {
+    "name": "Short, Johnson and Aguirre",
+    "general_discount_id": 89
+  },
+  {
+    "name": "Wilson, Ferguson and Cole",
+    "general_discount_id": null
+  },
+  {
+    "name": "Brown, Thomas and Cooper",
+    "general_discount_id": 85
+  },
+  {
+    "name": "Diaz-Kim",
+    "general_discount_id": 1
+  },
+  {
+    "name": "Ortiz-Russell",
+    "general_discount_id": null
+  },
+  {
+    "name": "White-Singh",
+    "general_discount_id": 8
+  },
+  {
+    "name": "Snow LLC",
+    "general_discount_id": 78
+  },
+  {
+    "name": "Harrison Inc",
+    "general_discount_id": 89
+  },
+  {
+    "name": "Martinez-Alexander",
+    "general_discount_id": 91
+  },
+  {
+    "name": "Howard PLC",
+    "general_discount_id": null
+  },
+  {
+    "name": "Terry, Peters and Burton",
+    "general_discount_id": 12
+  },
+  {
+    "name": "Garcia PLC",
+    "general_discount_id": 7
+  },
+  {
+    "name": "Miller-Patterson",
+    "general_discount_id": null
+  },
+  {
+    "name": "Davis, Baker and Hunter",
+    "general_discount_id": 71
+  },
+  {
+    "name": "Davis-Ewing",
+    "general_discount_id": 64
+  },
+  {
+    "name": "Reynolds Inc",
+    "general_discount_id": 45
+  },
+  {
+    "name": "Lee-Rodriguez",
+    "general_discount_id": 69
+  },
+  {
+    "name": "Campbell Inc",
+    "general_discount_id": null
+  }
+]

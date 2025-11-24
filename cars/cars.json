@@ -1,0 +1,602 @@
+[
+  {
+    "model": "Tucson",
+    "brand": "Hyundai",
+    "horsepower": 418,
+    "year": 2000
+  },
+  {
+    "model": "X5",
+    "brand": "BMW",
+    "horsepower": 385,
+    "year": 2005
+  },
+  {
+    "model": "Elantra",
+    "brand": "Hyundai",
+    "horsepower": 339,
+    "year": 2005
+  },
+  {
+    "model": "Optima",
+    "brand": "Kia",
+    "horsepower": 199,
+    "year": 2016
+  },
+  {
+    "model": "Focus",
+    "brand": "Ford",
+    "horsepower": 415,
+    "year": 2012
+  },
+  {
+    "model": "Optima",
+    "brand": "Kia",
+    "horsepower": 215,
+    "year": 2015
+  },
+  {
+    "model": "Q5",
+    "brand": "Audi",
+    "horsepower": 120,
+    "year": 2018
+  },
+  {
+    "model": "Tiguan",
+    "brand": "Volkswagen",
+    "horsepower": 120,
+    "year": 2005
+  },
+  {
+    "model": "GLC",
+    "brand": "Mercedes",
+    "horsepower": 405,
+    "year": 2021
+  },
+  {
+    "model": "Sportage",
+    "brand": "Kia",
+    "horsepower": 259,
+    "year": 2022
+  },
+  {
+    "model": "Sonata",
+    "brand": "Hyundai",
+    "horsepower": 260,
+    "year": 2013
+  },
+  {
+    "model": "Telluride",
+    "brand": "Kia",
+    "horsepower": 124,
+    "year": 2022
+  },
+  {
+    "model": "Altima",
+    "brand": "Nissan",
+    "horsepower": 435,
+    "year": 2013
+  },
+  {
+    "model": "X5",
+    "brand": "BMW",
+    "horsepower": 215,
+    "year": 2003
+  },
+  {
+    "model": "Tucson",
+    "brand": "Hyundai",
+    "horsepower": 442,
+    "year": 2006
+  },
+  {
+    "model": "A4",
+    "brand": "Audi",
+    "horsepower": 239,
+    "year": 2020
+  },
+  {
+    "model": "GLE",
+    "brand": "Mercedes",
+    "horsepower": 260,
+    "year": 2020
+  },
+  {
+    "model": "Optima",
+    "brand": "Kia",
+    "horsepower": 356,
+    "year": 2001
+  },
+  {
+    "model": "5 Series",
+    "brand": "BMW",
+    "horsepower": 116,
+    "year": 2010
+  },
+  {
+    "model": "Optima",
+    "brand": "Kia",
+    "horsepower": 281,
+    "year": 2017
+  },
+  {
+    "model": "Elantra",
+    "brand": "Hyundai",
+    "horsepower": 232,
+    "year": 2012
+  },
+  {
+    "model": "A6",
+    "brand": "Audi",
+    "horsepower": 466,
+    "year": 2000
+  },
+  {
+    "model": "E-Class",
+    "brand": "Mercedes",
+    "horsepower": 318,
+    "year": 2023
+  },
+  {
+    "model": "Altima",
+    "brand": "Nissan",
+    "horsepower": 374,
+    "year": 2006
+  },
+  {
+    "model": "CR-V",
+    "brand": "Honda",
+    "horsepower": 486,
+    "year": 2009
+  },
+  {
+    "model": "Focus",
+    "brand": "Ford",
+    "horsepower": 241,
+    "year": 2001
+  },
+  {
+    "model": "GLC",
+    "brand": "Mercedes",
+    "horsepower": 351,
+    "year": 2023
+  },
+  {
+    "model": "Sportage",
+    "brand": "Kia",
+    "horsepower": 226,
+    "year": 2019
+  },
+  {
+    "model": "5 Series",
+    "brand": "BMW",
+    "horsepower": 485,
+    "year": 2021
+  },
+  {
+    "model": "Sonata",
+    "brand": "Hyundai",
+    "horsepower": 455,
+    "year": 2001
+  },
+  {
+    "model": "Atlas",
+    "brand": "Volkswagen",
+    "horsepower": 495,
+    "year": 2006
+  },
+  {
+    "model": "Focus",
+    "brand": "Ford",
+    "horsepower": 332,
+    "year": 2016
+  },
+  {
+    "model": "Fusion",
+    "brand": "Ford",
+    "horsepower": 403,
+    "year": 2016
+  },
+  {
+    "model": "GLC",
+    "brand": "Mercedes",
+    "horsepower": 490,
+    "year": 2023
+  },
+  {
+    "model": "A6",
+    "brand": "Audi",
+    "horsepower": 143,
+    "year": 2011
+  },
+  {
+    "model": "A6",
+    "brand": "Audi",
+    "horsepower": 192,
+    "year": 2005
+  },
+  {
+    "model": "Golf",
+    "brand": "Volkswagen",
+    "horsepower": 343,
+    "year": 2003
+  },
+  {
+    "model": "Golf",
+    "brand": "Volkswagen",
+    "horsepower": 367,
+    "year": 2006
+  },
+  {
+    "model": "CR-V",
+    "brand": "Honda",
+    "horsepower": 283,
+    "year": 2014
+  },
+  {
+    "model": "A6",
+    "brand": "Audi",
+    "horsepower": 305,
+    "year": 2005
+  },
+  {
+    "model": "Pilot",
+    "brand": "Honda",
+    "horsepower": 427,
+    "year": 2004
+  },
+  {
+    "model": "Q5",
+    "brand": "Audi",
+    "horsepower": 372,
+    "year": 2020
+  },
+  {
+    "model": "Altima",
+    "brand": "Nissan",
+    "horsepower": 272,
+    "year": 2018
+  },
+  {
+    "model": "GLE",
+    "brand": "Mercedes",
+    "horsepower": 144,
+    "year": 2015
+  },
+  {
+    "model": "C-Class",
+    "brand": "Mercedes",
+    "horsepower": 302,
+    "year": 2019
+  },
+  {
+    "model": "A6",
+    "brand": "Audi",
+    "horsepower": 298,
+    "year": 2019
+  },
+  {
+    "model": "Highlander",
+    "brand": "Toyota",
+    "horsepower": 216,
+    "year": 2004
+  },
+  {
+    "model": "Elantra",
+    "brand": "Hyundai",
+    "horsepower": 443,
+    "year": 2000
+  },
+  {
+    "model": "Rogue",
+    "brand": "Nissan",
+    "horsepower": 217,
+    "year": 2005
+  },
+  {
+    "model": "Explorer",
+    "brand": "Ford",
+    "horsepower": 234,
+    "year": 2013
+  },
+  {
+    "model": "Explorer",
+    "brand": "Ford",
+    "horsepower": 354,
+    "year": 2022
+  },
+  {
+    "model": "Golf",
+    "brand": "Volkswagen",
+    "horsepower": 145,
+    "year": 2000
+  },
+  {
+    "model": "Rav4",
+    "brand": "Toyota",
+    "horsepower": 225,
+    "year": 2023
+  },
+  {
+    "model": "Golf",
+    "brand": "Volkswagen",
+    "horsepower": 485,
+    "year": 2005
+  },
+  {
+    "model": "Q7",
+    "brand": "Audi",
+    "horsepower": 480,
+    "year": 2012
+  },
+  {
+    "model": "Q7",
+    "brand": "Audi",
+    "horsepower": 388,
+    "year": 2008
+  },
+  {
+    "model": "Rav4",
+    "brand": "Toyota",
+    "horsepower": 256,
+    "year": 2012
+  },
+  {
+    "model": "Santa Fe",
+    "brand": "Hyundai",
+    "horsepower": 192,
+    "year": 2020
+  },
+  {
+    "model": "Civic",
+    "brand": "Honda",
+    "horsepower": 112,
+    "year": 2018
+  },
+  {
+    "model": "Tiguan",
+    "brand": "Volkswagen",
+    "horsepower": 356,
+    "year": 2022
+  },
+  {
+    "model": "Escape",
+    "brand": "Ford",
+    "horsepower": 483,
+    "year": 2002
+  },
+  {
+    "model": "Atlas",
+    "brand": "Volkswagen",
+    "horsepower": 415,
+    "year": 2003
+  },
+  {
+    "model": "Focus",
+    "brand": "Ford",
+    "horsepower": 191,
+    "year": 2013
+  },
+  {
+    "model": "Q7",
+    "brand": "Audi",
+    "horsepower": 254,
+    "year": 2008
+  },
+  {
+    "model": "5 Series",
+    "brand": "BMW",
+    "horsepower": 432,
+    "year": 2006
+  },
+  {
+    "model": "GLE",
+    "brand": "Mercedes",
+    "horsepower": 143,
+    "year": 2012
+  },
+  {
+    "model": "GLE",
+    "brand": "Mercedes",
+    "horsepower": 405,
+    "year": 2016
+  },
+  {
+    "model": "GLC",
+    "brand": "Mercedes",
+    "horsepower": 134,
+    "year": 2023
+  },
+  {
+    "model": "GLC",
+    "brand": "Mercedes",
+    "horsepower": 408,
+    "year": 2004
+  },
+  {
+    "model": "Corolla",
+    "brand": "Toyota",
+    "horsepower": 459,
+    "year": 2020
+  },
+  {
+    "model": "Highlander",
+    "brand": "Toyota",
+    "horsepower": 178,
+    "year": 2005
+  },
+  {
+    "model": "Optima",
+    "brand": "Kia",
+    "horsepower": 119,
+    "year": 2001
+  },
+  {
+    "model": "Civic",
+    "brand": "Honda",
+    "horsepower": 439,
+    "year": 2022
+  },
+  {
+    "model": "Camry",
+    "brand": "Toyota",
+    "horsepower": 331,
+    "year": 2011
+  },
+  {
+    "model": "Tucson",
+    "brand": "Hyundai",
+    "horsepower": 255,
+    "year": 2017
+  },
+  {
+    "model": "Pilot",
+    "brand": "Honda",
+    "horsepower": 413,
+    "year": 2023
+  },
+  {
+    "model": "Atlas",
+    "brand": "Volkswagen",
+    "horsepower": 490,
+    "year": 2013
+  },
+  {
+    "model": "Pilot",
+    "brand": "Honda",
+    "horsepower": 277,
+    "year": 2020
+  },
+  {
+    "model": "Focus",
+    "brand": "Ford",
+    "horsepower": 160,
+    "year": 2019
+  },
+  {
+    "model": "Civic",
+    "brand": "Honda",
+    "horsepower": 277,
+    "year": 2008
+  },
+  {
+    "model": "A4",
+    "brand": "Audi",
+    "horsepower": 406,
+    "year": 2023
+  },
+  {
+    "model": "Escape",
+    "brand": "Ford",
+    "horsepower": 267,
+    "year": 2013
+  },
+  {
+    "model": "Sonata",
+    "brand": "Hyundai",
+    "horsepower": 370,
+    "year": 2015
+  },
+  {
+    "model": "Camry",
+    "brand": "Toyota",
+    "horsepower": 163,
+    "year": 2000
+  },
+  {
+    "model": "Santa Fe",
+    "brand": "Hyundai",
+    "horsepower": 451,
+    "year": 2004
+  },
+  {
+    "model": "A4",
+    "brand": "Audi",
+    "horsepower": 389,
+    "year": 2019
+  },
+  {
+    "model": "Accord",
+    "brand": "Honda",
+    "horsepower": 365,
+    "year": 2003
+  },
+  {
+    "model": "Tucson",
+    "brand": "Hyundai",
+    "horsepower": 327,
+    "year": 2016
+  },
+  {
+    "model": "Tiguan",
+    "brand": "Volkswagen",
+    "horsepower": 269,
+    "year": 2016
+  },
+  {
+    "model": "CR-V",
+    "brand": "Honda",
+    "horsepower": 131,
+    "year": 2007
+  },
+  {
+    "model": "Focus",
+    "brand": "Ford",
+    "horsepower": 236,
+    "year": 2011
+  },
+  {
+    "model": "GLC",
+    "brand": "Mercedes",
+    "horsepower": 278,
+    "year": 2006
+  },
+  {
+    "model": "CR-V",
+    "brand": "Honda",
+    "horsepower": 379,
+    "year": 2023
+  },
+  {
+    "model": "Pilot",
+    "brand": "Honda",
+    "horsepower": 299,
+    "year": 2007
+  },
+  {
+    "model": "Telluride",
+    "brand": "Kia",
+    "horsepower": 406,
+    "year": 2011
+  },
+  {
+    "model": "Highlander",
+    "brand": "Toyota",
+    "horsepower": 295,
+    "year": 2019
+  },
+  {
+    "model": "Accord",
+    "brand": "Honda",
+    "horsepower": 229,
+    "year": 2004
+  },
+  {
+    "model": "Sonata",
+    "brand": "Hyundai",
+    "horsepower": 292,
+    "year": 2013
+  },
+  {
+    "model": "E-Class",
+    "brand": "Mercedes",
+    "horsepower": 486,
+    "year": 2008
+  },
+  {
+    "model": "Sportage",
+    "brand": "Kia",
+    "horsepower": 366,
+    "year": 2004
+  }
+]

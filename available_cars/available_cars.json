@@ -1,0 +1,502 @@
+[
+  {
+    "car_id": 88,
+    "amount": 1,
+    "price": 48198.12
+  },
+  {
+    "car_id": 29,
+    "amount": 8,
+    "price": 33685.56
+  },
+  {
+    "car_id": 88,
+    "amount": 34,
+    "price": 91914.05
+  },
+  {
+    "car_id": 6,
+    "amount": 18,
+    "price": 95185.7
+  },
+  {
+    "car_id": 55,
+    "amount": 37,
+    "price": 28951.19
+  },
+  {
+    "car_id": 16,
+    "amount": 40,
+    "price": 60212.62
+  },
+  {
+    "car_id": 64,
+    "amount": 42,
+    "price": 96273.29
+  },
+  {
+    "car_id": 47,
+    "amount": 8,
+    "price": 64103.57
+  },
+  {
+    "car_id": 47,
+    "amount": 33,
+    "price": 80835.11
+  },
+  {
+    "car_id": 81,
+    "amount": 23,
+    "price": 76857.71
+  },
+  {
+    "car_id": 8,
+    "amount": 9,
+    "price": 24811.92
+  },
+  {
+    "car_id": 26,
+    "amount": 35,
+    "price": 33670.83
+  },
+  {
+    "car_id": 13,
+    "amount": 40,
+    "price": 23059.37
+  },
+  {
+    "car_id": 73,
+    "amount": 34,
+    "price": 94079.81
+  },
+  {
+    "car_id": 18,
+    "amount": 37,
+    "price": 67160.79
+  },
+  {
+    "car_id": 32,
+    "amount": 19,
+    "price": 84264.67
+  },
+  {
+    "car_id": 79,
+    "amount": 8,
+    "price": 91627.99
+  },
+  {
+    "car_id": 79,
+    "amount": 15,
+    "price": 72851.64
+  },
+  {
+    "car_id": 12,
+    "amount": 21,
+    "price": 93399.3
+  },
+  {
+    "car_id": 44,
+    "amount": 11,
+    "price": 42701.26
+  },
+  {
+    "car_id": 89,
+    "amount": 15,
+    "price": 17395.67
+  },
+  {
+    "car_id": 54,
+    "amount": 39,
+    "price": 40998.75
+  },
+  {
+    "car_id": 94,
+    "amount": 47,
+    "price": 67812.18
+  },
+  {
+    "car_id": 2,
+    "amount": 16,
+    "price": 22538.82
+  },
+  {
+    "car_id": 33,
+    "amount": 30,
+    "price": 36253.79
+  },
+  {
+    "car_id": 93,
+    "amount": 31,
+    "price": 33304.27
+  },
+  {
+    "car_id": 45,
+    "amount": 14,
+    "price": 42190.92
+  },
+  {
+    "car_id": 74,
+    "amount": 40,
+    "price": 35429.01
+  },
+  {
+    "car_id": 22,
+    "amount": 17,
+    "price": 52538.87
+  },
+  {
+    "car_id": 23,
+    "amount": 47,
+    "price": 71283.41
+  },
+  {
+    "car_id": 47,
+    "amount": 17,
+    "price": 97902.14
+  },
+  {
+    "car_id": 78,
+    "amount": 11,
+    "price": 49295.55
+  },
+  {
+    "car_id": 27,
+    "amount": 1,
+    "price": 62683.55
+  },
+  {
+    "car_id": 54,
+    "amount": 20,
+    "price": 71403.7
+  },
+  {
+    "car_id": 89,
+    "amount": 44,
+    "price": 32528.39
+  },
+  {
+    "car_id": 27,
+    "amount": 1,
+    "price": 34501.71
+  },
+  {
+    "car_id": 13,
+    "amount": 38,
+    "price": 80021.16
+  },
+  {
+    "car_id": 63,
+    "amount": 40,
+    "price": 64686.8
+  },
+  {
+    "car_id": 48,
+    "amount": 48,
+    "price": 13376.06
+  },
+  {
+    "car_id": 69,
+    "amount": 36,
+    "price": 84168.82
+  },
+  {
+    "car_id": 9,
+    "amount": 42,
+    "price": 56263.65
+  },
+  {
+    "car_id": 35,
+    "amount": 40,
+    "price": 47040.07
+  },
+  {
+    "car_id": 26,
+    "amount": 30,
+    "price": 53379.83
+  },
+  {
+    "car_id": 67,
+    "amount": 29,
+    "price": 58506.47
+  },
+  {
+    "car_id": 74,
+    "amount": 38,
+    "price": 38987.56
+  },
+  {
+    "car_id": 98,
+    "amount": 24,
+    "price": 17292.53
+  },
+  {
+    "car_id": 57,
+    "amount": 15,
+    "price": 87264.48
+  },
+  {
+    "car_id": 37,
+    "amount": 12,
+    "price": 31985.81
+  },
+  {
+    "car_id": 65,
+    "amount": 22,
+    "price": 29540.22
+  },
+  {
+    "car_id": 11,
+    "amount": 29,
+    "price": 91767.54
+  },
+  {
+    "car_id": 99,
+    "amount": 19,
+    "price": 77780.2
+  },
+  {
+    "car_id": 4,
+    "amount": 45,
+    "price": 34484.71
+  },
+  {
+    "car_id": 2,
+    "amount": 43,
+    "price": 74046.52
+  },
+  {
+    "car_id": 1,
+    "amount": 25,
+    "price": 12075.34
+  },
+  {
+    "car_id": 47,
+    "amount": 27,
+    "price": 21810.34
+  },
+  {
+    "car_id": 64,
+    "amount": 2,
+    "price": 15727.27
+  },
+  {
+    "car_id": 76,
+    "amount": 48,
+    "price": 68893.1
+  },
+  {
+    "car_id": 61,
+    "amount": 10,
+    "price": 85909.88
+  },
+  {
+    "car_id": 51,
+    "amount": 25,
+    "price": 58240.85
+  },
+  {
+    "car_id": 25,
+    "amount": 43,
+    "price": 42707.13
+  },
+  {
+    "car_id": 54,
+    "amount": 45,
+    "price": 38777.55
+  },
+  {
+    "car_id": 18,
+    "amount": 13,
+    "price": 36442.82
+  },
+  {
+    "car_id": 65,
+    "amount": 28,
+    "price": 33075.01
+  },
+  {
+    "car_id": 64,
+    "amount": 34,
+    "price": 47389.91
+  },
+  {
+    "car_id": 29,
+    "amount": 14,
+    "price": 93128.89
+  },
+  {
+    "car_id": 4,
+    "amount": 35,
+    "price": 24461.38
+  },
+  {
+    "car_id": 89,
+    "amount": 29,
+    "price": 48711.33
+  },
+  {
+    "car_id": 44,
+    "amount": 40,
+    "price": 27406.69
+  },
+  {
+    "car_id": 64,
+    "amount": 18,
+    "price": 38729.92
+  },
+  {
+    "car_id": 21,
+    "amount": 17,
+    "price": 91988.85
+  },
+  {
+    "car_id": 69,
+    "amount": 50,
+    "price": 67305.77
+  },
+  {
+    "car_id": 80,
+    "amount": 50,
+    "price": 62395.84
+  },
+  {
+    "car_id": 62,
+    "amount": 45,
+    "price": 55335.26
+  },
+  {
+    "car_id": 83,
+    "amount": 36,
+    "price": 54822.2
+  },
+  {
+    "car_id": 64,
+    "amount": 27,
+    "price": 33904.08
+  },
+  {
+    "car_id": 35,
+    "amount": 10,
+    "price": 10821.8
+  },
+  {
+    "car_id": 22,
+    "amount": 45,
+    "price": 49316.96
+  },
+  {
+    "car_id": 29,
+    "amount": 12,
+    "price": 85171.45
+  },
+  {
+    "car_id": 41,
+    "amount": 47,
+    "price": 28667.91
+  },
+  {
+    "car_id": 62,
+    "amount": 32,
+    "price": 42516.99
+  },
+  {
+    "car_id": 27,
+    "amount": 23,
+    "price": 11648.95
+  },
+  {
+    "car_id": 43,
+    "amount": 50,
+    "price": 13072.78
+  },
+  {
+    "car_id": 93,
+    "amount": 44,
+    "price": 87329.07
+  },
+  {
+    "car_id": 43,
+    "amount": 24,
+    "price": 53762.36
+  },
+  {
+    "car_id": 32,
+    "amount": 10,
+    "price": 94525.27
+  },
+  {
+    "car_id": 94,
+    "amount": 4,
+    "price": 74921.86
+  },
+  {
+    "car_id": 73,
+    "amount": 14,
+    "price": 21449.18
+  },
+  {
+    "car_id": 77,
+    "amount": 40,
+    "price": 50259.67
+  },
+  {
+    "car_id": 75,
+    "amount": 14,
+    "price": 32259.9
+  },
+  {
+    "car_id": 11,
+    "amount": 5,
+    "price": 40899.65
+  },
+  {
+    "car_id": 13,
+    "amount": 3,
+    "price": 97474.94
+  },
+  {
+    "car_id": 5,
+    "amount": 16,
+    "price": 72105.63
+  },
+  {
+    "car_id": 42,
+    "amount": 23,
+    "price": 96663.81
+  },
+  {
+    "car_id": 61,
+    "amount": 13,
+    "price": 16776.18
+  },
+  {
+    "car_id": 43,
+    "amount": 33,
+    "price": 38443.84
+  },
+  {
+    "car_id": 16,
+    "amount": 6,
+    "price": 99256.81
+  },
+  {
+    "car_id": 34,
+    "amount": 42,
+    "price": 45907.74
+  },
+  {
+    "car_id": 41,
+    "amount": 4,
+    "price": 66365.17
+  },
+  {
+    "car_id": 51,
+    "amount": 12,
+    "price": 87226.72
+  },
+  {
+    "car_id": 52,
+    "amount": 11,
+    "price": 45672.77
+  }
+]

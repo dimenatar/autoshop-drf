@@ -1,0 +1,902 @@
+[
+  {
+    "name": "Cheryl Chapman",
+    "age": 35,
+    "telephone": "+1-631-495-85",
+    "balance": 99605.13,
+    "role": "admin",
+    "password": "%9SdDQc7(l",
+    "email": "mathewssarah@example.org"
+  },
+  {
+    "name": "Brian White",
+    "age": 40,
+    "telephone": "001-844-225-0",
+    "balance": 87606.97,
+    "role": "customer",
+    "password": "+lq#9CNq1D",
+    "email": "smithnatalie@example.com"
+  },
+  {
+    "name": "Kimberly Hanna",
+    "age": 59,
+    "telephone": "001-840-206-7",
+    "balance": 69876.39,
+    "role": "admin",
+    "password": "!v6C&ATh)6",
+    "email": "david53@example.org"
+  },
+  {
+    "name": "Terry Dunn",
+    "age": 69,
+    "telephone": "(498)348-6737",
+    "balance": 21527.55,
+    "role": "admin",
+    "password": "pm$5FWufEz",
+    "email": "geraldmiller@example.net"
+  },
+  {
+    "name": "Diana Pena",
+    "age": 29,
+    "telephone": "794-334-4827",
+    "balance": 16234.93,
+    "role": "customer",
+    "password": "Lf!d6Lny$8",
+    "email": "shepardjose@example.org"
+  },
+  {
+    "name": "Austin Rios",
+    "age": 62,
+    "telephone": "9716390552",
+    "balance": 52890.05,
+    "role": "customer",
+    "password": "9bX1CcJg%m",
+    "email": "ernest40@example.net"
+  },
+  {
+    "name": "George Rivera",
+    "age": 56,
+    "telephone": "001-976-397-4",
+    "balance": 75535.43,
+    "role": "admin",
+    "password": "AI2OHYfO@p",
+    "email": "emilyjordan@example.org"
+  },
+  {
+    "name": "Stephanie Cabrera",
+    "age": 37,
+    "telephone": "+1-777-986-19",
+    "balance": 28723.73,
+    "role": "admin",
+    "password": "^Q6KK2sli+",
+    "email": "rachelmendez@example.net"
+  },
+  {
+    "name": "Marissa Harper",
+    "age": 32,
+    "telephone": "(237)505-1915",
+    "balance": 51165.86,
+    "role": "customer",
+    "password": "aZ3MdTb)$!",
+    "email": "angelarasmussen@example.org"
+  },
+  {
+    "name": "Jennifer Mayer",
+    "age": 20,
+    "telephone": "(612)681-2515",
+    "balance": 55136.42,
+    "role": "admin",
+    "password": "&bU6P%wKhL",
+    "email": "coreysolis@example.com"
+  },
+  {
+    "name": "Charles Cruz",
+    "age": 40,
+    "telephone": "(791)894-6086",
+    "balance": 88041.82,
+    "role": "admin",
+    "password": "(DUgvfW15J",
+    "email": "pjames@example.com"
+  },
+  {
+    "name": "Jill Terry",
+    "age": 20,
+    "telephone": "5025703226",
+    "balance": 73388.39,
+    "role": "admin",
+    "password": "j8KYoC*h^5",
+    "email": "davidmurray@example.com"
+  },
+  {
+    "name": "Thomas Pitts",
+    "age": 56,
+    "telephone": "8089133586",
+    "balance": 80238.73,
+    "role": "admin",
+    "password": "(i(Fu$o$P7",
+    "email": "michaelchan@example.org"
+  },
+  {
+    "name": "Steven Simon",
+    "age": 28,
+    "telephone": "517.357.4839",
+    "balance": 13907.95,
+    "role": "customer",
+    "password": "6YfP3azu_)",
+    "email": "wblake@example.net"
+  },
+  {
+    "name": "Tammy Barajas",
+    "age": 39,
+    "telephone": "+1-535-703-54",
+    "balance": 28130.74,
+    "role": "admin",
+    "password": "y%H8MY8LLy",
+    "email": "patelmelody@example.net"
+  },
+  {
+    "name": "Jennifer Bautista",
+    "age": 71,
+    "telephone": "+1-529-272-06",
+    "balance": 37991.93,
+    "role": "admin",
+    "password": "kR)0iIrC+2",
+    "email": "kimberly33@example.org"
+  },
+  {
+    "name": "Ashley Martinez",
+    "age": 42,
+    "telephone": "(407)734-7719",
+    "balance": 27466.34,
+    "role": "admin",
+    "password": "*7J2Xm2jkA",
+    "email": "chadlopez@example.net"
+  },
+  {
+    "name": "Larry Douglas",
+    "age": 30,
+    "telephone": "587.309.3279",
+    "balance": 19389.67,
+    "role": "admin",
+    "password": "OogsOQTt&6",
+    "email": "elizabethrhodes@example.com"
+  },
+  {
+    "name": "Jaime Cameron",
+    "age": 42,
+    "telephone": "001-897-924-6",
+    "balance": 75979.96,
+    "role": "customer",
+    "password": "qT&4MuYx5s",
+    "email": "goldenrichard@example.net"
+  },
+  {
+    "name": "Justin Welch",
+    "age": 45,
+    "telephone": "532-665-4380x",
+    "balance": 35242.82,
+    "role": "customer",
+    "password": "J3@9DOnbA#",
+    "email": "mmartin@example.com"
+  },
+  {
+    "name": "John Smith",
+    "age": 55,
+    "telephone": "001-201-628-6",
+    "balance": 39015.61,
+    "role": "admin",
+    "password": "LgIY#PG1o#",
+    "email": "warrennorton@example.org"
+  },
+  {
+    "name": "Roger Espinoza",
+    "age": 67,
+    "telephone": "775-951-7501x",
+    "balance": 41772.46,
+    "role": "customer",
+    "password": "k62%A(be)1",
+    "email": "johnsontanya@example.org"
+  },
+  {
+    "name": "Joel Doyle",
+    "age": 42,
+    "telephone": "783-923-6657",
+    "balance": 78119.89,
+    "role": "customer",
+    "password": "tN*8AjUqIv",
+    "email": "berryrachel@example.org"
+  },
+  {
+    "name": "Tina Colon",
+    "age": 18,
+    "telephone": "305.755.4917x",
+    "balance": 94563.15,
+    "role": "admin",
+    "password": "6&s5SRSl01",
+    "email": "tevans@example.net"
+  },
+  {
+    "name": "Erin Meyer",
+    "age": 75,
+    "telephone": "(977)785-7434",
+    "balance": 19962.16,
+    "role": "admin",
+    "password": ")xVg%dx4o2",
+    "email": "louis33@example.org"
+  },
+  {
+    "name": "Daniel Hull",
+    "age": 30,
+    "telephone": "2182099078",
+    "balance": 85807.51,
+    "role": "admin",
+    "password": "6vG1PRbr_^",
+    "email": "luisorr@example.net"
+  },
+  {
+    "name": "Brad Barker",
+    "age": 49,
+    "telephone": "+1-612-638-31",
+    "balance": 32831.04,
+    "role": "customer",
+    "password": "H*UN1CcV2J",
+    "email": "joseph86@example.net"
+  },
+  {
+    "name": "David Morrow",
+    "age": 43,
+    "telephone": "001-969-247-8",
+    "balance": 88357.52,
+    "role": "customer",
+    "password": "q5TSBeX()3",
+    "email": "eatkinson@example.net"
+  },
+  {
+    "name": "Jacob Gomez",
+    "age": 32,
+    "telephone": "+1-870-923-21",
+    "balance": 64704.84,
+    "role": "admin",
+    "password": "(kBQzDjEd7",
+    "email": "lewisrandall@example.com"
+  },
+  {
+    "name": "Katherine Glover",
+    "age": 43,
+    "telephone": "(377)747-1404",
+    "balance": 70914.46,
+    "role": "customer",
+    "password": "!5&pNyqxGv",
+    "email": "toddbutler@example.net"
+  },
+  {
+    "name": "John Williams",
+    "age": 60,
+    "telephone": "815-683-9461x",
+    "balance": 47034.4,
+    "role": "admin",
+    "password": "@8(KxVj5zn",
+    "email": "dorothywilliams@example.net"
+  },
+  {
+    "name": "Brett Wheeler",
+    "age": 23,
+    "telephone": "+1-281-954-92",
+    "balance": 84818.11,
+    "role": "admin",
+    "password": "Fg5TSZZyy$",
+    "email": "joannamoore@example.net"
+  },
+  {
+    "name": "Joseph Hill",
+    "age": 67,
+    "telephone": "208-567-3308x",
+    "balance": 28811.51,
+    "role": "admin",
+    "password": "_Ud0B96ul@",
+    "email": "elizabethjames@example.net"
+  },
+  {
+    "name": "Crystal Hickman MD",
+    "age": 21,
+    "telephone": "(730)502-5460",
+    "balance": 67562.88,
+    "role": "admin",
+    "password": "634RnnLpa#",
+    "email": "hjennings@example.com"
+  },
+  {
+    "name": "Maria Kidd",
+    "age": 46,
+    "telephone": "967.968.2664x",
+    "balance": 26316.72,
+    "role": "admin",
+    "password": "RD6+A4Ab)V",
+    "email": "brookscharles@example.org"
+  },
+  {
+    "name": "Kimberly Ortiz",
+    "age": 54,
+    "telephone": "(840)834-5751",
+    "balance": 46855.96,
+    "role": "customer",
+    "password": "W8+Ndc!q&1",
+    "email": "kennethmeadows@example.com"
+  },
+  {
+    "name": "Marcus George",
+    "age": 55,
+    "telephone": "321.407.0807",
+    "balance": 58325.31,
+    "role": "admin",
+    "password": "Pq*5tqYCO^",
+    "email": "cfrederick@example.org"
+  },
+  {
+    "name": "Omar Church",
+    "age": 61,
+    "telephone": "001-797-833-1",
+    "balance": 88445.95,
+    "role": "admin",
+    "password": "$AV59Ky1JF",
+    "email": "christopher88@example.org"
+  },
+  {
+    "name": "Jasmine Blackburn",
+    "age": 32,
+    "telephone": "561.923.6640",
+    "balance": 16636.79,
+    "role": "admin",
+    "password": "bKl7Y2fCY^",
+    "email": "alexismcdonald@example.org"
+  },
+  {
+    "name": "Kathy Nelson",
+    "age": 27,
+    "telephone": "001-967-637-3",
+    "balance": 36936.13,
+    "role": "customer",
+    "password": "4#)6l^ApXH",
+    "email": "charlesoneill@example.org"
+  },
+  {
+    "name": "Kristi Kim",
+    "age": 56,
+    "telephone": "469.539.3922",
+    "balance": 1829.64,
+    "role": "admin",
+    "password": "P)x*4YtEWZ",
+    "email": "roseandrea@example.com"
+  },
+  {
+    "name": "Amy Vaughn",
+    "age": 52,
+    "telephone": "(513)529-1065",
+    "balance": 25308.96,
+    "role": "admin",
+    "password": "%gH1usGJ1w",
+    "email": "robinsondavid@example.com"
+  },
+  {
+    "name": "Jacob Mack",
+    "age": 20,
+    "telephone": "+1-969-403-48",
+    "balance": 61308.36,
+    "role": "admin",
+    "password": "&Jlv_sOiz8",
+    "email": "gonzalezsteve@example.net"
+  },
+  {
+    "name": "Johnny Patel",
+    "age": 58,
+    "telephone": "001-303-322-6",
+    "balance": 19865.18,
+    "role": "customer",
+    "password": "5WEhUIr4+q",
+    "email": "haletina@example.com"
+  },
+  {
+    "name": "Cynthia Tyler",
+    "age": 66,
+    "telephone": "791-469-9217x",
+    "balance": 49918.83,
+    "role": "admin",
+    "password": "59D(umw9$z",
+    "email": "william85@example.com"
+  },
+  {
+    "name": "Julie Andersen",
+    "age": 21,
+    "telephone": "703.270.0980",
+    "balance": 97493.86,
+    "role": "customer",
+    "password": "T_x31fVwU&",
+    "email": "wsharp@example.net"
+  },
+  {
+    "name": "Tara Scott",
+    "age": 57,
+    "telephone": "+1-444-434-81",
+    "balance": 31576.66,
+    "role": "customer",
+    "password": "YoLNKXkl#6",
+    "email": "deborahflynn@example.com"
+  },
+  {
+    "name": "Maureen Marshall",
+    "age": 43,
+    "telephone": "311-846-0144",
+    "balance": 21736.82,
+    "role": "customer",
+    "password": "dY!n89Mu!L",
+    "email": "austinjohnson@example.org"
+  },
+  {
+    "name": "Rebecca Ball",
+    "age": 60,
+    "telephone": "(662)775-8775",
+    "balance": 95528.61,
+    "role": "customer",
+    "password": ")DFd8YBr)c",
+    "email": "davidgillespie@example.net"
+  },
+  {
+    "name": "Stephen Wallace",
+    "age": 52,
+    "telephone": "309-431-0536x",
+    "balance": 65427.58,
+    "role": "customer",
+    "password": "&*Q9fCfSyc",
+    "email": "mwilson@example.org"
+  },
+  {
+    "name": "Samantha Kane",
+    "age": 41,
+    "telephone": "471-567-0990x",
+    "balance": 14046.73,
+    "role": "admin",
+    "password": "PcB5c$Efi*",
+    "email": "michaelsanders@example.org"
+  },
+  {
+    "name": "Charles Nelson",
+    "age": 34,
+    "telephone": "399-428-2053",
+    "balance": 43174.28,
+    "role": "admin",
+    "password": "9n_LJ3Miky",
+    "email": "aerickson@example.net"
+  },
+  {
+    "name": "Victoria Owens",
+    "age": 59,
+    "telephone": "(635)663-2787",
+    "balance": 10138.77,
+    "role": "admin",
+    "password": "i(V1CbCkbB",
+    "email": "edwardsbeverly@example.net"
+  },
+  {
+    "name": "Zachary Lewis",
+    "age": 37,
+    "telephone": "838.571.6123x",
+    "balance": 11825.29,
+    "role": "admin",
+    "password": "+(4Zgo9eO8",
+    "email": "zburgess@example.com"
+  },
+  {
+    "name": "Richard Ward",
+    "age": 56,
+    "telephone": "597-202-7543x",
+    "balance": 34065.47,
+    "role": "customer",
+    "password": "T2E^IdAm$b",
+    "email": "lewisrichard@example.net"
+  },
+  {
+    "name": "Stephanie Odom",
+    "age": 20,
+    "telephone": "001-352-785-9",
+    "balance": 10514.85,
+    "role": "admin",
+    "password": "f!F2MUm^o$",
+    "email": "thomas38@example.org"
+  },
+  {
+    "name": "Kyle Fuller",
+    "age": 66,
+    "telephone": "463-886-6428x",
+    "balance": 76635.12,
+    "role": "customer",
+    "password": "8%r$FlOe@n",
+    "email": "burtonlindsay@example.com"
+  },
+  {
+    "name": "David Simon",
+    "age": 43,
+    "telephone": "673-254-2591x",
+    "balance": 61880.11,
+    "role": "customer",
+    "password": "_AvQAEozI9",
+    "email": "barnescasey@example.com"
+  },
+  {
+    "name": "Aaron Stevens",
+    "age": 21,
+    "telephone": "703-397-7505x",
+    "balance": 46651.83,
+    "role": "customer",
+    "password": "qW089J^jf(",
+    "email": "xboyle@example.net"
+  },
+  {
+    "name": "Tyrone Reed",
+    "age": 32,
+    "telephone": "+1-545-369-64",
+    "balance": 46907.91,
+    "role": "customer",
+    "password": "(4QDuimdfq",
+    "email": "cindy61@example.org"
+  },
+  {
+    "name": "Ruth Oliver",
+    "age": 77,
+    "telephone": "479.209.4850x",
+    "balance": 36648.17,
+    "role": "customer",
+    "password": "k52QFog1f#",
+    "email": "obrienvirginia@example.com"
+  },
+  {
+    "name": "Sara Henry",
+    "age": 73,
+    "telephone": "001-542-557-7",
+    "balance": 79188.01,
+    "role": "customer",
+    "password": "sWMhXJd9#4",
+    "email": "gabrielleroberts@example.com"
+  },
+  {
+    "name": "Linda Lewis",
+    "age": 40,
+    "telephone": "422-747-9327x",
+    "balance": 53250.75,
+    "role": "admin",
+    "password": "(ojSQlYXK7",
+    "email": "tonya13@example.org"
+  },
+  {
+    "name": "Robert Banks",
+    "age": 31,
+    "telephone": "348.991.6136",
+    "balance": 12855.74,
+    "role": "admin",
+    "password": "t0_MWJ6x*n",
+    "email": "cnelson@example.org"
+  },
+  {
+    "name": "Edwin Diaz",
+    "age": 18,
+    "telephone": "+1-390-643-67",
+    "balance": 51910.76,
+    "role": "customer",
+    "password": "0M^_4Uyk*D",
+    "email": "bowensheila@example.net"
+  },
+  {
+    "name": "Courtney Schneider",
+    "age": 34,
+    "telephone": "(870)646-0858",
+    "balance": 37787.24,
+    "role": "admin",
+    "password": "_54d*9Vbfq",
+    "email": "yroberts@example.com"
+  },
+  {
+    "name": "Brian Huerta",
+    "age": 70,
+    "telephone": "(895)392-6061",
+    "balance": 80754.31,
+    "role": "customer",
+    "password": "O(9kIVTtfD",
+    "email": "wattsjason@example.com"
+  },
+  {
+    "name": "Jennifer Murray",
+    "age": 34,
+    "telephone": "4596982115",
+    "balance": 91714.93,
+    "role": "customer",
+    "password": "*6chlH0OJc",
+    "email": "brookslucas@example.org"
+  },
+  {
+    "name": "Christopher Smith",
+    "age": 30,
+    "telephone": "+1-627-559-02",
+    "balance": 29758.96,
+    "role": "admin",
+    "password": "$#5SfTWAJC",
+    "email": "leeantonio@example.net"
+  },
+  {
+    "name": "Ann Dillon",
+    "age": 77,
+    "telephone": "9236798759",
+    "balance": 75801.22,
+    "role": "customer",
+    "password": "vrDX9GAdX)",
+    "email": "emily97@example.com"
+  },
+  {
+    "name": "Kimberly Olson",
+    "age": 24,
+    "telephone": "3942349164",
+    "balance": 56347.1,
+    "role": "customer",
+    "password": "e58K$DiS&3",
+    "email": "dgreen@example.com"
+  },
+  {
+    "name": "Donna Smith",
+    "age": 62,
+    "telephone": "+1-456-247-46",
+    "balance": 89989.86,
+    "role": "customer",
+    "password": "J_2G*ZP+Cw",
+    "email": "rogersjenny@example.org"
+  },
+  {
+    "name": "Eric Glass",
+    "age": 48,
+    "telephone": "+1-229-506-76",
+    "balance": 74810.15,
+    "role": "customer",
+    "password": "V5(4xGNzu0",
+    "email": "justin52@example.net"
+  },
+  {
+    "name": "Eric Ruiz",
+    "age": 80,
+    "telephone": "349.864.4932x",
+    "balance": 53007.76,
+    "role": "customer",
+    "password": "X5!8ZKm67Z",
+    "email": "lisastrickland@example.net"
+  },
+  {
+    "name": "Robert Gibson",
+    "age": 54,
+    "telephone": "+1-479-494-79",
+    "balance": 6677.21,
+    "role": "admin",
+    "password": "_4kZ#DDGz*",
+    "email": "ethan36@example.net"
+  },
+  {
+    "name": "Tracey James",
+    "age": 36,
+    "telephone": "001-437-451-8",
+    "balance": 97483.35,
+    "role": "customer",
+    "password": "lL3SgkGz&@",
+    "email": "whiteelizabeth@example.net"
+  },
+  {
+    "name": "Wendy Cooper",
+    "age": 34,
+    "telephone": "001-970-643-9",
+    "balance": 66633.26,
+    "role": "admin",
+    "password": "%z^O4Izb_9",
+    "email": "bailey81@example.org"
+  },
+  {
+    "name": "Gabriel Carter",
+    "age": 49,
+    "telephone": "+1-217-475-04",
+    "balance": 18677.51,
+    "role": "admin",
+    "password": "8q1_IWt&!V",
+    "email": "johnnymitchell@example.org"
+  },
+  {
+    "name": "Richard West",
+    "age": 18,
+    "telephone": "+1-574-541-64",
+    "balance": 11988.21,
+    "role": "customer",
+    "password": "l5M6))Qw&)",
+    "email": "epowell@example.net"
+  },
+  {
+    "name": "Wendy Hayes",
+    "age": 71,
+    "telephone": "581-417-3563x",
+    "balance": 85587.0,
+    "role": "customer",
+    "password": "4Hx8UcuE*K",
+    "email": "jonathan59@example.com"
+  },
+  {
+    "name": "Kathryn Cooley",
+    "age": 46,
+    "telephone": "001-399-725-9",
+    "balance": 6578.02,
+    "role": "customer",
+    "password": "ZJNxQFE7&9",
+    "email": "scampbell@example.org"
+  },
+  {
+    "name": "Molly Carpenter",
+    "age": 40,
+    "telephone": "+1-734-548-80",
+    "balance": 26098.93,
+    "role": "customer",
+    "password": "p2Kl1Ojq)f",
+    "email": "tylerjohnson@example.net"
+  },
+  {
+    "name": "Michelle Anderson MD",
+    "age": 38,
+    "telephone": "4262124241",
+    "balance": 35336.25,
+    "role": "customer",
+    "password": "D8iqx!nB@Q",
+    "email": "nhawkins@example.com"
+  },
+  {
+    "name": "Brian Smith",
+    "age": 57,
+    "telephone": "+1-969-346-51",
+    "balance": 30209.09,
+    "role": "admin",
+    "password": "^2#)aC@6qJ",
+    "email": "jamessims@example.net"
+  },
+  {
+    "name": "Lauren Christian",
+    "age": 46,
+    "telephone": "681.374.2950",
+    "balance": 68870.03,
+    "role": "admin",
+    "password": "^08Rx2jv^)",
+    "email": "rperry@example.org"
+  },
+  {
+    "name": "Michael Daniel",
+    "age": 41,
+    "telephone": "504-388-3167",
+    "balance": 16555.91,
+    "role": "admin",
+    "password": "3TYcNbPp+i",
+    "email": "lisa86@example.com"
+  },
+  {
+    "name": "Angel Kramer",
+    "age": 46,
+    "telephone": "(776)543-7069",
+    "balance": 68915.01,
+    "role": "admin",
+    "password": "lc^6Fha1na",
+    "email": "dsimpson@example.org"
+  },
+  {
+    "name": "Stephanie Stout",
+    "age": 20,
+    "telephone": "(227)622-3336",
+    "balance": 17658.49,
+    "role": "customer",
+    "password": "@D_g52CfCk",
+    "email": "fitzpatrickcatherine@example.net"
+  },
+  {
+    "name": "David Cooper",
+    "age": 32,
+    "telephone": "+1-652-326-03",
+    "balance": 18503.57,
+    "role": "admin",
+    "password": "*8WK+aDKH9",
+    "email": "stephen39@example.org"
+  },
+  {
+    "name": "Cynthia Sanders",
+    "age": 60,
+    "telephone": "(605)730-2207",
+    "balance": 70165.14,
+    "role": "customer",
+    "password": "#1FhTB2x#I",
+    "email": "ashley22@example.org"
+  },
+  {
+    "name": "James Cervantes",
+    "age": 20,
+    "telephone": "(848)950-6158",
+    "balance": 9335.11,
+    "role": "admin",
+    "password": "(%Kjhdy%0!",
+    "email": "marshalltroy@example.org"
+  },
+  {
+    "name": "Eric Arroyo",
+    "age": 21,
+    "telephone": "001-610-924-8",
+    "balance": 40587.6,
+    "role": "admin",
+    "password": "y^54PVrx#$",
+    "email": "jonesstephanie@example.net"
+  },
+  {
+    "name": "Linda Richard",
+    "age": 45,
+    "telephone": "+1-589-909-90",
+    "balance": 74299.53,
+    "role": "admin",
+    "password": "c!kEj3QATa",
+    "email": "jeffrey46@example.org"
+  },
+  {
+    "name": "Michael Mason",
+    "age": 67,
+    "telephone": "5587094184",
+    "balance": 91589.21,
+    "role": "customer",
+    "password": "n@$87lN!jm",
+    "email": "oross@example.org"
+  },
+  {
+    "name": "Jeffrey Coleman",
+    "age": 43,
+    "telephone": "900.805.2101",
+    "balance": 60570.03,
+    "role": "customer",
+    "password": "Mh(8Z4i&nK",
+    "email": "breanna73@example.com"
+  },
+  {
+    "name": "Joseph Lindsey",
+    "age": 37,
+    "telephone": "(636)462-6503",
+    "balance": 8712.16,
+    "role": "customer",
+    "password": "_Yj_JvTn4j",
+    "email": "pettyrebecca@example.com"
+  },
+  {
+    "name": "Gloria Fox",
+    "age": 40,
+    "telephone": "(302)799-7934",
+    "balance": 95394.67,
+    "role": "admin",
+    "password": "_)$#7QFrdt",
+    "email": "marystone@example.com"
+  },
+  {
+    "name": "Thomas Weber",
+    "age": 19,
+    "telephone": "(634)240-5260",
+    "balance": 92666.97,
+    "role": "customer",
+    "password": "R0%6ScNE2E",
+    "email": "kennethsanford@example.net"
+  },
+  {
+    "name": "Patricia Oneill",
+    "age": 75,
+    "telephone": "432.748.8970",
+    "balance": 75374.82,
+    "role": "admin",
+    "password": "o$N60+f(&2",
+    "email": "josephsmith@example.org"
+  },
+  {
+    "name": "Lauren Hall",
+    "age": 72,
+    "telephone": "662-286-8700",
+    "balance": 90674.48,
+    "role": "admin",
+    "password": "++9St#0A8Q",
+    "email": "mejiabrian@example.com"
+  }
+]
