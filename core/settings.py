@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from core.configs.DB_config import DBConfig
+from core.configs.celery_config import CeleryConfig
 from core.configs.django_config import DjangoConfig
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -94,6 +95,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CELERY_RESULT_BACKEND = 'django-cache'
-CELERY_BROKER_URL = "redis://localhost:6379/1"
-CELERY_CACHE_BACKEND = 'default'
+CELERY_RESULT_BACKEND = CeleryConfig.CELERY_RESULT_BACKEND
+CELERY_BROKER_URL = CeleryConfig.CELERY_BROKER_URL
+CELERY_CACHE_BACKEND = CeleryConfig.CELERY_CACHE_BACKEND
+
+CELERY_BEAT_SCHEDULE = CeleryConfig.CELERY_BEAT_SCHEDULE

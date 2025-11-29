@@ -1,3 +1,6 @@
+from abc import abstractmethod
+from typing import Any
+
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from cars.models import Car
@@ -30,6 +33,10 @@ class BasePersonalDiscount(BaseDiscount):
     def __str__(self) -> str:
         return f"{super().__str__()}, purchases_amount: {self.purchases_amount}"
 
+    @abstractmethod
+    def is_suitable_discount(self, shop: Any, buyer: Any) -> bool:
+        return False
+
     class Meta:
         abstract = True
 
@@ -41,6 +48,12 @@ class UserPersonalDiscount(BasePersonalDiscount):
 
     def __str__(self) -> str:
         return f"user:{self.user} {super().__str__()}, autoshop: {self.autoshop}"
+
+    def is_suitable_discount(self, shop: Any, buyer: Any) -> bool:
+        return self.objects.filter(user=buyer, autoshop=shop).exists()
+
+    def get_full_discount_percent(self) -> float:
+        return self.percent
 
 
 class AutoShopPersonalDiscount(BasePersonalDiscount):
@@ -58,10 +71,14 @@ class AutoShopPersonalDiscount(BasePersonalDiscount):
         return f"{super().__str__()} autoshop:{self.autoshop} supplier:{self.supplier}"
 
     def get_full_discount_percent(self) -> float:
-        return (self.purchases_amount // self.purchases_amount) + self.percent
+        return (self.purchases_amount // self.required_cars_bought_amount) + self.percent
+
+    def is_suitable_discount(self, shop: Any, buyer: Any) -> bool:
+        return self.objects.filter(autoshop=buyer, supplier=shop).exists()
+
 
 class CarDiscount(BaseDiscount):
-    car = models.ManyToManyField(Car)
+    cars = models.ManyToManyField(Car)
 
     def __str__(self) -> str:
-        return f"car:{self.car} {super().__str__()}"
+        return f"car:{self.cars} {super().__str__()}"

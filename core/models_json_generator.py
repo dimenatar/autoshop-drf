@@ -4,11 +4,13 @@ import pathlib
 
 from faker import Faker
 import random
-from datetime import date, timedelta
+from datetime import timedelta
+
+from core.configs.celery_config import CeleryConfig
 
 fake = Faker()
 
-COUNT = 100
+COUNT = 5000
 
 CAR_BRANDS = ['Toyota', 'Honda', 'Ford', 'BMW', 'Mercedes', 'Audi', 'Volkswagen', 'Hyundai', 'Kia', 'Nissan']
 CAR_MODELS = {
@@ -44,8 +46,8 @@ def generate_users(count):
             'name': fake.name(),
             'age': random.randint(18, 80),
             'telephone': fake.phone_number()[:13],
-            'balance': round(random.uniform(1000, 100000), 2),
-            'role': random.choice(['admin', 'customer']),
+            'balance': CeleryConfig.get_random_user_start_balance(),
+            'role': 'customer',
             'password': fake.password(length=10),
             'email': fake.email()
         })
@@ -55,7 +57,7 @@ def generate_general_discounts(count):
     discounts = []
     for i in range(count):
         start_date = fake.date_between(start_date='-30d', end_date='today')
-        end_date = start_date + timedelta(days=random.randint(30, 365))
+        end_date = start_date + timedelta(days=random.randint(1, 3))
         discounts.append({
             'percent': round(random.uniform(1, 20), 2),
             'start_date': start_date.isoformat(),
@@ -76,43 +78,36 @@ def generate_suppliers(count, max_discount_id):
 
 def generate_autoshops(count, max_discount_id):
     autoshops = []
+
+
     for i in range(count):
+        balance = CeleryConfig.get_random_autoshop_start_balance()
+        car_price = CeleryConfig.get_random_car_price()
         autoshops.append({
             'name': fake.company(),
             'location': random.choice(COUNTRIES),
-            'balance': round(random.uniform(10000, 500000), 2),
-            'max_price': round(random.uniform(20000, 150000), 2) if random.random() > 0.3 else None,
-            'desired_brand': random.choice(CAR_BRANDS) if random.random() > 0.4 else None,
-            'desired_model': random.choice(list(CAR_MODELS.values()))[0] if random.random() > 0.4 else None,
-            'min_horsepower': random.randint(100, 300) if random.random() > 0.3 else None,
-            'max_horsepower': random.randint(301, 500) if random.random() > 0.3 else None,
-            'min_year': random.randint(2000, 2010) if random.random() > 0.3 else None,
-            'max_year': random.randint(2011, 2023) if random.random() > 0.3 else None,
-            'general_discount_id': random.randint(1, max_discount_id) if random.random() > 0.4 else None
+            'balance': balance,
+            'max_price': car_price,
+            'desired_brand': random.choice(CAR_BRANDS),
+            'desired_model': random.choice(list(CAR_MODELS.values()))[0],
+            'min_horsepower': random.randint(100, 300),
+            'max_horsepower': random.randint(301, 500),
+            'min_year': random.randint(2000, 2010),
+            'max_year': random.randint(2011, 2023),
+            'general_discount_id': random.randint(1, max_discount_id)
         })
     return autoshops
 
-def generate_available_cars(count, max_car_id):
-    available_cars = []
-    for i in range(count):
-        available_cars.append({
-            'car_id': random.randint(1, max_car_id),
-            'amount': random.randint(1, 50),
-            'price': round(random.uniform(10000, 100000), 2)
-        })
-    return available_cars
-
 def generate_car_discounts(count, max_car_id):
-    car_discounts = []
+    discounts = []
     for i in range(count):
-        # Случайное количество автомобилей от 1 до 5
         car_count = random.randint(1, 5)
         car_ids = random.sample(range(1, max_car_id+1), car_count)
-        car_discounts.append({
+        discounts.append({
             'percent': round(random.uniform(1, 15), 2),
             'cars': car_ids
         })
-    return car_discounts
+    return discounts
 
 def generate_user_personal_discounts(count, max_user_id, max_autoshop_id):
     user_discounts = []
@@ -126,10 +121,9 @@ def generate_user_personal_discounts(count, max_user_id, max_autoshop_id):
     return user_discounts
 
 def write_to_file(package, filename, data):
+    path_to_project = pathlib.Path(__file__).parent.parent.absolute()
 
-    path_to_package = pathlib.Path(__file__).parent.parent.absolute()
-
-    with open(os.path.join(path_to_package, package, filename), 'w') as f:
+    with open(os.path.join(path_to_project, package, filename), 'w') as f:
         json.dump(data, f, indent=2)
 
 def generate_autoshop_personal_discounts(count, max_autoshop_id, max_supplier_id):
@@ -151,7 +145,6 @@ if __name__ == '__main__':
     added_general_discounts = generate_general_discounts(COUNT)
     added_suppliers = generate_suppliers(COUNT, COUNT)
     added_autoshops = generate_autoshops(COUNT, COUNT)
-    added_available_cars = generate_available_cars(COUNT, COUNT)
     car_discounts = generate_car_discounts(COUNT, COUNT)
     added_user_personal_discounts = generate_user_personal_discounts(COUNT, COUNT, COUNT)
     added_autoshop_personal_discounts = generate_autoshop_personal_discounts(COUNT, COUNT, COUNT)
@@ -161,9 +154,8 @@ if __name__ == '__main__':
     write_to_file('discounts', 'general_discounts.json', added_general_discounts)
     write_to_file('suppliers', 'suppliers.json', added_suppliers)
     write_to_file('autoshops', 'autoshops.json', added_autoshops)
-    write_to_file('available_cars', 'available_cars.json', added_available_cars)
     write_to_file('discounts', 'car_discounts.json', car_discounts)
     write_to_file('discounts', 'user_personal_discounts.json', added_user_personal_discounts)
     write_to_file('discounts', 'autoshop_personal_discounts.json', added_autoshop_personal_discounts)
 
-    print("Генерация завершена. Созданы файлы с 100 записями для каждой модели.")
+    print(f"Генерация завершена. Созданы файлы с {COUNT} записями для каждой модели.")

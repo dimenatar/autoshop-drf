@@ -8,8 +8,8 @@ class Supplier(BaseModel):
     name = models.TextField(blank=True, null=True)
     cars_in_stock = models.ManyToManyField(AvailableCars)
     car_discounts = models.ManyToManyField(CarDiscount)
-    general_discount_id = models.ForeignKey('discounts.GeneralDiscount',
-                                            on_delete=models.CASCADE, null=True)
+    general_discount = models.ForeignKey('discounts.GeneralDiscount',
+                                         on_delete=models.CASCADE, null=True)
 
     def __str__(self) -> str:
-        return f"name: {self.name}, general discount id: {self.general_discount_id}"
+        return f"name: {self.name}, general discount id: {self.general_discount}"

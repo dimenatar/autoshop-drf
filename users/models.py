@@ -22,6 +22,10 @@ class User(BaseModel):
     def __str__(self) -> str:
         return f"name: {self.name}, role: {self.role} email: {self.email}"
 
+    def purchase_car(self, price) -> None:
+        self.balance -= price
+        self.save()
+
 
 class UserRole(enum.Enum):
     ADMIN = 'Admin'
