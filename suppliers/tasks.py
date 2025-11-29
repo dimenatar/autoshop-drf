@@ -10,14 +10,17 @@ from core.configs.celery_config import CeleryConfig
 from discounts.models import GeneralDiscount
 from suppliers.models import Supplier
 
+
 @shared_task
 def add_discount_on_cars() -> None:
     suppliers = Supplier.objects.filter(is_active=True).all()
     core.celery_entry_point.generate_discounts(suppliers)
 
+
 @shared_task
 def add_available_cars() -> None:
-    if Car.objects.filter(is_active=True).count() == 0: return
+    if Car.objects.filter(is_active=True).count() == 0:
+        return
 
     for supplier in Supplier.objects.filter(is_active=True).all():
         car_amount_to_add = CeleryConfig.SUPPLIER_MAX_AVAILABLE_CARS_AMOUNT - supplier.cars_in_stock.filter(is_active=True).count()
@@ -32,19 +35,19 @@ def add_available_cars() -> None:
                     id__in=supplier_existing_car_id
                 )
 
-                if not cars_to_choose: break
+                if not cars_to_choose:
+                    break
+
                 car = random.choice(cars_to_choose)
 
                 created_car = AvailableCars.objects.create(
-                    car = car,
-                    price = CeleryConfig.get_random_car_price(),
+                    car=car,
+                    price=CeleryConfig.get_random_car_price(),
                     amount=random.randint(1, 10)
                 )
                 created_car.save()
                 supplier_existing_car_id.append(car.id)
                 supplier.cars_in_stock.add(created_car)
-
-
 
 
 @shared_task

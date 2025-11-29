@@ -1,5 +1,5 @@
-from datetime import datetime
 import random
+from datetime import datetime
 from typing import Dict, List, Tuple
 
 from celery import shared_task
@@ -32,11 +32,13 @@ def create_user_task() -> None:
             created_count += 1
     return
 
+
 @shared_task
 def create_offer_for_users() -> None:
     users = User.objects.all().filter(is_active=True)
     for user in users:
         create_offer_for_user(user)
+
 
 @shared_task
 def add_random_balance_for_users() -> None:
@@ -45,12 +47,14 @@ def add_random_balance_for_users() -> None:
         user.balance += CeleryConfig.get_random_user_income()
         user.save()
 
+
 @shared_task
 def purchase_car_by_offers_task() -> None:
     shop_offers = UserOffer.objects.filter(is_active=True).all()
     autoshops = AutoShop.objects.filter(is_active=True).all()
 
     purchase_cars_by_users_from_shops(shop_offers, autoshops)
+
 
 def get_suitable_shops(user_offer: UserOffer, shops: List[AutoShop]) -> Dict[AutoShop, AvailableCars]:
     suitable_shops = {}
@@ -62,6 +66,7 @@ def get_suitable_shops(user_offer: UserOffer, shops: List[AutoShop]) -> Dict[Aut
 
     return suitable_shops
 
+
 def get_best_shop_by_price(car: Car, user: User, cars_by_shops: Dict[AutoShop, AvailableCars]) -> Tuple[AutoShop, float, float, AvailableCars]:
     filtered_shops = {}
     car_by_shop = {}
@@ -71,14 +76,15 @@ def get_best_shop_by_price(car: Car, user: User, cars_by_shops: Dict[AutoShop, A
             filtered_shops[shop] = available_car.price
             car_by_shop[shop] = available_car
 
-
     discounts_for_user = list(UserPersonalDiscount.objects.filter(user=user))
     shop, price, discount = core.celery_entry_point.get_best_by_price(filtered_shops, discounts_for_user, car, user)
 
     return shop, price, discount, car_by_shop[shop]
 
+
 def buy(user: User, price: float) -> None:
     user.purchase_car(price)
+
 
 def add_sales_history(shop: AutoShop, user: User, car: Car, price: float, discount_percent: float) -> None:
     sale = AutoShopSale.objects.create(
@@ -91,6 +97,7 @@ def add_sales_history(shop: AutoShop, user: User, car: Car, price: float, discou
     )
     sale.save()
     print(f"Successful purchase: {user} -> {car} -> {shop} for {price}")
+
 
 def purchase_cars_by_users_from_shops(offers: List[UserOffer], shops: List[AutoShop]) -> None:
     for offer in offers:
@@ -113,7 +120,8 @@ def purchase_cars_by_users_from_shops(offers: List[UserOffer], shops: List[AutoS
 
 
 def create_offer_for_user(user: User) -> UserOffer | None:
-    if UserOffer.objects.filter(is_active=True).filter(user=user).exists(): return
+    if UserOffer.objects.filter(is_active=True).filter(user=user).exists():
+        return None
 
     if random.randint(0, 1):
         autoshops_with_cars = (AutoShop.objects
@@ -122,20 +130,25 @@ def create_offer_for_user(user: User) -> UserOffer | None:
                                .filter(cars_in_stock__is_active=True)
                                .filter(cars_in_stock__amount__gt=0).all())
 
-        if not autoshops_with_cars: return
+        if not autoshops_with_cars:
+            return None
 
-        car = (random.choice(random.choice(autoshops_with_cars)
-                            .cars_in_stock.filter(is_active=True).all())).car
+        car = (random.choice(
+            random.choice(autoshops_with_cars).cars_in_stock.filter(is_active=True).all())).car
 
     else:
         car = random.choice(Car.objects.filter(is_active=True).all())
 
-    if UserOffer.objects.filter(is_active=True).filter(car=car).exists(): return
+    if UserOffer.objects.filter(is_active=True).filter(car=car).exists():
+        return None
 
-    if not car: return
+    if not car:
+        return None
+
     price = core.celery_entry_point.get_min_max_car_price(user.balance)
 
-    if not price: return
+    if not price:
+        return None
 
     _, max_price = price
 
@@ -146,4 +159,4 @@ def create_offer_for_user(user: User) -> UserOffer | None:
     )
 
     offer.save()
-    return offer
+    return (UserOffer(offer))

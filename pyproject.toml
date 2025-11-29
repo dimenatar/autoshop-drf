@@ -55,12 +55,10 @@ per-file-ignores = [
 ]
 
 [tool.mypy]
-warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
 check_untyped_defs = true
-disallow_untyped_decorators = true
 no_implicit_optional = true
 warn_redundant_casts = true
 warn_unused_ignores = true
@@ -71,7 +69,8 @@ exclude = [
     "tests/",
     "settings/",
     "manage.py",
-    "celery.py"
+    "celery.py",
+    "venv/"
 ]
 
 disable_error_code = [

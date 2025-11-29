@@ -1,6 +1,8 @@
 import random
 from typing import Tuple
+
 from decouple import config
+
 
 class CeleryConfig:
     MAX_ACTIVE_ENTITIES_PER_MODEL = config("MAX_ACTIVE_ENTITIES_PER_MODEL", cast=int, default=50)
@@ -10,10 +12,10 @@ class CeleryConfig:
     CELERY_CACHE_BACKEND = config("CELERY_CACHE_BACKEND")
     SUPPLIER_MAX_AVAILABLE_CARS_AMOUNT = config("SUPPLIER_MAX_AVAILABLE_CARS_AMOUNT", cast=int)
 
-    _cashed_autoshop_balance = None
-    _cashed_user_balance = None
-    _cashed_user_income = None
-    _cashed_car_price = None
+    _cashed_autoshop_balance: tuple[float, float] | None = None
+    _cashed_user_balance: tuple[float, float] | None = None
+    _cashed_user_income: tuple[float, float] | None = None
+    _cashed_car_price: tuple[float, float] | None = None
 
     @staticmethod
     def get_min_max_car_price() -> tuple:
@@ -41,100 +43,100 @@ class CeleryConfig:
         return price
 
     @staticmethod
-    def _get_float_tuple(value) -> tuple:
+    def _get_float_tuple(value: str) -> tuple:
         return tuple(float(x) for x in (config(value).split(',')))
 
     @staticmethod
-    def _get_random_value_from_tuple(data, name) -> Tuple[Tuple, float]:
-        if not data:
+    def _get_random_value_from_tuple(data: Tuple[float, float] | None, name: str) -> Tuple[Tuple, float]:
+        if data is None:
             data = CeleryConfig._get_float_tuple(name)
 
         return data, round(random.uniform(*data), 2)
 
     CELERY_BEAT_SCHEDULE = {
-    'create_autoshop_task':
+        'create_autoshop_task':
         {
             'task': 'autoshops.tasks.create_autoshop_task',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'delete_autoshop_task':
+        'delete_autoshop_task':
         {
             'task': 'autoshops.tasks.delete_autoshop_task',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'autoshops.tasks.create_offers_task':
+        'autoshops.tasks.create_offers_task':
         {
             'task': 'autoshops.tasks.create_offers_task',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'purchase_cars_by_shops_from_supplier_task':
+        'purchase_cars_by_shops_from_supplier_task':
         {
             'task': 'autoshops.tasks.purchase_cars_by_shops_from_supplier_task',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'create_cars_from_json':
+        'create_cars_from_json':
         {
             'task': 'cars.tasks.create_cars_from_json',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'remove_ended_discounts_task':
+        'remove_ended_discounts_task':
         {
             'task': 'discounts.tasks.remove_ended_discounts_task',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'create_general_discounts_from_json':
+        'create_general_discounts_from_json':
         {
             'task': 'discounts.tasks.create_general_discounts_from_json',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'create_car_discounts_from_json':
+        'create_car_discounts_from_json':
         {
             'task': 'discounts.tasks.create_car_discounts_from_json',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'create_user_personal_discounts_from_json':
+        'create_user_personal_discounts_from_json':
         {
             'task': 'discounts.tasks.create_user_personal_discounts_from_json',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'create_suppliers_from_json':
+        'create_suppliers_from_json':
         {
             'task': 'suppliers.tasks.create_suppliers_from_json',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'create_user_task':
+        'create_user_task':
         {
             'task': 'users.tasks.create_user_task',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'create_offer_for_users':
+        'create_offer_for_users':
         {
             'task': 'users.tasks.create_offer_for_users',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'add_random_balance_for_users':
+        'add_random_balance_for_users':
         {
             'task': 'users.tasks.add_random_balance_for_users',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'purchase_car_by_offers_task':
+        'purchase_car_by_offers_task':
         {
             'task': 'users.tasks.purchase_car_by_offers_task',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'add_available_cars':
+        'add_available_cars':
         {
             'task': 'suppliers.tasks.add_available_cars',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'add_discount_on_supplier_cars':
+        'add_discount_on_supplier_cars':
         {
             'task': 'suppliers.tasks.add_discount_on_cars',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-    'add_discount_on_autoshop_cars':
+        'add_discount_on_autoshop_cars':
         {
             'task': 'autoshops.tasks.add_discount_on_cars',
             'schedule': DEFAULT_SCHEDULE_SECONDS
         },
-}
+    }

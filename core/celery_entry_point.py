@@ -1,18 +1,21 @@
 import json
 import os
 import pathlib
-from datetime import datetime
-from django.utils import timezone
 import random
-from typing import Tuple, Any, Dict, List
-from celery import Celery
+from datetime import datetime
+from typing import Any, Dict, List, Tuple, Type
+
+import celery
+from django.utils import timezone
 
 from core.configs.celery_config import CeleryConfig
+from core.models import BaseModel
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
-app = Celery('core')
+app = celery.Celery('core')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
+
 
 def get_min_max_car_price(balance: float) -> Tuple[float, float] | None:
     min_price, max_price = CeleryConfig.get_min_max_car_price()
@@ -20,6 +23,7 @@ def get_min_max_car_price(balance: float) -> Tuple[float, float] | None:
         return None
     max_price = min(max_price, balance)
     return min_price, max_price
+
 
 def get_best_by_price(price_by_entity: Dict[Any, Any], discounts: List[Any], car: Any, buyer: Any) -> Tuple[Any, float, float]:
     prices_per_car: Dict[Any, Any] = {}
@@ -50,13 +54,16 @@ def get_best_by_price(price_by_entity: Dict[Any, Any], discounts: List[Any], car
 
     return best_item, best_price, best_discount
 
-def get_available_count(model) -> int:
-    return model.objects.filter(is_active=True).count()
 
-def get_create_count(model) -> int:
+def get_available_count(model: Type[BaseModel]) -> int:
+    return (int(model.objects.filter(is_active=True).count()))
+
+
+def get_create_count(model: Type[BaseModel]) -> int:
     current_count = get_available_count(model)
     available_slots = CeleryConfig.MAX_ACTIVE_ENTITIES_PER_MODEL - current_count
     return min(10, random.randrange(min(CeleryConfig.MAX_ACTIVE_ENTITIES_PER_MODEL, available_slots))) if available_slots > 0 else 0
+
 
 def generate_discounts(entities: List[Any]) -> None:
     now = timezone.now()
@@ -117,7 +124,8 @@ def generate_discounts(entities: List[Any]) -> None:
             CarDiscount.cars.through.objects.bulk_create(through_relations)
             entity.car_discounts.add(*new_discounts)
 
-def load_json_data(package, filename) -> List[Any]:
+
+def load_json_data(package: str, filename: str) -> Any:
     path_to_project = pathlib.Path(__file__).parent.parent.absolute()
 
     try:

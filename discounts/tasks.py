@@ -7,7 +7,7 @@ from faker.proxy import Faker
 from autoshops.models import AutoShop
 from cars.models import Car
 from core.celery_entry_point import get_create_count, load_json_data
-from discounts.models import GeneralDiscount, CarDiscount, UserPersonalDiscount
+from discounts.models import CarDiscount, GeneralDiscount, UserPersonalDiscount
 from users.models import User
 
 DISCOUNT_THEMES = [
@@ -26,6 +26,7 @@ ADJECTIVES = [
     "Grand", "Big", "Huge", "Massive", "Epic"
 ]
 
+
 @shared_task
 def remove_ended_discounts_task() -> None:
     discounts = GeneralDiscount.objects.filter(is_active=True).all()
@@ -38,7 +39,7 @@ def remove_ended_discounts_task() -> None:
 
 
 @shared_task
-def create_general_discounts_from_json():
+def create_general_discounts_from_json() -> None:
     create_count = get_create_count(GeneralDiscount)
     if create_count == 0:
         return
@@ -131,8 +132,10 @@ def create_user_personal_discounts_from_json() -> None:
             )
             created_count += 1
 
+
 def get_random_discount_name() -> str:
     return f'{random.choice(ADJECTIVES)} {random.choice(DISCOUNT_THEMES)} {random.choice(DISCOUNT_TYPES)}'
+
 
 def get_random_discount_description() -> str:
     return Faker().text(max_nb_chars=100)

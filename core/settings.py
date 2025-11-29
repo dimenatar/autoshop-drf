@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from core.configs.DB_config import DBConfig
 from core.configs.celery_config import CeleryConfig
+from core.configs.DB_config import DBConfig
 from core.configs.django_config import DjangoConfig
 
 BASE_DIR = Path(__file__).resolve().parent.parent

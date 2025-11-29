@@ -1,8 +1,9 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 from django_countries.fields import CountryField
+
 from available_cars.models import AvailableCars
-from cars.models import CarDetails, Car
+from cars.models import Car, CarDetails
 from core.configs.celery_config import CeleryConfig
 from discounts.models import CarDiscount
 from users.models import User
@@ -30,11 +31,11 @@ class AutoShop(CarDetails):
             found_car = AvailableCars.objects.create(
                 car=car,
                 amount=0,
-                price = CeleryConfig.get_random_car_price()
+                price=CeleryConfig.get_random_car_price()
             )
             found_car.save()
             self.cars_in_stock.add(found_car)
-        found_car.amount+=1
+        found_car.amount += 1
         found_car.save()
         self.balance -= price
         self.save()
@@ -45,8 +46,8 @@ class AutoShop(CarDetails):
             return True
         return False
 
-    def reduce_car_amount(self, available_car) -> None:
-        for car in self.cars_in_stock.filter(is_active=True).all():
+    def reduce_car_amount(self, available_car: AvailableCars) -> None:
+        for car in self.cars_in_stock.filter(is_active=True, car=available_car.car).all():
             car.amount -= 1
             if car.amount == 0:
                 car.is_active = False

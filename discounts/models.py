@@ -1,8 +1,9 @@
 from abc import abstractmethod
 from typing import Any
 
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+
 from cars.models import Car
 from core.models import BaseModel
 
@@ -71,7 +72,7 @@ class AutoShopPersonalDiscount(BasePersonalDiscount):
         return f"{super().__str__()} autoshop:{self.autoshop} supplier:{self.supplier}"
 
     def get_full_discount_percent(self) -> float:
-        return (self.purchases_amount // self.required_cars_bought_amount) + self.percent
+        return float((self.purchases_amount // self.required_cars_bought_amount) + self.percent)
 
     def is_suitable_discount(self, shop: Any, buyer: Any) -> bool:
         return self.objects.filter(autoshop=buyer, supplier=shop).exists()

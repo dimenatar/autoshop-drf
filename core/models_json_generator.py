@@ -1,10 +1,11 @@
 import json
 import os.path
 import pathlib
-
-from faker import Faker
 import random
 from datetime import timedelta
+from typing import Any, List
+
+from faker import Faker
 
 from core.configs.celery_config import CeleryConfig
 
@@ -27,7 +28,8 @@ CAR_MODELS = {
 }
 COUNTRIES = ['US', 'CA', 'GB', 'DE', 'FR', 'JP', 'KR', 'CN', 'RU', 'BR']
 
-def generate_cars(count):
+
+def generate_cars(count: int) -> List[Any]:
     cars = []
     for i in range(count):
         brand = random.choice(CAR_BRANDS)
@@ -39,7 +41,8 @@ def generate_cars(count):
         })
     return cars
 
-def generate_users(count):
+
+def generate_users(count: int) -> List[Any]:
     users = []
     for i in range(count):
         users.append({
@@ -53,7 +56,8 @@ def generate_users(count):
         })
     return users
 
-def generate_general_discounts(count):
+
+def generate_general_discounts(count: int) -> List[Any]:
     discounts = []
     for i in range(count):
         start_date = fake.date_between(start_date='-30d', end_date='today')
@@ -67,7 +71,8 @@ def generate_general_discounts(count):
         })
     return discounts
 
-def generate_suppliers(count, max_discount_id):
+
+def generate_suppliers(count: int, max_discount_id: int) -> List[Any]:
     suppliers = []
     for i in range(count):
         suppliers.append({
@@ -76,9 +81,9 @@ def generate_suppliers(count, max_discount_id):
         })
     return suppliers
 
-def generate_autoshops(count, max_discount_id):
-    autoshops = []
 
+def generate_autoshops(count: int, max_discount_id: int) -> List[Any]:
+    autoshops = []
 
     for i in range(count):
         balance = CeleryConfig.get_random_autoshop_start_balance()
@@ -98,7 +103,8 @@ def generate_autoshops(count, max_discount_id):
         })
     return autoshops
 
-def generate_car_discounts(count, max_car_id):
+
+def generate_car_discounts(count: int, max_car_id: int) -> List[Any]:
     discounts = []
     for i in range(count):
         car_count = random.randint(1, 5)
@@ -109,7 +115,8 @@ def generate_car_discounts(count, max_car_id):
         })
     return discounts
 
-def generate_user_personal_discounts(count, max_user_id, max_autoshop_id):
+
+def generate_user_personal_discounts(count: int, max_user_id: int, max_autoshop_id: int) -> List[Any]:
     user_discounts = []
     for i in range(count):
         user_discounts.append({
@@ -120,13 +127,15 @@ def generate_user_personal_discounts(count, max_user_id, max_autoshop_id):
         })
     return user_discounts
 
-def write_to_file(package, filename, data):
+
+def write_to_file(package: str, filename: str, data: Any) -> None:
     path_to_project = pathlib.Path(__file__).parent.parent.absolute()
 
     with open(os.path.join(path_to_project, package, filename), 'w') as f:
         json.dump(data, f, indent=2)
 
-def generate_autoshop_personal_discounts(count, max_autoshop_id, max_supplier_id):
+
+def generate_autoshop_personal_discounts(count: int, max_autoshop_id: int, max_supplier_id: int) -> List[Any]:
     autoshop_discounts = []
     for i in range(count):
         autoshop_discounts.append({
@@ -138,6 +147,7 @@ def generate_autoshop_personal_discounts(count, max_autoshop_id, max_supplier_id
             'increasing_percent_per_requirements_fulfilled': round(random.uniform(0.5, 5), 2)
         })
     return autoshop_discounts
+
 
 if __name__ == '__main__':
     added_cars = generate_cars(COUNT)

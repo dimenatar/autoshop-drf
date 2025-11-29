@@ -1,7 +1,8 @@
 import random
 from datetime import datetime
 from random import randint
-from typing import Dict, Tuple, List
+from typing import Dict, List, Tuple
+
 from celery import shared_task
 
 import core.celery_entry_point
@@ -14,6 +15,7 @@ from offers.models import AutoShopOffer
 from sales.models import SupplierSale
 from suppliers.models import Supplier
 
+
 @shared_task
 def add_discount_on_cars() -> None:
     shops = AutoShop.objects.filter(is_active=True).all()
@@ -23,14 +25,14 @@ def add_discount_on_cars() -> None:
 @shared_task
 def delete_autoshop_task() -> None:
     shops = AutoShop.objects.all().filter(is_active=True)
-    company_worth_by_autoshop = {}
+    company_worth_by_autoshop: Dict[AutoShop, float] = {}
 
     for shop in shops:
         company_worth_by_autoshop[shop] = (
                 sum([car.amount * car.price for car in shop.cars_in_stock.filter(is_active=True).all()]) + shop.balance)
 
     if company_worth_by_autoshop:
-        bankrupt = min(company_worth_by_autoshop, key=company_worth_by_autoshop.get)
+        bankrupt = min(company_worth_by_autoshop, key=lambda k: company_worth_by_autoshop[k])
         bankrupt.is_active = False
         bankrupt.save()
 
@@ -73,7 +75,6 @@ def create_autoshop_task() -> None:
 
             available_cars_amount = randint(3, 10)
 
-
             available_cars = [AvailableCars.objects.create(
                 car=car,
                 amount=randint(10, 100),
@@ -85,7 +86,6 @@ def create_autoshop_task() -> None:
 
             created_count += 1
 
-    print(f'Created {created_count} autoshops')
 
 @shared_task
 def create_offers_task() -> None:
@@ -102,45 +102,48 @@ def purchase_cars_by_shops_from_supplier_task() -> None:
 
     purchase_cars_by_shops_from_suppliers(sales, shop_offers, suppliers)
 
+
 def get_suitable_suppliers(shop: AutoShop, suppliers: List[Supplier]) -> Dict[Supplier, List[AvailableCars]]:
-    suitable_suppliers = {}
+    suitable_suppliers: Dict[Supplier, List[AvailableCars]] = {}
     for supplier in suppliers:
         for car_in_stock in supplier.cars_in_stock.all():
             car = car_in_stock.car
 
-            if (car.is_active and
+            if not ((car.is_active and
                (shop.desired_model == car.model) and
                (shop.desired_brand == car.brand) and
                (shop.max_horsepower >= car.horsepower >= shop.min_horsepower) and
-               (shop.max_year >= car.year >= shop.min_year)):
-                    if not suitable_suppliers.keys().__contains__(supplier):
-                        suitable_suppliers[supplier] = list()
-                    suitable_suppliers[supplier].append(car_in_stock)
+               (shop.max_year >= car.year >= shop.min_year))):
+                continue
+            if not suitable_suppliers.keys().__contains__(supplier):
+                suitable_suppliers[supplier] = list()
+            suitable_suppliers[supplier].append(car_in_stock)
 
     return suitable_suppliers
+
 
 def pick_car_to_buy(sales: List[SupplierSale], cars_by_suppliers: Dict[Supplier, List[AvailableCars]]) -> AvailableCars:
     car_to_popularity = {}
     checked_cars = set()
     for supplier, cars in cars_by_suppliers.items():
         for car in cars:
-            if not car in checked_cars:
+            if car not in checked_cars:
                 car_to_popularity[car] = sum(1 for sale in sales if sale.car == car.car)
                 checked_cars.add(car)
 
     if len(car_to_popularity) > 0 and random.choice(range(2)) == 1:
-        return max(car_to_popularity, key=car_to_popularity.get)
+        return max(car_to_popularity, key=lambda k: car_to_popularity[k])
 
-    return random.choice(random.choice(list(cars_by_suppliers.items()))[1])
+    return random.choice(list(car_to_popularity.keys()))
+
 
 def get_best_supplier_by_price(desired_car: Car, shop: AutoShop, cars_by_suppliers: Dict[Supplier, List[AvailableCars]]) -> Tuple[Supplier, float, float]:
     filtered_suppliers = {}
 
     for supplier, available_cars in cars_by_suppliers.items():
         for available_car in available_cars:
-            if available_car.car==desired_car:
+            if available_car.car == desired_car:
                 filtered_suppliers[supplier] = available_car.price
-
 
     discounts_for_autoshop = list(AutoShopPersonalDiscount.objects.filter(autoshop=shop).all())
 
@@ -166,8 +169,8 @@ def add_sales_history(shop: AutoShop, supplier: Supplier, car: Car, price: float
 
 
 def create_offer(shop: AutoShop) -> AutoShopOffer | None:
-
-    if AutoShopOffer.objects.filter(is_active=True).filter(autoshop=shop).exists(): return
+    if AutoShopOffer.objects.filter(is_active=True).filter(autoshop=shop).exists():
+        return None
 
     price = CeleryConfig.get_random_car_price()
 
@@ -184,6 +187,7 @@ def create_offer(shop: AutoShop) -> AutoShopOffer | None:
 
     offer.save()
     return offer
+
 
 def purchase_cars_by_shops_from_suppliers(sales: List[SupplierSale], autoshop_offers: List[AutoShopOffer], suppliers: List[Supplier]) -> None:
     for offer in autoshop_offers:
