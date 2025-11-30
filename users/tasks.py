@@ -1,14 +1,16 @@
 import random
-from datetime import datetime
-from typing import Dict, List, Tuple
+from typing import Dict, Tuple
 
 from celery import shared_task
+from django.db.models import Prefetch
+from django.utils import timezone
 
 import core
+import core.celery_base
 from autoshops.models import AutoShop
 from available_cars.models import AvailableCars
 from cars.models import Car
-from core.celery_entry_point import get_create_count, load_json_data
+from core.celery_base import get_create_count, load_json_data
 from core.configs.celery_config import CeleryConfig
 from discounts.models import UserPersonalDiscount
 from offers.models import UserOffer
@@ -51,58 +53,10 @@ def add_random_balance_for_users() -> None:
 @shared_task
 def purchase_car_by_offers_task() -> None:
     shop_offers = UserOffer.objects.filter(is_active=True).all()
-    autoshops = AutoShop.objects.filter(is_active=True).all()
 
-    purchase_cars_by_users_from_shops(shop_offers, autoshops)
-
-
-def get_suitable_shops(user_offer: UserOffer, shops: List[AutoShop]) -> Dict[AutoShop, AvailableCars]:
-    suitable_shops = {}
-    for shop in shops:
-        for car_in_stock in shop.cars_in_stock.all():
-            car = car_in_stock.car
-            if car.is_active and car == user_offer.car:
-                suitable_shops[shop] = car_in_stock
-
-    return suitable_shops
-
-
-def get_best_shop_by_price(car: Car, user: User, cars_by_shops: Dict[AutoShop, AvailableCars]) -> Tuple[AutoShop, float, float, AvailableCars]:
-    filtered_shops = {}
-    car_by_shop = {}
-
-    for shop, available_car in cars_by_shops.items():
-        if available_car.car == car:
-            filtered_shops[shop] = available_car.price
-            car_by_shop[shop] = available_car
-
-    discounts_for_user = list(UserPersonalDiscount.objects.filter(user=user))
-    shop, price, discount = core.celery_entry_point.get_best_by_price(filtered_shops, discounts_for_user, car, user)
-
-    return shop, price, discount, car_by_shop[shop]
-
-
-def buy(user: User, price: float) -> None:
-    user.purchase_car(price)
-
-
-def add_sales_history(shop: AutoShop, user: User, car: Car, price: float, discount_percent: float) -> None:
-    sale = AutoShopSale.objects.create(
-        user=user,
-        car=car,
-        price=price,
-        discount_percent=discount_percent,
-        date=datetime.now(),
-        autoshop=shop
-    )
-    sale.save()
-    print(f"Successful purchase: {user} -> {car} -> {shop} for {price}")
-
-
-def purchase_cars_by_users_from_shops(offers: List[UserOffer], shops: List[AutoShop]) -> None:
-    for offer in offers:
+    for offer in shop_offers:
         user = offer.user
-        suitable_shops = get_suitable_shops(offer, shops)
+        suitable_shops = get_suitable_shops(offer)
 
         if len(suitable_shops) == 0:
             continue
@@ -119,16 +73,63 @@ def purchase_cars_by_users_from_shops(offers: List[UserOffer], shops: List[AutoS
             offer.save()
 
 
+def get_suitable_shops(user_offer: UserOffer) -> Dict[AutoShop, AvailableCars]:
+
+    query = AutoShop.objects.filter(
+        is_active=True,
+        cars_in_stock__car=user_offer.car,
+        cars_in_stock__car__is_active=True,
+    ).prefetch_related(Prefetch(
+        'cars_in_stock',
+        queryset=AvailableCars.objects.filter(
+            car=user_offer.car,
+            is_active=True,
+        )
+    ))
+
+    return {shop: shop.cars_in_stock.first() for shop in query}
+
+
+def get_best_shop_by_price(car: Car, user: User, cars_by_shops: Dict[AutoShop, AvailableCars]) -> Tuple[AutoShop, float, float, AvailableCars]:
+    filtered_shops = {}
+    car_by_shop = {}
+
+    for shop, available_car in cars_by_shops.items():
+        if available_car.car == car:
+            filtered_shops[shop] = available_car.price
+            car_by_shop[shop] = available_car
+
+    discounts_for_user = list(UserPersonalDiscount.objects.filter(user=user))
+    shop, price, discount = core.celery_base.get_best_by_price(filtered_shops, discounts_for_user, car, user)
+
+    return shop, price, discount, car_by_shop[shop]
+
+
+def buy(user: User, price: float) -> None:
+    user.purchase_car(price)
+
+
+def add_sales_history(shop: AutoShop, user: User, car: Car, price: float, discount_percent: float) -> None:
+    sale = AutoShopSale.objects.create(
+        user=user,
+        car=car,
+        price=price,
+        discount_percent=discount_percent,
+        date=timezone.now(),
+        autoshop=shop
+    )
+    sale.save()
+    print(f"Successful purchase: {user} -> {car} -> {shop} for {price}")
+
+
 def create_offer_for_user(user: User) -> UserOffer | None:
     if UserOffer.objects.filter(is_active=True).filter(user=user).exists():
         return None
 
     if random.randint(0, 1):
         autoshops_with_cars = (AutoShop.objects
-                               .filter(is_active=True)
-                               .filter(cars_in_stock__isnull=False)
-                               .filter(cars_in_stock__is_active=True)
-                               .filter(cars_in_stock__amount__gt=0).all())
+                               .filter(is_active=True, cars_in_stock__isnull=False, cars_in_stock__amount__gt=0)
+                               .all())
 
         if not autoshops_with_cars:
             return None
@@ -145,7 +146,7 @@ def create_offer_for_user(user: User) -> UserOffer | None:
     if not car:
         return None
 
-    price = core.celery_entry_point.get_min_max_car_price(user.balance)
+    price = core.celery_base.get_min_max_car_price(user.balance)
 
     if not price:
         return None
@@ -159,4 +160,4 @@ def create_offer_for_user(user: User) -> UserOffer | None:
     )
 
     offer.save()
-    return (UserOffer(offer))
+    return offer

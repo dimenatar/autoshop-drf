@@ -3,9 +3,10 @@ import random
 from celery import shared_task
 
 import core
+import core.celery_base
 from available_cars.models import AvailableCars
 from cars.models import Car
-from core.celery_entry_point import get_create_count, load_json_data
+from core.celery_base import get_create_count, load_json_data
 from core.configs.celery_config import CeleryConfig
 from discounts.models import GeneralDiscount
 from suppliers.models import Supplier
@@ -14,7 +15,7 @@ from suppliers.models import Supplier
 @shared_task
 def add_discount_on_cars() -> None:
     suppliers = Supplier.objects.filter(is_active=True).all()
-    core.celery_entry_point.generate_discounts(suppliers)
+    core.celery_base.generate_discounts(suppliers)
 
 
 @shared_task

@@ -6,7 +6,7 @@ from faker.proxy import Faker
 
 from autoshops.models import AutoShop
 from cars.models import Car
-from core.celery_entry_point import get_create_count, load_json_data
+from core.celery_base import get_create_count, load_json_data
 from discounts.models import CarDiscount, GeneralDiscount, UserPersonalDiscount
 from users.models import User
 

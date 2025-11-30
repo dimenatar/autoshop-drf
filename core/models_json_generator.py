@@ -13,7 +13,6 @@ fake = Faker()
 
 COUNT = 5000
 
-CAR_BRANDS = ['Toyota', 'Honda', 'Ford', 'BMW', 'Mercedes', 'Audi', 'Volkswagen', 'Hyundai', 'Kia', 'Nissan']
 CAR_MODELS = {
     'Toyota': ['Camry', 'Corolla', 'Rav4', 'Highlander'],
     'Honda': ['Civic', 'Accord', 'CR-V', 'Pilot'],
@@ -32,7 +31,7 @@ COUNTRIES = ['US', 'CA', 'GB', 'DE', 'FR', 'JP', 'KR', 'CN', 'RU', 'BR']
 def generate_cars(count: int) -> List[Any]:
     cars = []
     for i in range(count):
-        brand = random.choice(CAR_BRANDS)
+        brand = random.choice(list(CAR_MODELS.keys()))
         cars.append({
             'model': random.choice(CAR_MODELS[brand]),
             'brand': brand,
@@ -88,13 +87,14 @@ def generate_autoshops(count: int, max_discount_id: int) -> List[Any]:
     for i in range(count):
         balance = CeleryConfig.get_random_autoshop_start_balance()
         car_price = CeleryConfig.get_random_car_price()
+        brand = random.choice(list(CAR_MODELS.keys()))
         autoshops.append({
             'name': fake.company(),
             'location': random.choice(COUNTRIES),
             'balance': balance,
             'max_price': car_price,
-            'desired_brand': random.choice(CAR_BRANDS),
-            'desired_model': random.choice(list(CAR_MODELS.values()))[0],
+            'desired_brand': brand,
+            'desired_model': random.choice(CAR_MODELS[brand]),
             'min_horsepower': random.randint(100, 300),
             'max_horsepower': random.randint(301, 500),
             'min_year': random.randint(2000, 2010),

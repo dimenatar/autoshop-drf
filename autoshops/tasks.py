@@ -1,10 +1,12 @@
 import random
-from datetime import datetime
 from random import randint
 from typing import Dict, List, Tuple
 
 from celery import shared_task
+from django.db.models import Prefetch
+from django.utils import timezone
 
+import core.celery_base
 import core.celery_entry_point
 from autoshops.models import AutoShop
 from available_cars.models import AvailableCars
@@ -19,7 +21,7 @@ from suppliers.models import Supplier
 @shared_task
 def add_discount_on_cars() -> None:
     shops = AutoShop.objects.filter(is_active=True).all()
-    core.celery_entry_point.generate_discounts(shops)
+    core.celery_base.generate_discounts(shops)
 
 
 @shared_task
@@ -44,14 +46,14 @@ def delete_autoshop_task() -> None:
 
 @shared_task
 def create_autoshop_task() -> None:
-    create_count = core.celery_entry_point.get_create_count(AutoShop)
+    create_count = core.celery_base.get_create_count(AutoShop)
 
     car_count = Car.objects.filter(is_active=True).count()
 
     if create_count == 0:
         return
 
-    autoshops_data = core.celery_entry_point.load_json_data('autoshops', 'autoshops.json')
+    autoshops_data = core.celery_base.load_json_data('autoshops', 'autoshops.json')
     if not autoshops_data:
         return
 
@@ -79,7 +81,7 @@ def create_autoshop_task() -> None:
                 car=car,
                 amount=randint(10, 100),
                 price=CeleryConfig.get_random_car_price()
-            ) for car in Car.objects.filter(is_active=True).order_by('?')[:min(car_count, available_cars_amount)]]
+            ) for car in Car.objects.filter(is_active=True, brand=shop.desired_brand).order_by('?')[:min(car_count, available_cars_amount)]]
 
             shop.cars_in_stock.set(available_cars)
             shop.save()
@@ -97,29 +99,50 @@ def create_offers_task() -> None:
 @shared_task
 def purchase_cars_by_shops_from_supplier_task() -> None:
     shop_offers = AutoShopOffer.objects.filter(is_active=True).all()
-    suppliers = Supplier.objects.filter(is_active=True).all()
     sales = SupplierSale.objects.filter(is_active=True).all()
 
-    purchase_cars_by_shops_from_suppliers(sales, shop_offers, suppliers)
+    for offer in shop_offers:
+        shop = offer.autoshop
+        suitable_suppliers = get_suitable_suppliers(shop)
+
+        if len(suitable_suppliers) == 0:
+            continue
+
+        desired_car = pick_car_to_buy(sales, suitable_suppliers)
+        best_supplier, price, discount = get_best_supplier_by_price(desired_car.car, shop, suitable_suppliers)
+
+        if shop.balance >= price:
+            buy(shop, desired_car, price)
+            add_sales_history(shop, best_supplier, desired_car.car, price, discount)
+            offer.is_active = False
+            offer.save()
 
 
-def get_suitable_suppliers(shop: AutoShop, suppliers: List[Supplier]) -> Dict[Supplier, List[AvailableCars]]:
-    suitable_suppliers: Dict[Supplier, List[AvailableCars]] = {}
-    for supplier in suppliers:
-        for car_in_stock in supplier.cars_in_stock.all():
-            car = car_in_stock.car
+def get_suitable_suppliers(shop: AutoShop) -> Dict[Supplier, List[AvailableCars]]:
+    query = Supplier.objects.filter(
+        is_active=True,
+        cars_in_stock__car__is_active=True,
+        cars_in_stock__car__model=shop.desired_model,
+        cars_in_stock__car__brand=shop.desired_brand,
+        cars_in_stock__car__horsepower__gte=shop.min_horsepower,
+        cars_in_stock__car__horsepower__lte=shop.max_horsepower,
+        cars_in_stock__car__year__gte=shop.min_year,
+        cars_in_stock__car__year__lte=shop.max_year,
+    ).prefetch_related(Prefetch(
+        'cars_in_stock',
+        queryset=AvailableCars.objects.filter(
+            is_active=True,
+            car__is_active=True,
+            car__model=shop.desired_model,
+            car__brand=shop.desired_brand,
+            car__horsepower__gte=shop.min_horsepower,
+            car__horsepower__lte=shop.max_horsepower,
+            car__year__gte=shop.min_year,
+            car__year__lte=shop.max_year,
+        )
+    )).distinct()
 
-            if not ((car.is_active and
-               (shop.desired_model == car.model) and
-               (shop.desired_brand == car.brand) and
-               (shop.max_horsepower >= car.horsepower >= shop.min_horsepower) and
-               (shop.max_year >= car.year >= shop.min_year))):
-                continue
-            if not suitable_suppliers.keys().__contains__(supplier):
-                suitable_suppliers[supplier] = list()
-            suitable_suppliers[supplier].append(car_in_stock)
-
-    return suitable_suppliers
+    return {supplier: list(supplier.cars_in_stock.all()) for supplier in query}
 
 
 def pick_car_to_buy(sales: List[SupplierSale], cars_by_suppliers: Dict[Supplier, List[AvailableCars]]) -> AvailableCars:
@@ -147,12 +170,12 @@ def get_best_supplier_by_price(desired_car: Car, shop: AutoShop, cars_by_supplie
 
     discounts_for_autoshop = list(AutoShopPersonalDiscount.objects.filter(autoshop=shop).all())
 
-    return core.celery_entry_point.get_best_by_price(filtered_suppliers, discounts_for_autoshop, desired_car, shop)
+    return core.celery_base.get_best_by_price(filtered_suppliers, discounts_for_autoshop, desired_car, shop)
 
 
 def buy(shop: AutoShop, car: AvailableCars, price: float) -> None:
     shop.purchase_car(car.car, price)
-    car.last_purchase_date = datetime.now()
+    car.last_purchase_date = timezone.now()
 
 
 def add_sales_history(shop: AutoShop, supplier: Supplier, car: Car, price: float, discount_percent: float) -> None:
@@ -160,7 +183,7 @@ def add_sales_history(shop: AutoShop, supplier: Supplier, car: Car, price: float
         car=car,
         price=price,
         discount_percent=discount_percent,
-        date=datetime.now(),
+        date=timezone.now(),
         supplier=supplier,
         autoshop=shop
     )
@@ -187,21 +210,3 @@ def create_offer(shop: AutoShop) -> AutoShopOffer | None:
 
     offer.save()
     return offer
-
-
-def purchase_cars_by_shops_from_suppliers(sales: List[SupplierSale], autoshop_offers: List[AutoShopOffer], suppliers: List[Supplier]) -> None:
-    for offer in autoshop_offers:
-        shop = offer.autoshop
-        suitable_suppliers = get_suitable_suppliers(shop, suppliers)
-
-        if len(suitable_suppliers) == 0:
-            continue
-
-        desired_car = pick_car_to_buy(sales, suitable_suppliers)
-        best_supplier, price, discount = get_best_supplier_by_price(desired_car.car, shop, suitable_suppliers)
-
-        if shop.balance >= price:
-            buy(shop, desired_car, price)
-            add_sales_history(shop, best_supplier, desired_car.car, price, discount)
-            offer.is_active = False
-            offer.save()

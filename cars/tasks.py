@@ -3,7 +3,7 @@ import random
 from celery import shared_task
 
 from cars.models import Car
-from core.celery_entry_point import get_create_count, load_json_data
+from core.celery_base import get_create_count, load_json_data
 
 
 @shared_task
