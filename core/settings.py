@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from core.configs.celery_config import CeleryConfig
 from core.configs.DB_config import DBConfig
 from core.configs.django_config import DjangoConfig
 
@@ -18,6 +19,8 @@ INSTALLED_APPS = [
     'core.configs.django_config',
     'core.configs.smtp_config',
     'core.configs.DB_config',
+    'django_celery_results',
+    'django_celery_beat',
     'autoshops',
     'cars',
     'discounts',
@@ -91,3 +94,9 @@ USE_I18N = True
 USE_TZ = True
 STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CELERY_RESULT_BACKEND = CeleryConfig.CELERY_RESULT_BACKEND
+CELERY_BROKER_URL = CeleryConfig.CELERY_BROKER_URL
+CELERY_CACHE_BACKEND = CeleryConfig.CELERY_CACHE_BACKEND
+
+CELERY_BEAT_SCHEDULE = CeleryConfig.CELERY_BEAT_SCHEDULE

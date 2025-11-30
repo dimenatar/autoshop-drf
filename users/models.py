@@ -1,5 +1,6 @@
 import enum
-from django.core.validators import MinValueValidator, MaxValueValidator
+
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from core.models import BaseModel
@@ -21,6 +22,10 @@ class User(BaseModel):
 
     def __str__(self) -> str:
         return f"name: {self.name}, role: {self.role} email: {self.email}"
+
+    def purchase_car(self, price: float) -> None:
+        self.balance -= price
+        self.save()
 
 
 class UserRole(enum.Enum):
