@@ -18,6 +18,9 @@ INSTALLED_APPS = [
     'core.configs.django_config',
     'core.configs.smtp_config',
     'core.configs.DB_config',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'autoshops',
     'cars',
     'discounts',
@@ -36,6 +39,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
