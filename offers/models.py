@@ -1,5 +1,6 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+
 from cars.models import CarDetails
 from core.models import BaseModel
 
