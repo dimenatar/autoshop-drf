@@ -6,7 +6,7 @@ from suppliers.services import SupplierService
 
 
 class SupplierStatisticsView(ViewBase):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.entity_name = 'supplier'
 
@@ -15,7 +15,7 @@ class SupplierStatisticsView(ViewBase):
 
 
 class SuppliersTotalStatisticsView(ViewBase):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.entity_name = 'autoshop'
 

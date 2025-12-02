@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 
 
 class ViewBase(APIView):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.entity_name = ''
 

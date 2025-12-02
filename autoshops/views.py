@@ -6,7 +6,7 @@ from core.views import ViewBase
 
 
 class AutoShopStatisticsView(ViewBase):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.entity_name = 'autoshop'
 
@@ -15,7 +15,7 @@ class AutoShopStatisticsView(ViewBase):
 
 
 class AutoShopsTotalStatisticsView(ViewBase):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.entity_name = 'autoshop'
 

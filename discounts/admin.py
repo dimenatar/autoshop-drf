@@ -1,6 +1,11 @@
 from django.contrib import admin
-from discounts.models import (GeneralDiscount, UserPersonalDiscount,
-                              CarDiscount, AutoShopPersonalDiscount)
+
+from discounts.models import (
+    AutoShopPersonalDiscount,
+    CarDiscount,
+    GeneralDiscount,
+    UserPersonalDiscount,
+)
 
 admin.site.register(GeneralDiscount)
 admin.site.register(CarDiscount)
