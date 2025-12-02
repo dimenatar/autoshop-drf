@@ -68,3 +68,5 @@ uritemplate==4.2.0
 virtualenv==20.35.4
 wheel==0.45.1
 yarl==1.22.0
+
+django-filter~=25.2
