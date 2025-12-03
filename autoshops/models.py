@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 from django_countries.fields import CountryField
+
 from available_cars.models import AvailableCars
 from cars.models import CarDetails
 from discounts.models import CarDiscount
