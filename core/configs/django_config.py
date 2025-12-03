@@ -1,5 +1,5 @@
-from django.apps import AppConfig
 from decouple import config
+from django.apps import AppConfig
 
 
 class DjangoConfig(AppConfig):

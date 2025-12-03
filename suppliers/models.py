@@ -1,4 +1,5 @@
 from django.db import models
+
 from available_cars.models import AvailableCars
 from core.models import BaseModel
 from discounts.models import CarDiscount
